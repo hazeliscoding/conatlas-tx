@@ -1,0 +1,10 @@
+id: anime-matsuri
+slug: anime-matsuri
+name: Anime Matsuri
+website: https://animematsuri.com/
+city: Houston
+region: gulf-coast
+status: active
+sources:
+  - anime-matsuri-site
+  - anime-matsuri-directions

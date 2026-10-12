@@ -1,0 +1,22 @@
+id: oni-con-2027
+series: oni-con
+edition: '2027'
+slug: oni-con-2027
+status: confirmed
+start_date: 2027-10-01
+end_date: 2027-10-03
+venue:
+  name: Houston Marriott Westchase
+city: Houston
+region: gulf-coast
+timezone: America/Chicago
+url: https://oni-con.net/
+evidence:
+  - source: oni-con-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-12
+    excerpt: Oni Con 2027 / October 1st - 3rd 2027 / Houston Marriott Westchase
+    note: Separate text blocks on the homepage, joined with slashes. The same page still lists a Hilton Galveston Island Resort hotel block from earlier Galveston editions.
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0

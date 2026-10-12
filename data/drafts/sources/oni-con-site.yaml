@@ -1,0 +1,7 @@
+id: oni-con-site
+series: oni-con
+url: https://oni-con.net/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-12
+access_notes: Canva site that renders client-side; text was read from the content embedded in the page.

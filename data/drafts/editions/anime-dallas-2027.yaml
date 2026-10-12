@@ -1,0 +1,21 @@
+id: anime-dallas-2027
+series: anime-dallas
+edition: '2027'
+slug: anime-dallas-2027
+status: confirmed
+start_date: 2027-01-08
+end_date: 2027-01-10
+venue:
+  name: Embassy Suites
+city: Frisco
+region: north
+timezone: America/Chicago
+url: https://animedallas.com/
+evidence:
+  - source: anime-dallas-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-12
+    excerpt: january 8th-10th, 2027 | embassy suites | frisco, TX
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0

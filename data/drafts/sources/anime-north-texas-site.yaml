@@ -1,0 +1,6 @@
+id: anime-north-texas-site
+series: anime-north-texas
+url: https://www.animenorthtexas.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-12

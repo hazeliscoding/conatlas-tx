@@ -1,0 +1,26 @@
+id: anime-frontier-2026
+series: anime-frontier
+edition: '2026'
+slug: anime-frontier-2026
+status: confirmed
+start_date: 2026-12-04
+end_date: 2026-12-06
+venue:
+  name: Fort Worth Convention Center
+  address: 1201 Houston St, Fort Worth, TX 76102
+city: Fort Worth
+region: north
+timezone: America/Chicago
+url: https://animefrontier.com/about/faqs/
+evidence:
+  - source: anime-frontier-faqs
+    facts: [existence, dates]
+    checked_at: 2026-10-12
+    excerpt: ANIME FRONTIER TAKES PLACE DECEMBER 4 – 6, 2026!
+  - source: anime-frontier-travel
+    facts: [venue, city]
+    checked_at: 2026-10-12
+    excerpt: TAKES PLACE AT THE FORT WORTH CONVENTION CENTER, LOCATED AT 1201 HOUSTON ST, FORT WORTH, TX 76102
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0

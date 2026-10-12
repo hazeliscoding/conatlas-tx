@@ -1,0 +1,7 @@
+id: otaku-odyssey-site
+series: otaku-odyssey
+url: https://www.otaku-odyssey.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-12
+access_notes: Returns HTTP 403 to some fetchers; loads in a browser.

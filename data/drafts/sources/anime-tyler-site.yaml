@@ -1,0 +1,7 @@
+id: anime-tyler-site
+series: anime-tyler
+url: https://animetyler.com/
+type: official_site
+supports: [existence, venue, city, tickets]
+last_checked: 2026-10-12
+access_notes: Dates appear only in a banner image; the "GET TICKETS!" link goes to the ticket page.

@@ -1,0 +1,9 @@
+id: halloweebtown
+slug: halloweebtown
+name: Halloweebtown
+website: https://www.halloweebtown.com/
+city: Grapevine
+region: north
+status: active
+sources:
+  - halloweebtown-site

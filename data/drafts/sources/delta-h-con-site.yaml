@@ -1,0 +1,6 @@
+id: delta-h-con-site
+series: delta-h-con
+url: https://deltahcon.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-12

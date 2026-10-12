@@ -1,0 +1,7 @@
+id: anime-frontier-travel
+series: anime-frontier
+url: https://animefrontier.com/about/travel/
+type: official_site
+supports: [venue, city]
+last_checked: 2026-10-12
+access_notes: The page renders client-side; its text was read from https://animefrontier.com/wp-json/wp/v2/pages?slug=travel.

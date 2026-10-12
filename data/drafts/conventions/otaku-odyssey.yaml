@@ -1,0 +1,9 @@
+id: otaku-odyssey
+slug: otaku-odyssey
+name: Otaku Odyssey
+website: https://www.otaku-odyssey.com/
+city: Mesquite
+region: north
+status: active
+sources:
+  - otaku-odyssey-site

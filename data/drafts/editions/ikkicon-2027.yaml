@@ -1,0 +1,26 @@
+id: ikkicon-2027
+series: ikkicon
+edition: '2027'
+slug: ikkicon-2027
+status: confirmed
+start_date: 2027-01-08
+end_date: 2027-01-10
+venue:
+  name: Kalahari Resorts & Conventions
+  address: 3001 Kalahari Blvd, Round Rock, TX 78665
+city: Round Rock
+region: central
+timezone: America/Chicago
+url: https://www.ikkicon.com/
+evidence:
+  - source: ikkicon-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-12
+    excerpt: 'January 8 - 10, 2027 | Kalahari: Resorts & Conventions'
+  - source: ikkicon-hotel
+    facts: [venue]
+    checked_at: 2026-10-12
+    excerpt: 3001 Kalahari Blvd, Round Rock, TX 78665
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0

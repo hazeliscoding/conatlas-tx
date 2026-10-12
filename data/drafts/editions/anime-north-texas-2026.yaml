@@ -1,0 +1,26 @@
+id: anime-north-texas-2026
+series: anime-north-texas
+edition: '2026'
+slug: anime-north-texas-2026
+status: completed
+start_date: 2026-08-07
+end_date: 2026-08-09
+venue:
+  name: The Westin Dallas Fort Worth Airport
+  address: 4545 W. John Carpenter Freeway, Irving, Texas 75063
+city: Irving
+region: north
+timezone: America/Chicago
+url: https://www.animenorthtexas.com/
+evidence:
+  - source: anime-north-texas-site
+    facts: [existence, dates, city]
+    checked_at: 2026-10-12
+    excerpt: Anime North Texas | August 7-9, 2026 Irving, Texas
+  - source: anime-north-texas-site
+    facts: [venue]
+    checked_at: 2026-10-12
+    excerpt: The Westin Dallas Fort Worth Airport 4545 W. John Carpenter Freeway Irving, Texas, USA, 75063
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0

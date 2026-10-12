@@ -1,0 +1,22 @@
+id: kimokawaii-conroe-2027
+series: kimokawaii
+edition: Conroe 2027
+slug: kimokawaii-conroe-2027
+name: KimoKawaii Conroe
+status: confirmed
+start_date: 2027-06-05
+end_date: 2027-06-06
+venue:
+  name: Lone Star Convention & Expo Center
+city: Conroe
+region: gulf-coast
+timezone: America/Chicago
+url: https://www.kimokawaii.net/
+evidence:
+  - source: kimokawaii-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-12
+    excerpt: Conroe TX Jun 5th & 6th, 2027 Lone Star Convention & Expo Center
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0

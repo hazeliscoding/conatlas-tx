@@ -1,0 +1,7 @@
+id: anime-tyler-tickets
+series: anime-tyler
+url: https://tickets.eventology.io/e/anime-tyler-2027
+type: official_announcement
+supports: [existence, dates, tickets]
+last_checked: 2026-10-12
+access_notes: Organizer ticket page, linked as "GET TICKETS!" from animetyler.com.

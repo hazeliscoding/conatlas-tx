@@ -1,0 +1,23 @@
+id: otaku-odyssey-2027
+series: otaku-odyssey
+edition: '2027'
+slug: otaku-odyssey-2027
+status: confirmed
+start_date: 2027-05-21
+end_date: 2027-05-23
+venue:
+  name: Mesquite Convention Center
+  address: 1700 Rodeo Drive, Mesquite, TX 75149
+city: Mesquite
+region: north
+timezone: America/Chicago
+url: https://www.otaku-odyssey.com/
+evidence:
+  - source: otaku-odyssey-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-12
+    excerpt: Otaku Odyssey - The Ultimate Anime Experience | May 21-23, 2027
+    note: Venue is from the page's event data (venueName "Mesquite Convention Center", 1700 Rodeo Drive, 75149). The page's schema.org block still says "Venue TBA".
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0

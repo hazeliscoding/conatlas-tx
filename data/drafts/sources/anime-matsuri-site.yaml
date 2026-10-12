@@ -1,0 +1,6 @@
+id: anime-matsuri-site
+series: anime-matsuri
+url: https://animematsuri.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-12

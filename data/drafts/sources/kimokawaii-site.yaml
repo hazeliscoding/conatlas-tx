@@ -1,0 +1,6 @@
+id: kimokawaii-site
+series: kimokawaii
+url: https://www.kimokawaii.net/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-12

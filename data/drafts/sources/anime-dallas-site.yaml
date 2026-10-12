@@ -1,0 +1,6 @@
+id: anime-dallas-site
+series: anime-dallas
+url: https://animedallas.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-12

@@ -1,0 +1,27 @@
+id: anime-tyler-2027
+series: anime-tyler
+edition: '2027'
+slug: anime-tyler-2027
+status: confirmed
+start_date: 2027-04-17
+end_date: 2027-04-18
+venue:
+  name: Holiday Inn Tyler - Conference Center
+  address: 5701 S Broadway Ave, Tyler, TX 75703
+city: Tyler
+region: north
+timezone: America/Chicago
+url: https://animetyler.com/
+tickets_url: https://tickets.eventology.io/e/anime-tyler-2027
+evidence:
+  - source: anime-tyler-tickets
+    facts: [existence, dates, tickets]
+    checked_at: 2026-10-12
+    excerpt: Sat, Apr 17, 2027 at 10:00 AM to Sun, Apr 18, 2027 at 5:00 PM
+  - source: anime-tyler-site
+    facts: [venue, city, tickets]
+    checked_at: 2026-10-12
+    excerpt: Holiday Inn Tyler - Conference Center - 5701 S Broadway Ave, Tyler, TX
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0

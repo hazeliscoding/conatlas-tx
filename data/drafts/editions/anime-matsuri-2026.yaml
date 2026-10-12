@@ -1,0 +1,26 @@
+id: anime-matsuri-2026
+series: anime-matsuri
+edition: '2026'
+slug: anime-matsuri-2026
+status: completed
+start_date: 2026-07-23
+end_date: 2026-07-26
+venue:
+  name: George R. Brown Convention Center
+  address: 1001 Avenida De Las Americas, Houston, TX 77010
+city: Houston
+region: gulf-coast
+timezone: America/Chicago
+url: https://animematsuri.com/
+evidence:
+  - source: anime-matsuri-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-12
+    excerpt: George R. Brown Convention Center Buy Badges Hotels HOUSTON, TEXAS JULY 23-26, 2026
+  - source: anime-matsuri-directions
+    facts: [venue]
+    checked_at: 2026-10-12
+    excerpt: 'Address: 1001 Avenida De Las Americas, Houston, TX 77010'
+last_verified_at: 2026-10-12
+updated_at: 2026-10-12
+revision: 0
