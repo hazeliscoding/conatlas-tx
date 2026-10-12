@@ -25,10 +25,14 @@ const MONTHS = [
 const TONES: Tone[] = ['pink', 'lavender', 'sage'];
 const plural = (n: number) => `${n} ${n === 1 ? 'convention' : 'conventions'}`;
 
-// Listings arrive sorted with undated ones last, so groups come out in order.
+// Listings arrive sorted with undated, then awaiting-next ones last, so groups come out in order.
+const UNDATED: Record<string, string> = {
+  tba: 'Dates not announced',
+  next: 'Next dates not announced',
+};
 const groups = new Map<string, Listing[]>();
 for (const listing of Astro.props.listings) {
-  const key = listing.start_date?.slice(0, 7) ?? 'tba';
+  const key = listing.awaitingNext ? 'next' : (listing.start_date?.slice(0, 7) ?? 'tba');
   groups.set(key, [...(groups.get(key) ?? []), listing]);
 }
 ---
@@ -38,15 +42,15 @@ for (const listing of Astro.props.listings) {
     const [year, month] = key.split('-').map(Number);
     return (
       <section
-        class:list={['tl__group', key === 'tba' && 'tl__group--tba']}
+        class:list={['tl__group', UNDATED[key] && 'tl__group--tba']}
         aria-labelledby={`tl-${key}`}
         data-filter-group
       >
         <div class="tl__head">
           <h2 class="tl__month" id={`tl-${key}`}>
-            {key === 'tba' ? 'Dates not announced' : MONTHS[month! - 1]}
+            {UNDATED[key] ?? MONTHS[month! - 1]}
           </h2>
-          {key !== 'tba' && <span class="tl__year">{year}</span>}
+          {!UNDATED[key] && <span class="tl__year">{year}</span>}
           <span class="tl__count" data-group-count>
             {plural(listings.length)}
           </span>

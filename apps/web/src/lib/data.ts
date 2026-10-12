@@ -24,23 +24,44 @@ export const href = (path = '') => `${import.meta.env.BASE_URL}${path}`;
 /** An edition's detail page. */
 export const detailHref = (edition: Pick<Edition, 'slug'>) => href(`cons/${edition.slug}/`);
 
-/** An edition with the name to show for it. */
-export type Listing = Edition & { displayName: string };
+/**
+ * An edition with the name to show for it. `awaitingNext` marks a series' latest past edition
+ * when the organizer hasn't announced the next one, so the series stays findable.
+ */
+export type Listing = Edition & { displayName: string; awaitingNext?: boolean };
 
 /**
- * Editions that haven't ended as of the build, soonest first, undated last.
+ * Editions that haven't ended as of the build, soonest first, undated last; then one
+ * `awaitingNext` listing per series with nothing upcoming.
  * shortcut: "today" is the build date, so an edition stays listed until the next build; rebuild daily once deploys exist.
  */
 export function getUpcoming(): Listing[] {
   const { series, editions } = getDataset();
   const today = todayIn('America/Chicago');
   const names = new Map(series.map((s) => [s.id, s.name]));
-  return editions
+  const toListing = (e: Edition): Listing => ({
+    ...e,
+    displayName: e.name ?? names.get(e.series) ?? e.series,
+  });
+  const upcoming = editions
     .filter((e) => e.status !== 'completed' && (!e.end_date || e.end_date >= today))
-    .map((e) => ({ ...e, displayName: e.name ?? names.get(e.series) ?? e.series }))
+    .map(toListing)
     .sort(
       (a, b) =>
         (a.start_date ?? '9999').localeCompare(b.start_date ?? '9999') ||
         a.displayName.localeCompare(b.displayName),
     );
+
+  const listed = new Set(upcoming.map((e) => e.series));
+  const latest = new Map<string, Edition>();
+  for (const e of editions) {
+    const prev = latest.get(e.series);
+    if (!listed.has(e.series) && (!prev || (e.start_date ?? '') > (prev.start_date ?? ''))) {
+      latest.set(e.series, e);
+    }
+  }
+  const awaiting = [...latest.values()]
+    .map((e) => ({ ...toListing(e), awaitingNext: true }))
+    .sort((a, b) => a.displayName.localeCompare(b.displayName));
+  return [...upcoming, ...awaiting];
 }

@@ -1,0 +1,77 @@
+---
+// Breadcrumb trail; on small screens only the parent link shows.
+import Icon from './Icon.astro';
+
+interface Props {
+  items: { label: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <ol>
+    {items.map((item, i) => (
+      <li>
+        {i > 0 && (
+          <span class="crumbs__sep">
+            <Icon name="chevron-right" size={14} />
+          </span>
+        )}
+        {i === items.length - 1 ? (
+          <span aria-current="page">{item.label}</span>
+        ) : (
+          <a href={item.href}>{item.label}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    font: var(--type-body-sm);
+  }
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  a {
+    color: var(--text-2);
+    text-decoration: none;
+    padding: 6px 4px;
+    border-radius: var(--radius-xs);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+  }
+  a:hover {
+    color: var(--link);
+    text-decoration: underline;
+  }
+  [aria-current='page'] {
+    color: var(--text);
+    font-weight: 600;
+    padding: 6px 4px;
+  }
+  .crumbs__sep {
+    display: inline-flex;
+    color: var(--text-muted);
+  }
+  @media (max-width: 640px) {
+    li:not(:nth-last-child(2)) {
+      display: none;
+    }
+    li:nth-last-child(2) .crumbs__sep {
+      display: none;
+    }
+  }
+</style>

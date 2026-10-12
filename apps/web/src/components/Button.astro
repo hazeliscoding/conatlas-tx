@@ -1,20 +1,37 @@
 ---
-// Design-system button. Renders a link when given an href.
+// Design-system button. Renders a link when given an href; `external` opens it in a new tab.
 import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
 
 type Props = HTMLAttributes<'button'> & {
   variant?: 'primary' | 'secondary' | 'soft' | 'ghost';
   size?: 'sm' | 'md';
   href?: string;
+  external?: boolean;
 };
 
-const { variant = 'primary', size = 'md', href, class: className, ...rest } = Astro.props;
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  external = false,
+  class: className,
+  ...rest
+} = Astro.props;
 const classes = ['btn', `btn--${variant}`, `btn--${size}`, className];
 ---
 
 {href ? (
-  <a class:list={classes} href={href}>
+  <a
+    class:list={classes}
+    href={href}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener noreferrer' : undefined}
+  >
     <slot />
+    {external && (
+      <Icon name="external-link" size={size === 'sm' ? 13 : 15} label="(opens in new tab)" />
+    )}
   </a>
 ) : (
   <button class:list={classes} type="button" {...rest}>

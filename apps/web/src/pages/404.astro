@@ -1,0 +1,18 @@
+---
+import Button from '../components/Button.astro';
+import EmptyState from '../components/EmptyState.astro';
+import Base from '../layouts/Base.astro';
+import { href } from '../lib/data.ts';
+---
+
+<Base title="Not found">
+  <h1 class="sr-only">Page not found</h1>
+  <EmptyState
+    title="We couldn't find that page"
+    description="It may have been renamed or removed. Try the upcoming list."
+  >
+    <Button variant="secondary" href={href()}>
+      Browse upcoming
+    </Button>
+  </EmptyState>
+</Base>

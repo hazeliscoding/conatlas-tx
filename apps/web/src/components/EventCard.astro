@@ -1,7 +1,8 @@
 ---
 // The discovery unit: date block, name, dates and venue, status, official link.
+// The title links to the detail page and stretches over the whole card.
 import { REGION_NAMES, dayCount, formatDateRange, weekday } from '@conatlas/core';
-import type { Listing } from '../lib/data.ts';
+import { detailHref, type Listing } from '../lib/data.ts';
 import DateBlock, { type Tone } from './DateBlock.astro';
 import Icon from './Icon.astro';
 import StatusLine from './StatusLine.astro';
@@ -9,17 +10,17 @@ import StatusLine from './StatusLine.astro';
 interface Props {
   listing: Listing;
   tone?: Tone;
-  /** Detail page link; makes the whole card clickable. */
-  href?: string;
 }
 
-const { listing: e, tone, href } = Astro.props;
+const { listing: e, tone } = Astro.props;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const start = e.start_date;
 const end = e.end_date ?? start;
 const [, sm, sd] = start ? start.split('-').map(Number) : [];
 const [, em, ed] = end ? end.split('-').map(Number) : [];
 const cancelled = e.status === 'cancelled';
+// A past edition standing in for a series whose next dates aren't announced: no date claims.
+const dated = start && end && !e.awaitingNext;
 const titleId = `ev-${e.id}`;
 ---
 
@@ -31,27 +32,23 @@ const titleId = `ev-${e.id}`;
   data-city={e.city}
 >
   <DateBlock
-    month={sm ? MONTHS[sm - 1]! : 'TBA'}
-    day={sd}
-    endDay={start !== end && sm === em ? ed : undefined}
+    month={dated ? MONTHS[sm! - 1]! : 'TBA'}
+    day={dated ? sd : undefined}
+    endDay={dated && start !== end && sm === em ? ed : undefined}
     weekday={
-      start && end
-        ? start === end
-          ? weekday(start)
-          : `${weekday(start)}–${weekday(end)}`
-        : undefined
+      dated ? (start === end ? weekday(start) : `${weekday(start)}–${weekday(end)}`) : undefined
     }
     tone={tone}
-    tentative={!start}
+    tentative={!dated}
     cancelled={cancelled}
   />
   <div class="ev__body">
     <div class="ev__eyebrow">{REGION_NAMES[e.region]}</div>
     <h3 class="ev__title" id={titleId}>
-      {href ? <a href={href}>{e.displayName}</a> : e.displayName}
+      <a href={detailHref(e)}>{e.displayName}</a>
     </h3>
     <div class="ev__meta">
-      {start && end ? (
+      {dated ? (
         <span class="ev__range">
           <time datetime={start === end ? start : `${start}/${end}`}>
             {formatDateRange(start, end)}
@@ -60,18 +57,20 @@ const titleId = `ev-${e.id}`;
         </span>
       ) : (
         <span class="ev__range ev__range--tentative">
-          {e.announced_window
-            ? `Expected ${e.announced_window} · not announced`
-            : 'Dates not announced'}
+          {e.awaitingNext && start && end
+            ? `Last held ${formatDateRange(start, end)}`
+            : e.announced_window
+              ? `Expected ${e.announced_window} · not announced`
+              : 'Dates not announced'}
         </span>
       )}
       <span>
         <Icon name="map-pin" size={14} />
-        {e.venue ? `${e.venue.name}, ${e.city}` : e.city}
+        {e.venue && !e.awaitingNext ? `${e.venue.name}, ${e.city}` : e.city}
       </span>
     </div>
     <div class="ev__foot">
-      <StatusLine edition={e} />
+      <StatusLine edition={e} awaitingNext={e.awaitingNext} />
     </div>
   </div>
   <div class="ev__actions">

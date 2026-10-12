@@ -37,9 +37,9 @@ const monthHref = (m: Month) => href(m === months[0] ? 'calendar/' : `calendar/$
 const i = months.indexOf(month);
 const title = `${MONTHS[Number(month.slice(5)) - 1]} ${month.slice(0, 4)}`;
 
-const dated = listings.filter((e) => e.start_date);
+const dated = listings.filter((e) => e.start_date && !e.awaitingNext);
 const inView = dated.filter((e) => e.start_date! <= `${month}-31` && e.end_date! >= `${month}-01`);
-const tba = listings.filter((e) => !e.start_date);
+const tba = listings.filter((e) => !e.start_date || e.awaitingNext);
 ---
 
 <div class="grid grid-cols-[minmax(0,1fr)] gap-4">
@@ -65,8 +65,8 @@ const tba = listings.filter((e) => !e.start_date);
   {tba.length > 0 ? (
     <>
       <p class="m-0 max-w-[68ch] [font:var(--type-body-sm)] text-text-2">
-        These conventions are expected but the organizer hasn't published dates. They're never
-        placed on the grid until confirmed.
+        The organizers of these conventions haven't published their next dates. They're never placed
+        on the grid until confirmed.
       </p>
       <div class="grid gap-3">
         {tba.map((listing) => (

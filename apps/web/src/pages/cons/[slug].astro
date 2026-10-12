@@ -1,0 +1,383 @@
+---
+// One page per edition, past ones included, with every fact traced to its official source.
+import {
+  REGION_NAMES,
+  dayCount,
+  formatDateRange,
+  todayIn,
+  weekday,
+  type Edition,
+  type Series,
+  type Source,
+} from '@conatlas/core';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Button from '../../components/Button.astro';
+import DateBlock from '../../components/DateBlock.astro';
+import Icon from '../../components/Icon.astro';
+import Ribbon from '../../components/Ribbon.astro';
+import StatusLine from '../../components/StatusLine.astro';
+import VenueBlock from '../../components/VenueBlock.astro';
+import Base from '../../layouts/Base.astro';
+import { detailHref, getDataset, href } from '../../lib/data.ts';
+
+interface Props {
+  edition: Edition;
+  series: Series;
+  sources: Map<string, Source>;
+  siblings: Edition[];
+}
+
+export function getStaticPaths() {
+  const { series, editions, sources } = getDataset();
+  const sourceMap = new Map(sources.map((s) => [s.id, s]));
+  return editions.map((edition) => ({
+    params: { slug: edition.slug },
+    props: {
+      edition,
+      series: series.find((s) => s.id === edition.series)!,
+      sources: sourceMap,
+      siblings: editions.filter((e) => e.series === edition.series && e.id !== edition.id),
+    },
+  }));
+}
+
+const { edition: e, series, sources, siblings } = Astro.props;
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const FACT_LABELS = {
+  existence: 'Announced',
+  dates: 'Dates',
+  venue: 'Venue',
+  city: 'City',
+  status: 'Status',
+  tickets: 'Tickets',
+};
+const today = todayIn('America/Chicago');
+const name = e.name ?? series.name;
+const start = e.start_date;
+const end = e.end_date ?? start;
+const [, sm, sd] = start ? start.split('-').map(Number) : [];
+const [, em, ed] = end ? end.split('-').map(Number) : [];
+const cancelled = e.status === 'cancelled';
+const ended = e.status === 'completed' || (end !== undefined && end < today);
+const longDate = (d: string) => formatDateRange(d, d);
+const description = e.description ?? series.description;
+// The edition to point a past page at: the soonest sibling that hasn't ended.
+const current = siblings
+  .filter((s) => s.status !== 'completed' && (!s.end_date || s.end_date >= today))
+  .sort((a, b) => (a.start_date ?? '9999').localeCompare(b.start_date ?? '9999'))[0];
+const past = siblings
+  .filter((s) => s.status === 'completed')
+  .sort((a, b) => (b.start_date ?? '').localeCompare(a.start_date ?? ''));
+---
+
+<Base
+  title={`${name} ${e.edition}`}
+  description={`Dates, venue and official sources for ${name} ${e.edition}.`}
+>
+  <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
+    <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: name }]} />
+
+    <header class="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-5">
+      <DateBlock
+        size="lg"
+        month={sm ? MONTHS[sm - 1]! : 'TBA'}
+        day={sd}
+        endDay={start !== end && sm === em ? ed : undefined}
+        weekday={
+          start && end
+            ? start === end
+              ? weekday(start)
+              : `${weekday(start)}–${weekday(end)}`
+            : undefined
+        }
+        tentative={!start}
+        cancelled={cancelled}
+      />
+      <div class="grid min-w-0 gap-2.5">
+        <div class="flex flex-wrap items-center gap-2">
+          <StatusLine edition={e} badge />
+          <span class="eyebrow">{REGION_NAMES[e.region]}</span>
+        </div>
+        <h1 class:list={['m-0 [font:var(--type-h1)] text-balance', cancelled && 'struck']}>
+          {name}
+        </h1>
+        <span class="pixel">{e.edition}</span>
+        <span class="range">
+          {start && end ? (
+            <>
+              <time datetime={start === end ? start : `${start}/${end}`}>
+                {start === end ? weekday(start) : `${weekday(start)}–${weekday(end)}`},{' '}
+                {formatDateRange(start, end)}
+              </time>
+              {dayCount(start, end) > 1 && (
+                <span class="range__days">· {dayCount(start, end)} days</span>
+              )}
+            </>
+          ) : (
+            <span class="range--tentative">
+              {e.announced_window
+                ? `Expected ${e.announced_window} · dates not announced`
+                : 'Dates not announced'}
+            </span>
+          )}
+        </span>
+        <VenueBlock name={e.venue?.name} city={e.city} />
+      </div>
+    </header>
+
+    {e.status === 'postponed' && (
+      <div class="banner banner--warning" role="status">
+        <Icon name="triangle-alert" size={18} />
+        <span>
+          <b>Postponed.</b> {e.status_note}
+          {start && ' The dates shown are the original ones and should not be relied on.'}
+        </span>
+      </div>
+    )}
+    {cancelled && (
+      <div class="banner banner--cancelled" role="status">
+        <Icon name="circle-x" size={18} />
+        <span>
+          <b>Cancelled.</b> {e.status_note}
+        </span>
+      </div>
+    )}
+    {ended && !cancelled && (
+      <div class="banner banner--neutral" role="status">
+        <Icon name="calendar" size={18} />
+        <span>This edition has ended. Kept for reference.</span>
+        {current ? (
+          <a class="banner__link" href={detailHref(current)}>
+            See the current edition →
+          </a>
+        ) : (
+          <span class="banner__link">The organizer hasn't announced the next one yet.</span>
+        )}
+      </div>
+    )}
+
+    <div class="flex flex-wrap items-center gap-2.5">
+      <Button variant="secondary" href={e.url} external>
+        Visit official site
+      </Button>
+      {e.tickets_url && !ended && (
+        <Button variant="ghost" href={e.tickets_url} external>
+          Tickets
+        </Button>
+      )}
+    </div>
+
+    <div class="detail-cols">
+      <div class="grid min-w-0 content-start gap-6">
+        {description && (
+          <section class="grid gap-3">
+            <Ribbon rule>About</Ribbon>
+            <p class="m-0 max-w-[68ch] text-pretty text-text-2">{description}</p>
+          </section>
+        )}
+        <section class="grid gap-3">
+          <Ribbon tone="sage" rule>
+            Venue
+          </Ribbon>
+          {e.venue ? (
+            <VenueBlock
+              card
+              name={e.venue.name}
+              address={e.venue.address}
+              city={e.city}
+              region={REGION_NAMES[e.region]}
+            />
+          ) : (
+            <p class="m-0 [font:var(--type-body-sm)] text-text-muted">
+              Venue not announced yet. City: {e.city}, {REGION_NAMES[e.region]}.
+            </p>
+          )}
+        </section>
+        {past.length > 0 && (
+          <section class="grid gap-3">
+            <Ribbon tone="lavender" rule>
+              Past editions
+            </Ribbon>
+            <ul class="m-0 grid gap-1.5 pl-5 [font:var(--type-body-sm)] text-text-2">
+              {past.map((p) => (
+                <li>
+                  <a href={detailHref(p)}>
+                    {p.edition}
+                    {p.start_date &&
+                      ` · ${formatDateRange(p.start_date, p.end_date ?? p.start_date)}`}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+
+      <aside class="grid min-w-0 content-start gap-3" aria-labelledby="verify-h">
+        <h2 id="verify-h" class="m-0 flex items-center gap-2 [font:var(--type-h4)]">
+          <Icon name="badge-check" size={18} />
+          Verification
+        </h2>
+        <p class="m-0 [font:var(--type-body-sm)] text-text-2">
+          Information verified from the organizer's official sources on{' '}
+          {longDate(e.last_verified_at)}.
+        </p>
+        <div class="source">
+          {series.organizer && (
+            <div class="source__row">
+              <span class="source__k">Organizer</span>
+              <span class="source__v">{series.organizer}</span>
+            </div>
+          )}
+          {e.evidence.map((ev) => {
+            const source = sources.get(ev.source)!;
+            return (
+              <div class="source__ev">
+                <span class="source__k">{ev.facts.map((f) => FACT_LABELS[f]).join(', ')}</span>
+                <a class="source__link" href={source.url} target="_blank" rel="noopener noreferrer">
+                  {new URL(source.url).hostname.replace(/^www\./, '')}
+                  {new URL(source.url).pathname !== '/' && new URL(source.url).pathname}
+                  <Icon name="external-link" size={11} label="(opens in new tab)" />
+                </a>
+                {ev.excerpt && <blockquote class="source__quote">“{ev.excerpt}”</blockquote>}
+                {ev.note && <p class="source__note">{ev.note}</p>}
+              </div>
+            );
+          })}
+          <div class="source__foot">Last checked {longDate(e.last_verified_at)}</div>
+        </div>
+        <p class="m-0 [font:var(--type-caption)] text-text-muted">
+          "Last checked" is when a maintainer compared this listing with the official site. Quotes
+          are copied from the organizer's pages on that day.
+        </p>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .eyebrow {
+    font: var(--type-meta);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+  }
+  .pixel {
+    font: var(--type-pixel);
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .struck {
+    text-decoration: line-through;
+    text-decoration-color: var(--status-cancelled-dot);
+  }
+  .range {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font: var(--type-h4);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .range__days {
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+  .range--tentative {
+    color: var(--text-2);
+    font-style: italic;
+    font-weight: 500;
+  }
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    font: var(--type-body-sm);
+  }
+  .banner--warning {
+    background: var(--status-warning-bg);
+    color: var(--status-warning-fg);
+  }
+  .banner--cancelled {
+    background: var(--status-cancelled-bg);
+    color: var(--status-cancelled-fg);
+  }
+  .banner--neutral {
+    align-items: center;
+    background: var(--status-neutral-bg);
+    color: var(--status-neutral-fg);
+  }
+  .banner__link {
+    margin-left: auto;
+    font-weight: 600;
+  }
+  .detail-cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .detail-cols {
+      grid-template-columns: minmax(0, 1fr) 340px;
+    }
+  }
+  .source {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    font: var(--type-body-sm);
+    color: var(--text-2);
+  }
+  .source__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .source__k {
+    font: var(--type-meta);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    min-width: 84px;
+  }
+  .source__v {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .source__ev {
+    display: grid;
+    gap: 4px;
+  }
+  .source__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    overflow-wrap: anywhere;
+  }
+  .source__quote {
+    margin: 0;
+    padding-left: 10px;
+    border-left: 2px solid var(--border-strong);
+    color: var(--text);
+    font-style: italic;
+  }
+  .source__note {
+    margin: 0;
+    font: var(--type-caption);
+    color: var(--text-muted);
+  }
+  .source__foot {
+    font: var(--type-caption);
+    color: var(--text-muted);
+    border-top: 1px dotted var(--border-strong);
+    padding-top: 10px;
+  }
+</style>

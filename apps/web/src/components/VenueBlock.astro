@@ -1,0 +1,83 @@
+---
+// Venue name, city and address, with an optional OpenStreetMap link.
+import Icon from './Icon.astro';
+
+interface Props {
+  name?: string;
+  address?: string;
+  city: string;
+  region?: string;
+  /** Bordered card with address and map link; otherwise a compact line. */
+  card?: boolean;
+}
+
+const { name, address, city, region, card = false } = Astro.props;
+// OpenStreetMap: an open map with no account or tracking, matching the site's no-third-party stance.
+const mapHref = card
+  ? `https://www.openstreetmap.org/search?query=${encodeURIComponent(address ?? `${name ?? ''} ${city}, TX`)}`
+  : undefined;
+---
+
+<div class:list={['venue', card && 'venue--card']}>
+  <span class="venue__icon">
+    <Icon name="map-pin" size={16} />
+  </span>
+  <div>
+    {name && <div class="venue__name">{name}</div>}
+    <div class="venue__city">
+      {city}, TX{region && <span class="venue__region">{region}</span>}
+    </div>
+    {card && address && <div class="venue__addr">{address}</div>}
+  </div>
+  {mapHref && (
+    <a class="venue__map" href={mapHref} target="_blank" rel="noopener noreferrer">
+      Open in OpenStreetMap <Icon name="external-link" size={11} label="(opens in new tab)" />
+    </a>
+  )}
+</div>
+
+<style>
+  .venue {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 10px;
+    font: var(--type-body-sm);
+    color: var(--text-2);
+    align-items: start;
+  }
+  .venue__icon {
+    display: inline-flex;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .venue__name {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .venue__region {
+    display: inline-block;
+    margin-left: 8px;
+    font: var(--type-meta);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--brand-lavender-ink);
+  }
+  .venue__addr {
+    font: var(--type-caption);
+    color: var(--text-muted);
+  }
+  .venue--card {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+  .venue__map {
+    grid-column: 2;
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font: var(--type-caption);
+  }
+</style>

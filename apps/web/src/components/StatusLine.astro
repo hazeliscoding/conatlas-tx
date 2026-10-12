@@ -1,13 +1,17 @@
 ---
-// An edition's status as icon + text + color, never color alone.
+// An edition's status as icon + text + color, never color alone. `badge` adds the pill background.
 import { formatDateRange, type Edition } from '@conatlas/core';
 import Icon, { type IconName } from './Icon.astro';
 
 interface Props {
   edition: Pick<Edition, 'status' | 'last_verified_at'>;
+  badge?: boolean;
+  /** The edition stands in for a series whose next dates aren't announced. */
+  awaitingNext?: boolean | undefined;
 }
 
-const { status, last_verified_at } = Astro.props.edition;
+const { edition, badge = false, awaitingNext = false } = Astro.props;
+const { status, last_verified_at } = edition;
 const verified = `Verified ${formatDateRange(last_verified_at, last_verified_at, { year: false })}`;
 const STATUS: Record<Edition['status'], [tone: string, icon: IconName, text: string]> = {
   confirmed: ['verified', 'badge-check', verified],
@@ -16,10 +20,15 @@ const STATUS: Record<Edition['status'], [tone: string, icon: IconName, text: str
   cancelled: ['cancelled', 'circle-x', 'Cancelled'],
   completed: ['neutral', 'calendar', 'Past event'],
 };
-const [tone, icon, text] = STATUS[status];
+const [tone, icon, text] = awaitingNext
+  ? ['info', 'info' as const, 'Next dates not announced']
+  : STATUS[status];
 ---
 
-<span class="sline" style={`color:var(--status-${tone}-fg)`}>
+<span
+  class:list={['sline', badge && 'sline--badge']}
+  style={`color:var(--status-${tone}-fg)${badge ? `;background:var(--status-${tone}-bg)` : ''}`}
+>
   <Icon name={icon} size={14} strokeWidth={2} />
   <span>{text}</span>
 </span>
@@ -31,5 +40,11 @@ const [tone, icon, text] = STATUS[status];
     gap: 6px;
     font: var(--type-caption);
     font-weight: 600;
+  }
+  .sline--badge {
+    height: 24px;
+    padding: 0 10px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
   }
 </style>
