@@ -14,6 +14,7 @@ pnpm typecheck       # tsc for packages, astro check for the site
 pnpm lint
 pnpm format          # or format:check
 pnpm test            # Vitest
+pnpm test:e2e        # Playwright smoke + axe on the built site; screenshots in test-results/screens/
 pnpm data:validate   # schema + cross-record checks on data/
 ```
 

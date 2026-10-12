@@ -4,7 +4,7 @@
 
 ConAtlas TX is a free, open-source convention calendar for fans, cosplayers and first-timers. No accounts, no tracking, and no guessed dates. If a con hasn't announced its weekend, we say so.
 
-> **Status:** early development (milestone M0, repository foundation). See [ROADMAP.md](ROADMAP.md).
+> **Status:** early development (milestone M1, core website, in review). See [ROADMAP.md](ROADMAP.md).
 
 ## How it works
 
@@ -26,6 +26,7 @@ pnpm dev             # open http://localhost:4321/conatlas-tx/
 | -------------------- | ------------------------------------------- |
 | `pnpm build`         | Build the static site into `apps/web/dist`  |
 | `pnpm test`          | Run unit tests                              |
+| `pnpm test:e2e`      | Browser smoke and axe checks (build first)  |
 | `pnpm typecheck`     | Type-check every package and the site       |
 | `pnpm lint`          | Lint with ESLint                            |
 | `pnpm format`        | Format with Prettier                        |
