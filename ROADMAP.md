@@ -20,6 +20,7 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-12** — Filters are progressive enhancement: the full timeline is static HTML, and the filter bar stays hidden until its script runs, so nobody without JavaScript sees dead controls.
 - **2026-10-12** — Design components are rebuilt as Astro components with the design's CSS ported into scoped styles. No React until something needs client state beyond a small script.
 - **2026-10-12** — The calendar is one static page per month (`/calendar/` for the current one, `/calendar/YYYY-MM/` through the last listed event), so month navigation is plain links. The design's day-selection panel and month/year selects are left out; the agenda list carries the same facts.
+- **2026-10-12** — The verification panel lists every evidence entry: the facts it backs, the official page, and the quoted excerpt. Map links go to OpenStreetMap.
 - **2026-10-12** — A touring brand (KimoKawaii, Animeverse Fest) is one series with an edition per city, labelled like `Houston 2027`.
 - **2026-10-12** — East Texas cities such as Tyler belong to North Texas until the design adds a region for them.
 - **2026-10-12** — A series with no announced next edition keeps only its latest completed edition, so the site can say the next dates aren't announced.
@@ -43,7 +44,7 @@ Status 2026-10-11: everything passes locally on a clean frozen install (21 tests
 - [x] Seed dataset of real Texas conventions, each backed by an official source
 - [x] Home: hero, upcoming timeline grouped by month, region and city filters
 - [x] Calendar: month grid, mobile agenda, month navigation, region filter, "Dates not announced" group
-- [ ] Convention detail page per edition, with status banners and verification panel
+- [x] Convention detail page per edition, with status banners and verification panel
 - [ ] Shareable filter query parameters
 - [ ] Light and dark themes, responsive layouts
 - [ ] About page, `docs/DATA_POLICY.md`
