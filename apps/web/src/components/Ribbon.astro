@@ -1,0 +1,58 @@
+---
+// Ribbon-tab section label from the design system.
+interface Props {
+  tone?: 'pink' | 'lavender' | 'sage';
+  /** Extend a dotted rule to the right. */
+  rule?: boolean;
+}
+
+const { tone, rule = false } = Astro.props;
+---
+
+<div class:list={[rule && 'row']}>
+  <span class:list={['ribbon', tone && `ribbon--${tone}`]}>
+    <slot />
+  </span>
+</div>
+
+<style>
+  .ribbon {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: var(--type-meta);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    background: var(--brand-plum);
+    color: var(--text-inverse);
+    padding: 7px 16px 7px 12px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 50%, 100% 100%, 0 100%);
+    white-space: nowrap;
+  }
+  :global([data-theme='dark']) .ribbon {
+    background: var(--brand-lavender);
+    color: var(--text-on-brand);
+  }
+  .ribbon--pink {
+    background: var(--brand-pink);
+    color: var(--text-on-brand);
+  }
+  .ribbon--lavender {
+    background: var(--brand-lavender);
+    color: var(--text-on-brand);
+  }
+  .ribbon--sage {
+    background: var(--brand-sage);
+    color: var(--text-on-brand);
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .row::after {
+    content: '';
+    flex: 1;
+    border-top: 2px dotted var(--border-strong);
+  }
+</style>

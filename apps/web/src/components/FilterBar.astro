@@ -1,0 +1,271 @@
+---
+// Region and city chips that filter the timeline in place. Hidden until its script runs,
+// so a visitor without JavaScript sees the full list and no dead controls.
+import { REGIONS, REGION_NAMES } from '@conatlas/core';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  cities: string[];
+  /** Total listings, for the count shown before any filter is applied. */
+  total: number;
+}
+
+const { cities, total } = Astro.props;
+---
+
+<form class="filters" aria-label="Filter conventions" data-filters hidden>
+  <div class="filters__row" role="group" aria-labelledby="filter-region">
+    <span class="filters__label" id="filter-region">
+      Region
+    </span>
+    <div class="filters__scroll">
+      {REGIONS.map((region) => (
+        <label class="tag">
+          <input type="checkbox" name="region" value={region} data-label={REGION_NAMES[region]} />
+          <span>{REGION_NAMES[region]}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+  <div class="filters__row" role="group" aria-labelledby="filter-city">
+    <span class="filters__label" id="filter-city">
+      City
+    </span>
+    <div class="filters__scroll">
+      {cities.map((city) => (
+        <label class="tag">
+          <input type="checkbox" name="city" value={city} data-label={city} />
+          <span class="tag__check">
+            <Icon name="check" size={14} />
+          </span>
+          <span>{city}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+  <div class="filters__applied">
+    <span class="filters__icon" data-applied-only hidden>
+      <Icon name="sliders-horizontal" size={16} />
+    </span>
+    <span class="filters__tags" data-applied></span>
+    <span data-applied-only hidden>
+      <Button variant="ghost" size="sm" data-clear>
+        Clear all
+      </Button>
+    </span>
+    <span class="filters__count" aria-live="polite" data-result-count>
+      {total}
+      {total === 1 ? 'convention' : 'conventions'}
+    </span>
+  </div>
+  <template data-applied-tag>
+    <span class="tag tag--static">
+      <span data-tag-label></span>
+      <button type="button" class="tag__x" data-remove>
+        <Icon name="x" size={14} strokeWidth={2} />
+      </button>
+    </span>
+  </template>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-filters]');
+  if (form) {
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-listing]')];
+    const groups = [...document.querySelectorAll<HTMLElement>('[data-month-group]')];
+    const empty = document.querySelector<HTMLElement>('[data-filter-empty]');
+    const count = form.querySelector<HTMLElement>('[data-result-count]')!;
+    const applied = form.querySelector<HTMLElement>('[data-applied]')!;
+    const appliedOnly = form.querySelectorAll<HTMLElement>('[data-applied-only]');
+    const template = form.querySelector<HTMLTemplateElement>('[data-applied-tag]')!;
+    const plural = (n: number) => `${n} ${n === 1 ? 'convention' : 'conventions'}`;
+    const checked = (name: string) => [
+      ...form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`),
+    ];
+
+    const update = () => {
+      const regions = checked('region').map((i) => i.value);
+      const cities = checked('city').map((i) => i.value);
+      let shown = 0;
+      for (const card of cards) {
+        const match =
+          (!regions.length || regions.includes(card.dataset.region!)) &&
+          (!cities.length || cities.includes(card.dataset.city!));
+        card.hidden = !match;
+        if (match) shown++;
+      }
+      for (const group of groups) {
+        const n = group.querySelectorAll('[data-listing]:not([hidden])').length;
+        group.hidden = n === 0;
+        group.querySelector('[data-group-count]')!.textContent = plural(n);
+      }
+      count.textContent = plural(shown);
+      if (empty) empty.hidden = shown > 0;
+
+      const inputs = [...checked('region'), ...checked('city')];
+      appliedOnly.forEach((el) => (el.hidden = inputs.length === 0));
+      applied.replaceChildren(
+        ...inputs.map((input) => {
+          const tag = template.content.firstElementChild!.cloneNode(true) as HTMLElement;
+          const label = input.dataset.label!;
+          tag.classList.add(input.name === 'region' ? 'tag--lavender' : 'tag--pink');
+          tag.querySelector('[data-tag-label]')!.textContent = label;
+          const remove = tag.querySelector<HTMLButtonElement>('[data-remove]')!;
+          remove.setAttribute('aria-label', `Remove filter ${label}`);
+          remove.addEventListener('click', () => {
+            input.checked = false;
+            update();
+            input.focus();
+          });
+          return tag;
+        }),
+      );
+    };
+
+    const clear = () => {
+      form.reset();
+      update();
+    };
+    form.addEventListener('change', update);
+    form.addEventListener('submit', (event) => event.preventDefault());
+    form.querySelector('[data-clear]')?.addEventListener('click', clear);
+    document
+      .querySelectorAll('[data-clear-filters]')
+      .forEach((b) => b.addEventListener('click', clear));
+    form.hidden = false;
+    update();
+  }
+</script>
+
+<style>
+  .filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .filters__row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filters__label {
+    font: var(--type-meta);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    margin-right: 4px;
+  }
+  .filters__scroll {
+    flex: 1 1 0%;
+    min-width: 0;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 4px;
+    scrollbar-width: none;
+  }
+  .filters__applied {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px dotted var(--border-strong);
+  }
+  .filters__icon {
+    display: inline-flex;
+    color: var(--text-muted);
+  }
+  .filters__tags {
+    display: contents;
+  }
+  .filters__count {
+    font: var(--type-body-sm);
+    color: var(--text-2);
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--radius-chip);
+    border: var(--border-w) solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text);
+    font: var(--type-nav);
+    cursor: pointer;
+    white-space: nowrap;
+    flex: none;
+    transition: var(--transition-color);
+  }
+  .tag:hover {
+    background: var(--surface-2);
+  }
+  .tag:has(input:focus-visible) {
+    box-shadow: var(--shadow-focus);
+  }
+  .tag:has(input:checked) {
+    background: var(--brand-plum);
+    color: var(--text-inverse);
+    border-color: var(--brand-plum);
+  }
+  :global([data-theme='dark']) .tag:has(input:checked) {
+    background: var(--brand-lavender);
+    color: var(--text-on-brand);
+    border-color: var(--brand-lavender);
+  }
+  .tag input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .tag__check {
+    display: none;
+  }
+  .tag:has(input:checked) .tag__check {
+    display: inline-flex;
+  }
+  .tag--static {
+    cursor: default;
+  }
+  .filters :global(.tag--pink) {
+    background: var(--accent-soft);
+    border-color: transparent;
+    color: var(--brand-pink-ink);
+  }
+  .filters :global(.tag--lavender) {
+    background: var(--lavender-100);
+    border-color: transparent;
+    color: var(--lavender-700);
+  }
+  :global([data-theme='dark']) .filters :global(.tag--lavender) {
+    background: var(--status-info-bg);
+    color: var(--status-info-fg);
+  }
+  .tag__x {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    margin-right: -6px;
+    border-radius: 50%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .tag__x:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+  .tag__x:focus-visible {
+    outline: 2px solid var(--focus-ring);
+  }
+</style>

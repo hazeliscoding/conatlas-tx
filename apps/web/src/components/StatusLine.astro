@@ -1,0 +1,35 @@
+---
+// An edition's status as icon + text + color, never color alone.
+import { formatDateRange, type Edition } from '@conatlas/core';
+import Icon, { type IconName } from './Icon.astro';
+
+interface Props {
+  edition: Pick<Edition, 'status' | 'last_verified_at'>;
+}
+
+const { status, last_verified_at } = Astro.props.edition;
+const verified = `Verified ${formatDateRange(last_verified_at, last_verified_at, { year: false })}`;
+const STATUS: Record<Edition['status'], [tone: string, icon: IconName, text: string]> = {
+  confirmed: ['verified', 'badge-check', verified],
+  dates_tba: ['info', 'info', 'Dates not announced'],
+  postponed: ['warning', 'triangle-alert', 'Postponed — new dates TBA'],
+  cancelled: ['cancelled', 'circle-x', 'Cancelled'],
+  completed: ['neutral', 'calendar', 'Past event'],
+};
+const [tone, icon, text] = STATUS[status];
+---
+
+<span class="sline" style={`color:var(--status-${tone}-fg)`}>
+  <Icon name={icon} size={14} strokeWidth={2} />
+  <span>{text}</span>
+</span>
+
+<style>
+  .sline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: var(--type-caption);
+    font-weight: 600;
+  }
+</style>

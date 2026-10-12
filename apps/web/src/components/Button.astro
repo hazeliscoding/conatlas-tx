@@ -1,0 +1,93 @@
+---
+// Design-system button. Renders a link when given an href.
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'button'> & {
+  variant?: 'primary' | 'secondary' | 'soft' | 'ghost';
+  size?: 'sm' | 'md';
+  href?: string;
+};
+
+const { variant = 'primary', size = 'md', href, class: className, ...rest } = Astro.props;
+const classes = ['btn', `btn--${variant}`, `btn--${size}`, className];
+---
+
+{href ? (
+  <a class:list={classes} href={href}>
+    <slot />
+  </a>
+) : (
+  <button class:list={classes} type="button" {...rest}>
+    <slot />
+  </button>
+)}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font: var(--type-button);
+    border-radius: var(--radius-button);
+    border: var(--border-w) solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      var(--transition-color),
+      transform var(--dur-fast) var(--ease-out);
+    user-select: none;
+    min-width: var(--touch-min);
+  }
+  .btn--sm {
+    height: var(--control-h-sm);
+    padding: 0 var(--space-3);
+    font-size: var(--fs-caption);
+  }
+  .btn--md {
+    height: var(--control-h-md);
+    padding: 0 var(--space-4);
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .btn--primary {
+    background: var(--accent);
+    color: var(--text-on-accent);
+  }
+  .btn--primary:hover {
+    background: var(--accent-hover);
+  }
+  .btn--secondary {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .btn--secondary:hover {
+    background: var(--surface-2);
+    border-color: var(--text-2);
+  }
+  .btn--soft {
+    background: var(--accent-soft);
+    color: var(--brand-pink-ink);
+  }
+  .btn--soft:hover {
+    background: var(--pink-200);
+  }
+  :global([data-theme='dark']) .btn--soft:hover {
+    background: #4d2a3c;
+  }
+  .btn--ghost {
+    background: transparent;
+    color: var(--text-2);
+  }
+  .btn--ghost:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+</style>

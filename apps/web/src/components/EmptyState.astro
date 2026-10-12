@@ -1,0 +1,85 @@
+---
+// Dashed "nothing here" panel with the design's flower-and-sparkles art. Actions go in the slot.
+import type { HTMLAttributes } from 'astro/types';
+import Motif from './Motif.astro';
+
+type Props = HTMLAttributes<'div'> & {
+  title: string;
+  description?: string;
+};
+
+const { title, description, ...rest } = Astro.props;
+---
+
+<div class="empty" role="status" {...rest}>
+  <div class="empty__art">
+    <Motif
+      kind="flower"
+      size={56}
+      color="currentColor"
+      center="var(--surface)"
+      class="art-flower"
+    />
+    <Motif kind="sparkle" size={22} color="var(--brand-lavender)" class="art-spark1" />
+    <Motif kind="sparkle" size={14} color="var(--brand-sage)" class="art-spark2" />
+  </div>
+  <h3 class="empty__title">{title}</h3>
+  {description && <p class="empty__desc">{description}</p>}
+  {Astro.slots.has('default') && (
+    <div class="empty__actions">
+      <slot />
+    </div>
+  )}
+</div>
+
+<style>
+  .empty {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 8px;
+    padding: 40px 24px;
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text-2);
+  }
+  .empty__art {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    margin-bottom: 6px;
+    color: var(--brand-pink);
+  }
+  .empty__art :global(svg) {
+    position: absolute;
+  }
+  .empty__art :global(.art-flower) {
+    left: 0;
+    top: 10px;
+  }
+  .empty__art :global(.art-spark1) {
+    right: 2px;
+    top: 0;
+  }
+  .empty__art :global(.art-spark2) {
+    right: 10px;
+    bottom: 4px;
+  }
+  .empty__title {
+    font: var(--type-h4);
+    color: var(--text);
+  }
+  .empty__desc {
+    font: var(--type-body-sm);
+    max-width: 36ch;
+    text-wrap: pretty;
+  }
+  .empty__actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>

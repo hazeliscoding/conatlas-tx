@@ -1,0 +1,113 @@
+---
+// Month eyebrow over a big day numeral. Decorative: the written date range carries the facts.
+export type Tone = 'pink' | 'lavender' | 'sage';
+
+interface Props {
+  month: string;
+  day?: number;
+  /** Shown when the range ends in the same month. */
+  endDay?: number;
+  weekday?: string;
+  tone?: Tone;
+  size?: 'lg';
+  tentative?: boolean;
+  cancelled?: boolean;
+}
+
+const { month, day, endDay, weekday, tone = 'pink', size, tentative, cancelled } = Astro.props;
+---
+
+<div
+  class:list={[
+    'date',
+    `date--${tone}`,
+    size === 'lg' && 'date--lg',
+    tentative && 'date--tentative',
+    cancelled && 'date--cancelled',
+  ]}
+  aria-hidden="true"
+>
+  <span class="date__m">{month}</span>
+  <span class="date__d">
+    {day ?? '?'}
+    {endDay && <small>–{endDay}</small>}
+  </span>
+  {weekday && <span class="date__w">{weekday}</span>}
+</div>
+
+<style>
+  .date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--text);
+    text-align: center;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .date--lavender {
+    background: var(--lavender-100);
+  }
+  .date--sage {
+    background: var(--sage-100);
+  }
+  :global([data-theme='dark']) .date--lavender {
+    background: var(--cal-2-bg);
+  }
+  :global([data-theme='dark']) .date--sage {
+    background: var(--cal-3-bg);
+  }
+  .date__m {
+    font: var(--type-meta);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--brand-pink-ink);
+  }
+  .date--lavender .date__m {
+    color: var(--brand-lavender-ink);
+  }
+  .date--sage .date__m {
+    color: var(--brand-sage-ink);
+  }
+  .date__d {
+    font: var(--type-date-day);
+    font-size: 32px;
+    line-height: 1.05;
+  }
+  .date__d small {
+    font-size: 0.5em;
+    font-weight: 700;
+    color: var(--text-2);
+  }
+  .date--lg .date__d {
+    font-size: var(--fs-date-day);
+  }
+  .date--tentative {
+    background: transparent;
+    border: 1.5px dashed var(--cal-tentative-border);
+    color: var(--text-2);
+  }
+  .date--tentative .date__m {
+    color: var(--text-muted);
+  }
+  .date--cancelled {
+    background: var(--cal-cancelled-bg);
+    color: var(--cal-cancelled-fg);
+  }
+  .date--cancelled .date__d {
+    text-decoration: line-through;
+    text-decoration-color: var(--cal-cancelled-border);
+  }
+  .date--cancelled .date__m {
+    color: var(--cal-cancelled-fg);
+  }
+  .date__w {
+    font: var(--type-caption);
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+</style>
