@@ -1,0 +1,7 @@
+pnpm-lock.yaml
+dist/
+.astro/
+coverage/
+
+# Copied from the design system as-is, so they stay diffable against it.
+apps/web/src/styles/tokens/
