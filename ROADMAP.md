@@ -45,7 +45,7 @@ Status 2026-10-11: everything passes locally on a clean frozen install (21 tests
 - [x] Home: hero, upcoming timeline grouped by month, region and city filters
 - [x] Calendar: month grid, mobile agenda, month navigation, region filter, "Dates not announced" group
 - [x] Convention detail page per edition, with status banners and verification panel
-- [ ] Shareable filter query parameters
+- [x] Shareable filter query parameters
 - [ ] Light and dark themes, responsive layouts
 - [ ] About page, `docs/DATA_POLICY.md`
 - [ ] Playwright smoke tests, axe checks, desktop and mobile screenshots compared with the design
