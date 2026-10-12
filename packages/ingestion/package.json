@@ -1,0 +1,14 @@
+{
+  "name": "@conatlas/ingestion",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "conatlas-data": "./src/cli.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@conatlas/core": "workspace:*"
+  }
+}
