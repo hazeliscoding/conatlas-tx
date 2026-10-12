@@ -20,7 +20,8 @@ const { month, day, endDay, weekday, tone = 'pink', size, tentative, cancelled }
 <div
   class:list={[
     'date',
-    `date--${tone}`,
+    // Tentative and cancelled blocks have their own look; a tone would override it in dark mode.
+    !tentative && !cancelled && `date--${tone}`,
     size === 'lg' && 'date--lg',
     tentative && 'date--tentative',
     cancelled && 'date--cancelled',
@@ -70,7 +71,11 @@ const { month, day, endDay, weekday, tone = 'pink', size, tentative, cancelled }
   .date--lavender .date__m {
     color: var(--brand-lavender-ink);
   }
+  /* --brand-sage-ink is 4.1:1 on sage-100 in light mode; sage-700 clears AA. */
   .date--sage .date__m {
+    color: var(--sage-700);
+  }
+  :global([data-theme='dark']) .date--sage .date__m {
     color: var(--brand-sage-ink);
   }
   .date__d {
@@ -105,9 +110,10 @@ const { month, day, endDay, weekday, tone = 'pink', size, tentative, cancelled }
   .date--cancelled .date__m {
     color: var(--cal-cancelled-fg);
   }
+  /* --text-muted is rated for plain backgrounds and dips under 4.5:1 on the tints. */
   .date__w {
     font: var(--type-caption);
-    color: var(--text-muted);
+    color: var(--text-2);
     margin-top: 2px;
   }
 </style>
