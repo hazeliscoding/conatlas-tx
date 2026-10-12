@@ -1,0 +1,11 @@
+/* ConAtlas TX motion tokens. Subtle; honors prefers-reduced-motion. */
+:root{
+  --dur-fast:120ms; --dur-base:180ms; --dur-slow:260ms; --dur-theme:320ms;
+  --ease-out:cubic-bezier(.2,.7,.2,1); --ease-in-out:cubic-bezier(.65,0,.35,1); --ease-pop:cubic-bezier(.34,1.4,.64,1); /* bookmark "pop" only */
+  --transition-color:color var(--dur-fast) var(--ease-out),background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);
+  --transition-all:all var(--dur-base) var(--ease-out);
+}
+@media (prefers-reduced-motion:reduce){
+  :root{--dur-fast:0ms;--dur-base:0ms;--dur-slow:0ms;--dur-theme:0ms;}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:0ms!important;scroll-behavior:auto!important;}
+}

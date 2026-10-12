@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'ConAtlas TX',
+  description = 'Discover your next anime adventure. A free, community-maintained calendar of anime conventions in Texas.',
+} = Astro.props;
+const pageTitle =
+  title === 'ConAtlas TX' ? `${title} · Texas anime convention calendar` : `${title} · ConAtlas TX`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <a class="sr-only focus:not-sr-only" href="#main">
+      Skip to content
+    </a>
+    <main
+      id="main"
+      class="mx-auto box-border grid w-full max-w-[1200px] flex-1 content-start gap-9 px-(--gutter) pt-7 pb-14"
+    >
+      <slot />
+    </main>
+  </body>
+</html>

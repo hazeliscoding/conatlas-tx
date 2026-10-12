@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import { getDataset } from '../lib/data.ts';
+
+const { editions } = getDataset();
+const published = editions.filter((e) => e.status !== 'completed' && e.status !== 'cancelled');
+const cities = new Set(published.map((e) => e.city));
+---
+
+<Base>
+  <section class="relative grid gap-[18px] overflow-hidden rounded-lg border border-border bg-surface p-[clamp(24px,4vw,44px)]">
+    <span class="font-pixel text-[length:var(--fs-pixel)] tracking-[.08em] text-text-muted">
+      VOL.01 · FALL 2026 · TEXAS
+    </span>
+    <h1 class="m-0 max-w-[16ch] [font:var(--type-display)] tracking-[-.02em]">
+      Find your next anime adventure in Texas.
+    </h1>
+    <p class="m-0 max-w-[52ch] [font:var(--type-body-lg)] text-text-2">
+      From San Antonio to Houston, Austin to DFW—discover upcoming anime conventions, save your
+      favorites, and plan your con year.
+    </p>
+    <p class="m-0 flex flex-wrap gap-3.5 [font:var(--type-caption)] text-text-muted">
+      <span>{published.length} upcoming conventions</span>
+      <span aria-hidden="true">·</span>
+      <span>{cities.size} cities</span>
+    </p>
+  </section>
+
+  {published.length === 0 && (
+    <section class="grid justify-items-start gap-2 rounded-md border-[1.5px] border-dashed border-border-strong px-6 py-5">
+      <h2 class="[font:var(--type-h4)]">Nothing here yet</h2>
+      <p class="[font:var(--type-body-sm)] text-text-2">
+        No conventions have been verified against an organizer's site yet. Listings appear here once
+        a maintainer confirms them.
+      </p>
+    </section>
+  )}
+</Base>

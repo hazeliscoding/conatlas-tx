@@ -1,0 +1,53 @@
+/* ConAtlas TX typography tokens. Fluid scale: comfortable at 360px, editorial at 1280px+. */
+:root{
+  --font-display:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Rounded Mplus 1c",ui-rounded,system-ui,sans-serif;
+  --font-body:"Hanken Grotesk Variable","Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-pixel:"Silkscreen","Courier New",monospace;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+
+  /* Sizes (fluid) */
+  --fs-display:clamp(2.25rem,1.5rem + 3.5vw,3.75rem);   /* 36 → 60 */
+  --fs-h1:clamp(1.875rem,1.4rem + 2.2vw,2.75rem);        /* 30 → 44 */
+  --fs-h2:clamp(1.5rem,1.2rem + 1.4vw,2.125rem);         /* 24 → 34 */
+  --fs-h3:clamp(1.25rem,1.1rem + .7vw,1.5rem);           /* 20 → 24 */
+  --fs-h4:1.125rem;                                      /* 18 */
+  --fs-h5:1rem;                                          /* 16 */
+  --fs-h6:.875rem;                                       /* 14, uppercase tracked */
+  --fs-body-lg:1.125rem;                                 /* 18 */
+  --fs-body:1rem;                                        /* 16 */
+  --fs-body-sm:.9375rem;                                 /* 15, compact body */
+  --fs-caption:.8125rem;                                 /* 13 */
+  --fs-meta:.75rem;                                      /* 12, metadata, uppercase */
+  --fs-pixel:.625rem;                                    /* 10, Silkscreen renders large */
+  --fs-date-day:clamp(1.75rem,1.4rem + 1.5vw,2.5rem);    /* big day numeral */
+  --fs-date-month:.75rem;
+
+  /* Weights */
+  --weight-regular:400; --weight-medium:500; --weight-semibold:600; --weight-bold:700; --weight-black:900;
+
+  /* Line heights */
+  --leading-tight:1.1; --leading-snug:1.25; --leading-normal:1.5; --leading-relaxed:1.65;
+
+  /* Tracking */
+  --tracking-tight:-.01em; --tracking-normal:0; --tracking-wide:.06em; --tracking-wider:.12em;
+
+  /* Composite shorthands (font: size/line-height family) */
+  --type-display:var(--weight-black) var(--fs-display)/var(--leading-tight) var(--font-display);
+  --type-h1:var(--weight-bold) var(--fs-h1)/var(--leading-tight) var(--font-display);
+  --type-h2:var(--weight-bold) var(--fs-h2)/var(--leading-snug) var(--font-display);
+  --type-h3:var(--weight-bold) var(--fs-h3)/var(--leading-snug) var(--font-display);
+  --type-h4:var(--weight-bold) var(--fs-h4)/var(--leading-snug) var(--font-display);
+  --type-h5:var(--weight-semibold) var(--fs-h5)/var(--leading-snug) var(--font-body);
+  --type-h6:var(--weight-semibold) var(--fs-h6)/var(--leading-snug) var(--font-body);
+  --type-body-lg:var(--weight-regular) var(--fs-body-lg)/var(--leading-relaxed) var(--font-body);
+  --type-body:var(--weight-regular) var(--fs-body)/var(--leading-normal) var(--font-body);
+  --type-body-sm:var(--weight-regular) var(--fs-body-sm)/var(--leading-normal) var(--font-body);
+  --type-caption:var(--weight-regular) var(--fs-caption)/var(--leading-normal) var(--font-body);
+  --type-meta:var(--weight-semibold) var(--fs-meta)/1.2 var(--font-body);
+  --type-button:var(--weight-semibold) var(--fs-body-sm)/1 var(--font-body);
+  --type-nav:var(--weight-medium) var(--fs-body-sm)/1 var(--font-body);
+  --type-pixel:var(--weight-regular) var(--fs-pixel)/1 var(--font-pixel);
+  --type-date-day:var(--weight-black) var(--fs-date-day)/1 var(--font-display);
+  --type-numeric:var(--weight-semibold) var(--fs-body)/1 var(--font-body);
+  --numeric-features:"tnum" 1,"lnum" 1;
+}
