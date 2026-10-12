@@ -1,0 +1,11 @@
+# Fictional fixture. Not a real convention.
+id: lone-star-anime-fest
+slug: lone-star-anime-fest
+name: Lone Star Anime Fest
+website: https://example.org/lone-star-anime-fest
+city: Austin
+region: central
+status: active
+sources:
+  - lone-star-anime-fest-site
+  - lone-star-anime-fest-listing

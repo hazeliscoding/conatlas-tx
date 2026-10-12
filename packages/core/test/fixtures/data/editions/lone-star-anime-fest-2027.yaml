@@ -1,0 +1,18 @@
+id: lone-star-anime-fest-2027
+series: lone-star-anime-fest
+edition: '2027'
+slug: lone-star-anime-fest-2027
+status: dates_tba
+announced_window: Fall 2027
+city: Austin
+region: central
+timezone: America/Chicago
+url: https://example.org/lone-star-anime-fest
+evidence:
+  - source: lone-star-anime-fest-site
+    facts: [existence]
+    checked_at: 2026-09-30
+    excerpt: See you again in fall 2027!
+last_verified_at: 2026-09-30
+updated_at: 2026-09-30
+revision: 0
