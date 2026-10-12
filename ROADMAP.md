@@ -21,6 +21,8 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-12** — Design components are rebuilt as Astro components with the design's CSS ported into scoped styles. No React until something needs client state beyond a small script.
 - **2026-10-12** — The calendar is one static page per month (`/calendar/` for the current one, `/calendar/YYYY-MM/` through the last listed event), so month navigation is plain links. The design's day-selection panel and month/year selects are left out; the agenda list carries the same facts.
 - **2026-10-12** — The verification panel lists every evidence entry: the facts it backs, the official page, and the quoted excerpt. Map links go to OpenStreetMap.
+- **2026-10-12** — End-to-end checks use Playwright (Chromium, desktop and mobile) with axe; serious and critical WCAG 2.2 AA issues fail CI. Screenshots are captured for review, not diffed: the design's fixtures are fictional, so pixel baselines against it wouldn't mean anything.
+- **2026-10-12** — Small text on tinted date blocks uses `--text-2` and `--sage-700` instead of the reference's muted and sage-ink colors, which fall just under AA there. The tokens themselves are unchanged.
 - **2026-10-12** — A touring brand (KimoKawaii, Animeverse Fest) is one series with an edition per city, labelled like `Houston 2027`.
 - **2026-10-12** — East Texas cities such as Tyler belong to North Texas until the design adds a region for them.
 - **2026-10-12** — A series with no announced next edition keeps only its latest completed edition, so the site can say the next dates aren't announced.
@@ -48,7 +50,7 @@ Status 2026-10-11: everything passes locally on a clean frozen install (21 tests
 - [x] Shareable filter query parameters
 - [x] Light and dark themes, responsive layouts
 - [x] About page, `docs/DATA_POLICY.md`
-- [ ] Playwright smoke tests, axe checks, desktop and mobile screenshots compared with the design
+- [x] Playwright smoke tests, axe checks, desktop and mobile screenshots compared with the design
 
 Done when: someone can find, filter and open every seeded convention with no JavaScript required for the facts, source links work, and no unverified event is shown.
 
