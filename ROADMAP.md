@@ -46,7 +46,7 @@ Status 2026-10-11: everything passes locally on a clean frozen install (21 tests
 - [x] Calendar: month grid, mobile agenda, month navigation, region filter, "Dates not announced" group
 - [x] Convention detail page per edition, with status banners and verification panel
 - [x] Shareable filter query parameters
-- [ ] Light and dark themes, responsive layouts
+- [x] Light and dark themes, responsive layouts
 - [ ] About page, `docs/DATA_POLICY.md`
 - [ ] Playwright smoke tests, axe checks, desktop and mobile screenshots compared with the design
 
