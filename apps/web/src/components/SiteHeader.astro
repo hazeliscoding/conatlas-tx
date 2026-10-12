@@ -8,11 +8,14 @@ import ThemeSwitch from './ThemeSwitch.astro';
 const NAV: { label: string; path: string; icon: IconName }[] = [
   { label: 'Explore', path: href(), icon: 'list' },
   { label: 'Calendar', path: href('calendar/'), icon: 'calendar' },
+  { label: 'About', path: href('about/'), icon: 'info' },
 ];
 const path = Astro.url.pathname;
-// Calendar month pages count as Calendar; detail pages fall under Explore.
+// Calendar month pages count as Calendar; convention pages fall under Explore.
 const current = (item: (typeof NAV)[number]) =>
-  item.path === href() ? !path.startsWith(href('calendar/')) : path.startsWith(item.path);
+  item.path === href()
+    ? path === href() || path.startsWith(href('cons/'))
+    : path.startsWith(item.path);
 ---
 
 <header class="hdr">

@@ -18,6 +18,8 @@ export function getDataset(): Dataset {
   return dataset;
 }
 
+export const REPO_URL = 'https://github.com/hazeliscoding/conatlas-tx';
+
 /** A site path under the deploy base, e.g. `href('calendar/')`. */
 export const href = (path = '') => `${import.meta.env.BASE_URL}${path}`;
 

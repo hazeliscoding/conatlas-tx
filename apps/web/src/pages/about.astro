@@ -1,0 +1,123 @@
+---
+import Button from '../components/Button.astro';
+import Ribbon from '../components/Ribbon.astro';
+import Base from '../layouts/Base.astro';
+import { REPO_URL } from '../lib/data.ts';
+
+const issues = `${REPO_URL}/issues`;
+const policy = `${REPO_URL}/blob/main/docs/DATA_POLICY.md`;
+---
+
+<Base title="About" description="How ConAtlas TX verifies Texas anime convention dates.">
+  <article class="about grid max-w-[72ch] gap-8">
+    <div class="grid gap-3">
+      <Ribbon rule>About</Ribbon>
+      <h1 class="m-0 [font:var(--type-h1)] text-balance">
+        A fan-made map of Texas anime conventions
+      </h1>
+      <p class="m-0 [font:var(--type-body-lg)] text-pretty text-text-2">
+        ConAtlas TX exists because finding out which cons are happening, when, and whether the dates
+        are real meant checking a dozen sites and a few group chats. We wanted one calm page that
+        just tells you.
+      </p>
+    </div>
+
+    <section id="texas">
+      <h2>Texas only, on purpose</h2>
+      <p>
+        Keeping to one state means a small group of fans can actually visit every organizer's site
+        and keep the list current. North, Central, Gulf Coast, South and West Texas are all covered.
+      </p>
+    </section>
+
+    <section id="what-counts">
+      <h2>What counts as an anime convention</h2>
+      <p>
+        A ticketed or free public event in Texas whose main programming is anime, manga or closely
+        related fandom: artist alleys, cosplay, panels, screenings. General comic cons are listed
+        only when the organizer describes them as an anime convention. Store meetups and private
+        club nights are not.
+      </p>
+    </section>
+
+    <section id="verify">
+      <h2>How we verify dates</h2>
+      <p>
+        Every listing is checked against the organizer's own website. A maintainer, with help from
+        Claude Code for research, proposes a change to a version-controlled data file; a human
+        reviews it before it's published. Each listing shows the date it was last checked and quotes
+        the organizer's own words for every fact.
+      </p>
+      <p>
+        When we can't confirm something we say so. Unannounced dates are labelled "Dates not
+        announced" and never placed on a guessed weekend. The full rules are in our{' '}
+        <a href={policy}>data policy</a>.
+      </p>
+    </section>
+
+    <section id="trust">
+      <h2>Why you can trust it</h2>
+      <p>
+        Because you can see the source of every date, when it was checked, and the full change
+        history in the open repository. If something's wrong, anyone can point it out and the fix is
+        public too.
+      </p>
+    </section>
+
+    <section id="contribute">
+      <h2>How to contribute</h2>
+      <p>
+        Suggest a missing con or report a correction by <a href={issues}>opening an issue</a> with a
+        link to the organizer's own page. Code and data live on GitHub under open licenses.
+      </p>
+      <div class="flex flex-wrap gap-2.5">
+        <Button variant="secondary" href={REPO_URL} external>
+          Source on GitHub
+        </Button>
+      </div>
+    </section>
+
+    <section id="license">
+      <h2>Open source and data license</h2>
+      <p>
+        The website code is MIT licensed. The convention data files are released under CC BY 4.0:
+        reuse them, with attribution to ConAtlas TX. Convention names and marks belong to their
+        organizers; we list them, we don't represent them.
+      </p>
+    </section>
+
+    <section id="privacy">
+      <h2>Privacy</h2>
+      <p>
+        No accounts, no tracking scripts, no cookies, and no requests to other sites: fonts are
+        served from here. The only thing stored is your light or dark mode choice, kept in your own
+        browser. If we add analytics later it will be aggregate-only and documented here first.
+      </p>
+    </section>
+
+    <section id="a11y">
+      <h2>Accessibility</h2>
+      <p>
+        We aim for WCAG 2.2 AA: keyboard access everywhere, visible focus, status shown with words
+        and icons rather than color alone, and a list view that works without the calendar grid.
+        Every date and venue is plain HTML, so the site works without JavaScript. If something gets
+        in your way, please <a href={issues}>tell us</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  section {
+    display: grid;
+    gap: 10px;
+  }
+  h2 {
+    margin: 0;
+    font: var(--type-h3);
+  }
+  section p {
+    margin: 0;
+    color: var(--text-2);
+  }
+</style>

@@ -1,0 +1,163 @@
+---
+// Site footer: blurb, discovery and project links, and the affiliation notice.
+import { REPO_URL, href } from '../lib/data.ts';
+import Motif from './Motif.astro';
+---
+
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <a class="wm" href={href()} aria-label="ConAtlas TX home">
+        <span>ConAtlas</span>
+        <span class="wm__tx">TX</span>
+      </a>
+      <span class="foot__tag">DISCOVER YOUR NEXT ANIME ADVENTURE</span>
+      <p class="foot__blurb">
+        A free, open-source guide to anime conventions across Texas. Dates are checked against each
+        organizer's official site; anything we can't confirm is labelled that way.
+      </p>
+    </div>
+    <nav aria-label="Discover">
+      <h2>Discover</h2>
+      <ul>
+        <li>
+          <a href={href()}>Upcoming conventions</a>
+        </li>
+        <li>
+          <a href={href('calendar/')}>Month calendar</a>
+        </li>
+      </ul>
+    </nav>
+    <nav aria-label="Contribute">
+      <h2>Contribute</h2>
+      <ul>
+        <li>
+          <a href={`${REPO_URL}/issues`}>Suggest a convention or correction</a>
+        </li>
+        <li>
+          <a href={REPO_URL}>Source on GitHub</a>
+        </li>
+      </ul>
+    </nav>
+    <nav aria-label="About">
+      <h2>About</h2>
+      <ul>
+        <li>
+          <a href={href('about/#verify')}>How we verify dates</a>
+        </li>
+        <li>
+          <a href={`${REPO_URL}/blob/main/docs/DATA_POLICY.md`}>Data policy</a>
+        </li>
+        <li>
+          <a href={href('about/#privacy')}>Privacy</a>
+        </li>
+        <li>
+          <a href={href('about/#a11y')}>Accessibility</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="foot__bottom">
+      <span class="foot__pixel">
+        <Motif kind="flower" size={14} color="var(--brand-pink)" center="var(--surface-2)" />
+        MADE IN TEXAS · EST. 2026 · OPEN SOURCE
+      </span>
+      <span>Not affiliated with any convention. Event names belong to their organizers.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    border-top: 2px dotted var(--border-strong);
+    background-color: var(--surface-2);
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 16px 16px;
+    color: var(--text-2);
+  }
+  .foot__in {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: var(--space-10) var(--gutter) var(--space-8);
+    display: grid;
+    gap: var(--space-8);
+    box-sizing: border-box;
+  }
+  @media (min-width: 768px) {
+    .foot__in {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    }
+  }
+  .wm {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.18em;
+    font: var(--type-h3);
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+    line-height: 1;
+  }
+  .wm__tx {
+    color: var(--accent);
+  }
+  .foot__tag {
+    display: block;
+    font: var(--type-pixel);
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+  }
+  .foot__blurb {
+    font: var(--type-body-sm);
+    max-width: 36ch;
+    margin: 12px 0 0;
+    text-wrap: pretty;
+  }
+  h2 {
+    font: var(--type-h6);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text);
+    margin: 0 0 10px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    font: var(--type-body-sm);
+  }
+  ul a {
+    color: var(--text-2);
+  }
+  ul a:hover {
+    color: var(--link);
+    text-decoration-thickness: 2px;
+  }
+  a:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .foot__bottom {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    font: var(--type-caption);
+  }
+  .foot__pixel {
+    font: var(--type-pixel);
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+</style>
