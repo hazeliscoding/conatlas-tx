@@ -16,7 +16,13 @@ const { title, prev, next, today } = Astro.props;
 
 <div class="mnav">
   {prev ? (
-    <a class="iconbtn" href={prev} aria-label="Previous month" title="Previous month">
+    <a
+      class="iconbtn"
+      href={prev}
+      data-keep-filters
+      aria-label="Previous month"
+      title="Previous month"
+    >
       <Icon name="chevron-left" size={20} />
     </a>
   ) : (
@@ -29,7 +35,7 @@ const { title, prev, next, today } = Astro.props;
     <small aria-hidden="true">TX · CON CALENDAR</small>
   </h2>
   {next ? (
-    <a class="iconbtn" href={next} aria-label="Next month" title="Next month">
+    <a class="iconbtn" href={next} data-keep-filters aria-label="Next month" title="Next month">
       <Icon name="chevron-right" size={20} />
     </a>
   ) : (
@@ -39,7 +45,7 @@ const { title, prev, next, today } = Astro.props;
   )}
   <span class="mnav__spacer"></span>
   {today && (
-    <Button variant="ghost" size="sm" href={today}>
+    <Button variant="ghost" size="sm" href={today} data-keep-filters>
       Today
     </Button>
   )}

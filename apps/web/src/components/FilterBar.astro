@@ -109,6 +109,17 @@ const { cities = [], total } = Astro.props;
       count.textContent = plural(shown.size);
       if (empty) empty.hidden = shown.size > 0;
 
+      // Mirror the filters in the URL (`?region=north&city=Houston`) so a filtered view can be
+      // shared, and carry them along links marked `data-keep-filters` (calendar months).
+      const query = new URLSearchParams(
+        [...new FormData(form)].map(([key, value]) => [key, String(value)]),
+      ).toString();
+      const search = query ? `?${query}` : '';
+      history.replaceState(history.state, '', `${location.pathname}${search}${location.hash}`);
+      document.querySelectorAll<HTMLAnchorElement>('a[data-keep-filters]').forEach((link) => {
+        link.search = search;
+      });
+
       const inputs = [...checked('region'), ...checked('city')];
       appliedOnly.forEach((el) => (el.hidden = inputs.length === 0));
       applied.replaceChildren(
@@ -139,6 +150,11 @@ const { cities = [], total } = Astro.props;
     document
       .querySelectorAll('[data-clear-filters]')
       .forEach((b) => b.addEventListener('click', clear));
+    // Restore filters from a shared link; unknown values simply match no chip.
+    const params = new URLSearchParams(location.search);
+    form.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((input) => {
+      input.checked = params.getAll(input.name).includes(input.value);
+    });
     form.hidden = false;
     update();
   }
