@@ -47,7 +47,7 @@ Status 2026-10-11: everything passes locally on a clean frozen install (21 tests
 - [x] Convention detail page per edition, with status banners and verification panel
 - [x] Shareable filter query parameters
 - [x] Light and dark themes, responsive layouts
-- [ ] About page, `docs/DATA_POLICY.md`
+- [x] About page, `docs/DATA_POLICY.md`
 - [ ] Playwright smoke tests, axe checks, desktop and mobile screenshots compared with the design
 
 Done when: someone can find, filter and open every seeded convention with no JavaScript required for the facts, source links work, and no unverified event is shown.
