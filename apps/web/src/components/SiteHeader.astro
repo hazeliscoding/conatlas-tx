@@ -1,0 +1,243 @@
+---
+// Sticky header: wordmark, primary nav and the theme switch. Under 768px the nav moves into a
+// <details> menu, which opens and closes without JavaScript.
+import { href } from '../lib/data.ts';
+import Icon, { type IconName } from './Icon.astro';
+import ThemeSwitch from './ThemeSwitch.astro';
+
+const NAV: { label: string; path: string; icon: IconName }[] = [
+  { label: 'Explore', path: href(), icon: 'list' },
+  { label: 'Calendar', path: href('calendar/'), icon: 'calendar' },
+];
+const path = Astro.url.pathname;
+// Calendar month pages count as Calendar; detail pages fall under Explore.
+const current = (item: (typeof NAV)[number]) =>
+  item.path === href() ? !path.startsWith(href('calendar/')) : path.startsWith(item.path);
+---
+
+<header class="hdr">
+  <a class="hdr__skip" href="#main">
+    Skip to content
+  </a>
+  <div class="hdr__in">
+    <a class="wm" href={href()} aria-label="ConAtlas TX home">
+      <span>ConAtlas</span>
+      <span class="wm__tx">TX</span>
+    </a>
+    <nav class="hdr__nav" aria-label="Primary">
+      {NAV.map((item) => (
+        <a class="hdr__link" href={item.path} aria-current={current(item) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <div class="hdr__right">
+      <div class="hdr__desk">
+        <ThemeSwitch />
+      </div>
+      <details class="hdr__mob">
+        <summary class="hdr__menu" aria-label="Menu">
+          <Icon name="menu" size={24} />
+        </summary>
+        <div class="mobnav">
+          <nav aria-label="Primary" class="mobnav__list">
+            {NAV.map((item) => (
+              <a
+                class="mobnav__link"
+                href={item.path}
+                aria-current={current(item) ? 'page' : undefined}
+              >
+                <Icon name={item.icon} size={20} />
+                {item.label}
+              </a>
+            ))}
+          </nav>
+          <div class="mobnav__foot">
+            <ThemeSwitch label="Dark mode" />
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background: color-mix(in oklab, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .hdr__in {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: var(--header-h-mobile);
+    padding: 0 var(--gutter);
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  .hdr__skip {
+    position: absolute;
+    left: 8px;
+    top: -40px;
+    padding: 8px 12px;
+    background: var(--brand-plum);
+    color: var(--text-inverse);
+    border-radius: var(--radius-sm);
+    font: var(--type-button);
+    z-index: 100;
+  }
+  .hdr__skip:focus {
+    top: 8px;
+  }
+  .wm {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.18em;
+    font: var(--type-h3);
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+    line-height: 1;
+  }
+  .wm__tx {
+    color: var(--accent);
+  }
+  .hdr__nav {
+    display: none;
+    gap: 4px;
+    margin-left: 8px;
+  }
+  .hdr__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: var(--radius-sm);
+    color: var(--text-2);
+    font: var(--type-nav);
+    text-decoration: none;
+    transition: var(--transition-color);
+  }
+  .hdr__link:hover {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+  .hdr__link[aria-current='page'] {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .hdr__link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 4px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+  .hdr__link:focus-visible,
+  .wm:focus-visible,
+  .hdr__menu:focus-visible,
+  .mobnav__link:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .hdr__right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .hdr__desk {
+    display: none;
+    align-items: center;
+    gap: 8px;
+  }
+  .hdr__menu {
+    display: grid;
+    place-items: center;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    border-radius: var(--radius-button);
+    color: var(--text-2);
+    cursor: pointer;
+    list-style: none;
+  }
+  .hdr__menu::-webkit-details-marker {
+    display: none;
+  }
+  .hdr__menu:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+  .mobnav {
+    position: absolute;
+    top: 100%;
+    right: var(--gutter);
+    left: var(--gutter);
+    margin-top: 4px;
+    display: grid;
+    background: var(--surface-raised);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-3);
+  }
+  .mobnav__list {
+    display: grid;
+    padding: 8px;
+  }
+  .mobnav__link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0 12px;
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font: var(--type-body);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .mobnav__link:hover {
+    background: var(--surface-2);
+  }
+  .mobnav__link :global(svg) {
+    color: var(--text-muted);
+  }
+  .mobnav__link[aria-current='page'] {
+    background: var(--accent-soft);
+    color: var(--brand-pink-ink);
+    font-weight: 600;
+  }
+  .mobnav__link[aria-current='page'] :global(svg) {
+    color: inherit;
+  }
+  .mobnav__foot {
+    padding: 8px 20px 12px;
+    border-top: 1px dotted var(--border-strong);
+  }
+  @media (min-width: 768px) {
+    .hdr__in {
+      height: var(--header-h);
+    }
+    .hdr__nav,
+    .hdr__desk {
+      display: flex;
+    }
+    .hdr__mob {
+      display: none;
+    }
+  }
+</style>
