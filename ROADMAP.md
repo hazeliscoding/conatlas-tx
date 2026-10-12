@@ -17,6 +17,8 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-11** — Primary deploy target is GitHub Pages via Actions. The output stays plain static files, so Cloudflare Pages works too.
 - **2026-10-11** — Code is MIT. Convention data in `data/` is CC BY 4.0 (as the design's About page states). Organizer names, logos and images are not covered by either license.
 - **2026-10-11** — The repository is public at `hazeliscoding/conatlas-tx`.
+- **2026-10-12** — Filters are progressive enhancement: the full timeline is static HTML, and the filter bar stays hidden until its script runs, so nobody without JavaScript sees dead controls.
+- **2026-10-12** — Design components are rebuilt as Astro components with the design's CSS ported into scoped styles. No React until something needs client state beyond a small script.
 - **2026-10-12** — A touring brand (KimoKawaii, Animeverse Fest) is one series with an edition per city, labelled like `Houston 2027`.
 - **2026-10-12** — East Texas cities such as Tyler belong to North Texas until the design adds a region for them.
 - **2026-10-12** — A series with no announced next edition keeps only its latest completed edition, so the site can say the next dates aren't announced.
@@ -38,7 +40,7 @@ Status 2026-10-11: everything passes locally on a clean frozen install (21 tests
 ## M1 — Core website
 
 - [x] Seed dataset of real Texas conventions, each backed by an official source
-- [ ] Home: hero, upcoming timeline grouped by month, region and city filters
+- [x] Home: hero, upcoming timeline grouped by month, region and city filters
 - [ ] Calendar: month grid, mobile agenda, month navigation, region filter, "Dates not announced" group
 - [ ] Convention detail page per edition, with status banners and verification panel
 - [ ] Shareable filter query parameters
