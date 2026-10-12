@@ -16,6 +16,7 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-11** — Fonts are self-hosted through Fontsource instead of the design's Google Fonts import, so visitors make no third-party requests.
 - **2026-10-11** — Primary deploy target is GitHub Pages via Actions. The output stays plain static files, so Cloudflare Pages works too.
 - **2026-10-11** — Code is MIT. Convention data in `data/` is CC BY 4.0 (as the design's About page states). Organizer names, logos and images are not covered by either license.
+- **2026-10-11** — The repository is public at `hazeliscoding/conatlas-tx`.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -29,7 +30,7 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 
 Done when: `pnpm install`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm data:validate` and `pnpm build` all pass locally and in CI, and the schemas accept the valid fixtures and reject the invalid ones.
 
-Status 2026-10-11: everything passes locally on a clean frozen install (21 tests, `pnpm audit` clean). The CI run is still pending because the GitHub repo doesn't exist yet.
+Status 2026-10-11: everything passes locally on a clean frozen install (21 tests, `pnpm audit` clean), and the first CI run on `main` passed. M0 is done.
 
 ## M1 — Core website
 
