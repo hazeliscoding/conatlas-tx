@@ -1,0 +1,60 @@
+---
+// List / Calendar switch, styled as the design's pill tabs. They change pages, so they're links.
+import { href } from '../lib/data.ts';
+import Icon from './Icon.astro';
+
+interface Props {
+  current: 'list' | 'calendar';
+}
+
+const { current } = Astro.props;
+const views = [
+  { id: 'list', label: 'List', path: href('#upcoming') },
+  { id: 'calendar', label: 'Calendar', path: href('calendar/') },
+] as const;
+---
+
+<nav class="tabs" aria-label="View">
+  {views.map((view) => (
+    <a class="tab" href={view.path} aria-current={view.id === current ? 'page' : undefined}>
+      {view.id === 'calendar' && <Icon name="calendar" size={16} />}
+      {view.label}
+    </a>
+  ))}
+</nav>
+
+<style>
+  .tabs {
+    display: inline-flex;
+    gap: 2px;
+    padding: 4px;
+    background: var(--surface-2);
+    border-radius: var(--radius-full);
+  }
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: var(--radius-full);
+    color: var(--text-2);
+    font: var(--type-nav);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: var(--transition-color);
+  }
+  .tab:hover {
+    color: var(--text);
+  }
+  .tab:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .tab[aria-current='page'] {
+    background: var(--surface-raised);
+    color: var(--text);
+    box-shadow: var(--shadow-1);
+  }
+</style>

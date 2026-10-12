@@ -1,0 +1,9 @@
+---
+import { todayIn } from '@conatlas/core';
+import CalendarView from '../../components/CalendarView.astro';
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Calendar" description="Texas anime conventions on a month calendar.">
+  <CalendarView month={todayIn('America/Chicago').slice(0, 7)} />
+</Base>

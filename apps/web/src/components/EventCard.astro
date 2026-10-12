@@ -26,7 +26,7 @@ const titleId = `ev-${e.id}`;
 <article
   class:list={['ev', cancelled && 'ev--cancelled']}
   aria-labelledby={titleId}
-  data-listing
+  data-listing={e.id}
   data-region={e.region}
   data-city={e.city}
 >

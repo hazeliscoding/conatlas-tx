@@ -18,6 +18,12 @@ export function getDataset(): Dataset {
   return dataset;
 }
 
+/** A site path under the deploy base, e.g. `href('calendar/')`. */
+export const href = (path = '') => `${import.meta.env.BASE_URL}${path}`;
+
+/** An edition's detail page. */
+export const detailHref = (edition: Pick<Edition, 'slug'>) => href(`cons/${edition.slug}/`);
+
 /** An edition with the name to show for it. */
 export type Listing = Edition & { displayName: string };
 

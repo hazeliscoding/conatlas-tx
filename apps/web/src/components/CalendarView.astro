@@ -1,0 +1,87 @@
+---
+// The calendar page body for one month. `/calendar/` shows the build's current month;
+// every other month in range has its own `/calendar/YYYY-MM/` page.
+import { todayIn } from '@conatlas/core';
+import { calendarMonths, type Month } from '../lib/calendar.ts';
+import { getUpcoming, href } from '../lib/data.ts';
+import EventCard from './EventCard.astro';
+import FilterBar from './FilterBar.astro';
+import MonthCalendar from './MonthCalendar.astro';
+import MonthNav from './MonthNav.astro';
+import Ribbon from './Ribbon.astro';
+import ViewTabs from './ViewTabs.astro';
+
+interface Props {
+  month: Month;
+}
+
+const { month } = Astro.props;
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+const today = todayIn('America/Chicago');
+const listings = getUpcoming();
+const months = calendarMonths(today, listings);
+const monthHref = (m: Month) => href(m === months[0] ? 'calendar/' : `calendar/${m}/`);
+const i = months.indexOf(month);
+const title = `${MONTHS[Number(month.slice(5)) - 1]} ${month.slice(0, 4)}`;
+
+const dated = listings.filter((e) => e.start_date);
+const inView = dated.filter((e) => e.start_date! <= `${month}-31` && e.end_date! >= `${month}-01`);
+const tba = listings.filter((e) => !e.start_date);
+---
+
+<div class="grid grid-cols-[minmax(0,1fr)] gap-4">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <h1 class="m-0 [font:var(--type-h1)]">Calendar</h1>
+    <ViewTabs current="calendar" />
+  </div>
+  <MonthNav
+    title={title}
+    prev={i > 0 ? monthHref(months[i - 1]!) : undefined}
+    next={i < months.length - 1 ? monthHref(months[i + 1]!) : undefined}
+    today={i > 0 ? monthHref(months[0]!) : undefined}
+  />
+  <FilterBar total={inView.length + tba.length} />
+</div>
+
+<MonthCalendar month={month} title={title} listings={inView} today={today} />
+
+<section class="grid grid-cols-[minmax(0,1fr)] gap-3">
+  <Ribbon tone="lavender" rule>
+    Dates not announced
+  </Ribbon>
+  {tba.length > 0 ? (
+    <>
+      <p class="m-0 max-w-[68ch] [font:var(--type-body-sm)] text-text-2">
+        These conventions are expected but the organizer hasn't published dates. They're never
+        placed on the grid until confirmed.
+      </p>
+      <div class="grid gap-3">
+        {tba.map((listing) => (
+          <EventCard listing={listing} />
+        ))}
+      </div>
+    </>
+  ) : (
+    <p class="m-0 [font:var(--type-body-sm)] text-text-muted">
+      Every convention we list has announced its dates.
+    </p>
+  )}
+</section>
+
+<p class="m-0 max-w-[70ch] [font:var(--type-caption)] text-text-muted">
+  Struck-through entries are cancelled; amber entries are postponed and awaiting new dates.
+  Conventions are listed only after their dates are checked against the organizer's own site.
+</p>

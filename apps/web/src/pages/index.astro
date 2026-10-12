@@ -6,6 +6,7 @@ import Icon from '../components/Icon.astro';
 import Motif from '../components/Motif.astro';
 import Ribbon from '../components/Ribbon.astro';
 import Timeline from '../components/Timeline.astro';
+import ViewTabs from '../components/ViewTabs.astro';
 import Base from '../layouts/Base.astro';
 import { getUpcoming } from '../lib/data.ts';
 
@@ -62,7 +63,10 @@ const cities = [...new Set(listings.map((e) => e.city))].sort();
         class="grid grid-cols-[minmax(0,1fr)] gap-4"
         aria-label="Upcoming conventions"
       >
-        <Ribbon>Upcoming</Ribbon>
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <Ribbon>Upcoming</Ribbon>
+          <ViewTabs current="list" />
+        </div>
         <FilterBar cities={cities} total={listings.length} />
       </section>
       <Timeline listings={listings} />

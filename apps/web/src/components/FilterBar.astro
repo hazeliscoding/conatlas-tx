@@ -1,17 +1,19 @@
 ---
-// Region and city chips that filter the timeline in place. Hidden until its script runs,
-// so a visitor without JavaScript sees the full list and no dead controls.
+// Region and city chips that filter `[data-listing]` elements in place; a `[data-filter-group]`
+// hides once all its listings are hidden. Hidden until its script runs, so a visitor without
+// JavaScript sees the full page and no dead controls.
 import { REGIONS, REGION_NAMES } from '@conatlas/core';
 import Button from './Button.astro';
 import Icon from './Icon.astro';
 
 interface Props {
-  cities: string[];
+  /** City chips; omit for a region-only bar. */
+  cities?: string[];
   /** Total listings, for the count shown before any filter is applied. */
   total: number;
 }
 
-const { cities, total } = Astro.props;
+const { cities = [], total } = Astro.props;
 ---
 
 <form class="filters" aria-label="Filter conventions" data-filters hidden>
@@ -28,22 +30,24 @@ const { cities, total } = Astro.props;
       ))}
     </div>
   </div>
-  <div class="filters__row" role="group" aria-labelledby="filter-city">
-    <span class="filters__label" id="filter-city">
-      City
-    </span>
-    <div class="filters__scroll">
-      {cities.map((city) => (
-        <label class="tag">
-          <input type="checkbox" name="city" value={city} data-label={city} />
-          <span class="tag__check">
-            <Icon name="check" size={14} />
-          </span>
-          <span>{city}</span>
-        </label>
-      ))}
+  {cities.length > 0 && (
+    <div class="filters__row" role="group" aria-labelledby="filter-city">
+      <span class="filters__label" id="filter-city">
+        City
+      </span>
+      <div class="filters__scroll">
+        {cities.map((city) => (
+          <label class="tag">
+            <input type="checkbox" name="city" value={city} data-label={city} />
+            <span class="tag__check">
+              <Icon name="check" size={14} />
+            </span>
+            <span>{city}</span>
+          </label>
+        ))}
+      </div>
     </div>
-  </div>
+  )}
   <div class="filters__applied">
     <span class="filters__icon" data-applied-only hidden>
       <Icon name="sliders-horizontal" size={16} />
@@ -73,7 +77,7 @@ const { cities, total } = Astro.props;
   const form = document.querySelector<HTMLFormElement>('[data-filters]');
   if (form) {
     const cards = [...document.querySelectorAll<HTMLElement>('[data-listing]')];
-    const groups = [...document.querySelectorAll<HTMLElement>('[data-month-group]')];
+    const groups = [...document.querySelectorAll<HTMLElement>('[data-filter-group]')];
     const empty = document.querySelector<HTMLElement>('[data-filter-empty]');
     const count = form.querySelector<HTMLElement>('[data-result-count]')!;
     const applied = form.querySelector<HTMLElement>('[data-applied]')!;
@@ -87,21 +91,23 @@ const { cities, total } = Astro.props;
     const update = () => {
       const regions = checked('region').map((i) => i.value);
       const cities = checked('city').map((i) => i.value);
-      let shown = 0;
+      // A multi-day event can appear more than once (calendar agenda), so count ids.
+      const shown = new Set<string>();
       for (const card of cards) {
         const match =
           (!regions.length || regions.includes(card.dataset.region!)) &&
           (!cities.length || cities.includes(card.dataset.city!));
         card.hidden = !match;
-        if (match) shown++;
+        if (match) shown.add(card.dataset.listing!);
       }
       for (const group of groups) {
         const n = group.querySelectorAll('[data-listing]:not([hidden])').length;
         group.hidden = n === 0;
-        group.querySelector('[data-group-count]')!.textContent = plural(n);
+        const groupCount = group.querySelector('[data-group-count]');
+        if (groupCount) groupCount.textContent = plural(n);
       }
-      count.textContent = plural(shown);
-      if (empty) empty.hidden = shown > 0;
+      count.textContent = plural(shown.size);
+      if (empty) empty.hidden = shown.size > 0;
 
       const inputs = [...checked('region'), ...checked('city')];
       appliedOnly.forEach((el) => (el.hidden = inputs.length === 0));

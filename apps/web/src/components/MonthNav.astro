@@ -1,0 +1,98 @@
+---
+// Previous / next month links around the month title. Ends of the range render disabled.
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  prev?: string;
+  next?: string;
+  /** Link to the current month; omitted when already on it. */
+  today?: string;
+}
+
+const { title, prev, next, today } = Astro.props;
+---
+
+<div class="mnav">
+  {prev ? (
+    <a class="iconbtn" href={prev} aria-label="Previous month" title="Previous month">
+      <Icon name="chevron-left" size={20} />
+    </a>
+  ) : (
+    <span class="iconbtn iconbtn--disabled" aria-hidden="true">
+      <Icon name="chevron-left" size={20} />
+    </span>
+  )}
+  <h2 class="mnav__title">
+    {title}
+    <small aria-hidden="true">TX · CON CALENDAR</small>
+  </h2>
+  {next ? (
+    <a class="iconbtn" href={next} aria-label="Next month" title="Next month">
+      <Icon name="chevron-right" size={20} />
+    </a>
+  ) : (
+    <span class="iconbtn iconbtn--disabled" aria-hidden="true">
+      <Icon name="chevron-right" size={20} />
+    </span>
+  )}
+  <span class="mnav__spacer"></span>
+  {today && (
+    <Button variant="ghost" size="sm" href={today}>
+      Today
+    </Button>
+  )}
+</div>
+
+<style>
+  .mnav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .mnav__title {
+    font: var(--type-h2);
+    font-size: clamp(22px, 1.2rem + 1vw, 30px);
+    min-width: 11ch;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .mnav__title small {
+    display: block;
+    font: var(--type-pixel);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+  .mnav__spacer {
+    flex: 1;
+  }
+  .iconbtn {
+    display: inline-grid;
+    place-items: center;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    border-radius: var(--radius-button);
+    border: var(--border-w) solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text-2);
+    transition: var(--transition-color);
+  }
+  a.iconbtn:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+  a.iconbtn:active {
+    background: var(--surface-3);
+    transform: translateY(1px);
+  }
+  a.iconbtn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .iconbtn--disabled {
+    color: var(--disabled-text);
+  }
+</style>
