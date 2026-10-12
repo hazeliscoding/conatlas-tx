@@ -20,14 +20,16 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 
 ## M0 — Repository foundation
 
-- [ ] pnpm workspace, TypeScript, ESLint, Prettier, Vitest
-- [ ] `packages/core`: Zod schemas, date helpers, dataset loader, cross-record validation
-- [ ] `packages/ingestion`: `pnpm data:validate`
-- [ ] `packages/calendar`: all-day date range helper
-- [ ] `apps/web`: Astro + Tailwind skeleton with the design tokens and self-hosted fonts
-- [ ] CI workflow: install, typecheck, lint, format, data validation, tests, build
+- [x] pnpm workspace, TypeScript, ESLint, Prettier, Vitest
+- [x] `packages/core`: Zod schemas, date helpers, dataset loader, cross-record validation
+- [x] `packages/ingestion`: `pnpm data:validate`
+- [x] `packages/calendar`: all-day date range helper
+- [x] `apps/web`: Astro + Tailwind skeleton with the design tokens and self-hosted fonts
+- [x] CI workflow: install, typecheck, lint, format, data validation, tests, build
 
 Done when: `pnpm install`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm data:validate` and `pnpm build` all pass locally and in CI, and the schemas accept the valid fixtures and reject the invalid ones.
+
+Status 2026-10-11: everything passes locally on a clean frozen install (21 tests, `pnpm audit` clean). The CI run is still pending because the GitHub repo doesn't exist yet.
 
 ## M1 — Core website
 
@@ -57,7 +59,7 @@ Done when: bookmarks survive a reload, generated calendars parse with an iCalend
 - [ ] `pnpm data:diff`, `pnpm data:propose`, `pnpm data:report`
 - [ ] Draft staging and explicit promotion
 - [ ] Semantic diff and duplicate detection
-- [ ] `/conatlas-refresh` and `/conatlas-add` skills
+- [ ] `/conatlas-refresh` and `/conatlas-add` skills (un-ignore `.claude/skills/` in `.gitignore`: the maintainer's global gitignore excludes `.claude/`)
 - [ ] `docs/INGESTION_ENGINE.md`, `docs/MAINTENANCE.md`
 
 Done when: a refresh stages drafts, the diff report is correct on fixtures, and nothing reaches `data/` without explicit maintainer approval.
