@@ -3,8 +3,11 @@ import { describe, expect, it } from 'vitest';
 import {
   EditionSchema,
   addDays,
+  dayCount,
+  formatDateRange,
   isIsoDate,
   todayIn,
+  weekday,
   validateDataset,
   type Dataset,
   type Edition,
@@ -45,6 +48,21 @@ describe('dates', () => {
     expect(todayIn('America/Chicago', lateEveningCentral)).toBe('2026-10-11');
     expect(todayIn('America/Denver', lateEveningCentral)).toBe('2026-10-11');
     expect(todayIn('UTC', lateEveningCentral)).toBe('2026-10-12');
+  });
+
+  it('formats date ranges the way the design writes them', () => {
+    expect(formatDateRange('2026-10-31', '2026-10-31')).toBe('Oct 31, 2026');
+    expect(formatDateRange('2026-12-04', '2026-12-06')).toBe('Dec 4–6, 2026');
+    expect(formatDateRange('2027-01-30', '2027-02-01')).toBe('Jan 30 – Feb 1, 2027');
+    expect(formatDateRange('2026-12-31', '2027-01-02')).toBe('Dec 31, 2026 – Jan 2, 2027');
+    expect(formatDateRange('2026-12-04', '2026-12-06', { year: false })).toBe('Dec 4–6');
+  });
+
+  it('names weekdays and counts days without drift', () => {
+    expect(weekday('2026-10-31')).toBe('Sat');
+    expect(weekday('2026-03-08')).toBe('Sun');
+    expect(dayCount('2026-12-04', '2026-12-06')).toBe(3);
+    expect(dayCount('2026-03-07', '2026-03-09')).toBe(3); // across the DST change
   });
 });
 
