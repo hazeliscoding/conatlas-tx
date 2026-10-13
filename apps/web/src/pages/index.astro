@@ -12,6 +12,10 @@ import { getUpcoming, href } from '../lib/data.ts';
 
 const listings = getUpcoming();
 const cities = [...new Set(listings.map((e) => e.city))].sort();
+// The hero counts what's coming up; past editions standing in for their series are left out.
+const upcoming = listings.filter((e) => !e.awaitingNext);
+const verified = upcoming.filter((e) => e.status === 'confirmed').length;
+const upcomingCities = new Set(upcoming.map((e) => e.city)).size;
 ---
 
 <Base>
@@ -27,7 +31,7 @@ const cities = [...new Set(listings.map((e) => e.city))].sort();
       kind="sparkle"
       size={26}
       color="var(--brand-lavender)"
-      class="absolute top-16 right-35"
+      class="absolute top-16 right-35 max-sm:hidden"
     />
     <span class="font-pixel text-[length:var(--fs-pixel)] tracking-[.08em] text-text-muted">
       VOL.01 · FALL 2026 · TEXAS
@@ -42,11 +46,15 @@ const cities = [...new Set(listings.map((e) => e.city))].sort();
     <p class="m-0 flex flex-wrap items-center gap-3.5 [font:var(--type-caption)] text-text-muted">
       <span class="inline-flex items-center gap-1.5">
         <Icon name="badge-check" size={14} />
-        {listings.length} verified against organizer sites
+        {verified} verified against organizer sites
+      </span>
+      <span class="inline-flex items-center gap-1.5">
+        <Icon name="calendar" size={14} />
+        {upcoming.length} upcoming conventions
       </span>
       <span class="inline-flex items-center gap-1.5">
         <Icon name="map-pin" size={14} />
-        {cities.length} cities
+        {upcomingCities} cities
       </span>
     </p>
   </section>
