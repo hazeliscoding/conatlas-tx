@@ -88,6 +88,7 @@ const agenda = weeks
             style={`grid-column:${seg.start + 1} / ${seg.end + 2};grid-row:${seg.lane + 2}`}
             aria-label={label(seg.item)}
             tabindex={seg.continuesBefore ? -1 : undefined}
+            aria-hidden={seg.continuesBefore ? 'true' : undefined}
             data-listing={seg.item.id}
             data-region={seg.item.region}
             data-city={seg.item.city}
@@ -144,6 +145,8 @@ const agenda = weeks
             data-region={e.region}
             data-city={e.city}
           >
+            {e.status === 'cancelled' && <Icon name="circle-x" size={14} strokeWidth={2.2} />}
+            {e.status === 'postponed' && <Icon name="triangle-alert" size={14} strokeWidth={2.2} />}
             <span>{e.displayName}</span>
             <small>{e.city}</small>
           </a>
@@ -231,7 +234,6 @@ const agenda = weeks
   }
   .cal__num--out {
     color: var(--text-muted);
-    opacity: 0.6;
   }
   .cal__num--today {
     background: var(--cal-today);
@@ -392,6 +394,7 @@ const agenda = weeks
   }
   .agenda__ev {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     min-height: 44px;
