@@ -2,6 +2,7 @@
 // Site footer: blurb, discovery and project links, and the affiliation notice.
 import { REGION_NAMES, REGIONS } from '@conatlas/core';
 import { REPO_URL, href, regionHref } from '../lib/data.ts';
+import Icon from './Icon.astro';
 import Motif from './Motif.astro';
 ---
 
@@ -66,6 +67,10 @@ import Motif from './Motif.astro';
       <span class="foot__pixel">
         <Motif kind="flower" size={14} color="var(--brand-pink)" center="var(--surface-2)" />
         MADE IN TEXAS · EST. 2026 · OPEN SOURCE
+      </span>
+      <span class="foot__credit">
+        Made with <Icon name="heart" size={13} strokeWidth={2} label="love" /> by{' '}
+        <a href="https://github.com/hazeliscoding">hazeliscoding</a>
       </span>
       <span>Not affiliated with any convention. Event names belong to their organizers.</span>
     </div>
@@ -157,6 +162,15 @@ import Motif from './Motif.astro';
     padding-top: var(--space-6);
     border-top: 1px solid var(--border);
     font: var(--type-caption);
+  }
+  .foot__credit {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .foot__credit :global(svg) {
+    color: var(--accent);
+    fill: currentColor;
   }
   .foot__pixel {
     font: var(--type-pixel);
