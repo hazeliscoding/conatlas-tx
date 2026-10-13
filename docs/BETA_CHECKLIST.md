@@ -26,7 +26,7 @@ Run through this once before announcing the site, and again after any big change
 ## Contributions and contacts
 
 - [ ] Each card on the Contribute page opens the right GitHub issue form, and new issues get their label.
-- [ ] "Report a problem" on a convention page prefills that convention in the forms.
+- [ ] "Suggest a correction" on a convention page prefills that convention in the forms.
 - [ ] A test email to the contact address arrives.
 - [ ] Private vulnerability reporting is on (Security → Report a vulnerability).
 
