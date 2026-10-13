@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { todayIn, validateDataset, type Dataset, type Edition } from '@conatlas/core';
+import { REGION_NAMES, todayIn, validateDataset, type Dataset, type Edition } from '@conatlas/core';
 import { loadDataset } from '@conatlas/core/load';
 
 // Astro runs with apps/web as the working directory.
@@ -29,6 +29,9 @@ export const detailHref = (edition: Pick<Edition, 'slug'>) => href(`cons/${editi
 /** An edition's full name, e.g. "San Japan 2027" or "KimoKawaii Conroe 2027". */
 export const editionTitle = (edition: Edition, seriesName: string) =>
   `${seriesName} ${edition.edition}`;
+
+/** Calendar feeds by URL name (`feeds/<name>.ics`): all of Texas, then one per region. */
+export const FEEDS: Record<string, string> = { all: 'All of Texas', ...REGION_NAMES };
 
 /** What calendar apps show for an edition, and the page they link back to. */
 export const eventDetails = (edition: Edition, title: string) => ({
