@@ -51,7 +51,11 @@ for (const listing of Astro.props.listings) {
             {UNDATED[key] ?? MONTHS[month! - 1]}
             {!UNDATED[key] && <span class="sr-only"> {year}</span>}
           </h2>
-          {!UNDATED[key] && <span class="tl__year">{year}</span>}
+          {!UNDATED[key] && (
+            <span class="tl__year" aria-hidden="true">
+              {year}
+            </span>
+          )}
           <span class="tl__count" data-group-count>
             {plural(listings.length)}
           </span>
