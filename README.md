@@ -4,7 +4,7 @@
 
 ConAtlas TX is a free, open-source convention calendar for fans, cosplayers and first-timers. No accounts, no tracking, and no guessed dates. If a con hasn't announced its weekend, we say so.
 
-> **Status:** live at **[conatlas-tx.vercel.app](https://conatlas-tx.vercel.app)** (milestone M4, production readiness, in review). See [ROADMAP.md](ROADMAP.md).
+> **Status:** live at **[conatlas-tx.vercel.app](https://conatlas-tx.vercel.app)** (milestone M5, search and discovery, in progress). See [ROADMAP.md](ROADMAP.md).
 
 ![The home page: upcoming Texas anime conventions grouped by month, each with its dates, venue and verification](docs/screenshots/home.png)
 

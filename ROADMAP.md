@@ -117,7 +117,7 @@ Status 2026-10-13: a live refresh of five conventions staged 19 drafts, a second
 
 Done when: all CI gates pass, the design review has nothing left to fix, there are no critical accessibility failures, and the site deploys statically.
 
-Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page type in both themes), after three design-review rounds a final pass found nothing left to fix, Lighthouse scores 100 for accessibility, and layout shift stays at 0.03 or less on a throttled phone. The site deploys to https://conatlas-tx.vercel.app/ after CI: every page type, calendar file and the sitemap return 200 with the right types, paths without a trailing slash redirect, and missing pages get the site's 404. Waiting on the maintainer's review.
+Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page type in both themes), after three design-review rounds a final pass found nothing left to fix, Lighthouse scores 100 for accessibility, and layout shift stays at 0.03 or less on a throttled phone. The site deploys to https://conatlas-tx.vercel.app/ after CI: every page type, calendar file and the sitemap return 200 with the right types, paths without a trailing slash redirect, and missing pages get the site's 404. Approved by the maintainer on 2026-10-13.
 
 ## M5 — Search and discovery
 
