@@ -3,5 +3,5 @@ series: oni-con
 url: https://oni-con.net/
 type: official_site
 supports: [existence, dates, venue, city]
-last_checked: 2026-10-12
-access_notes: Canva site that renders client-side; text was read from the content embedded in the page.
+last_checked: 2026-10-13
+access_notes: Canva site that renders client-side; read the visible text in a headless browser. The page bundle still embeds hidden Galveston-era pages (Hilton Galveston hotel block, Galveston Island Convention Center) that are not shown on screen.

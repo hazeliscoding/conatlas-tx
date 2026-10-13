@@ -14,9 +14,14 @@ url: https://oni-con.net/
 evidence:
   - source: oni-con-site
     facts: [existence, dates, venue, city]
-    checked_at: 2026-10-12
-    excerpt: Oni Con 2027 / October 1st - 3rd 2027 / Houston Marriott Westchase
-    note: Separate text blocks on the homepage, joined with slashes. The same page still lists a Hilton Galveston Island Resort hotel block from earlier Galveston editions.
-last_verified_at: 2026-10-12
-updated_at: 2026-10-12
+    checked_at: 2026-10-13
+    excerpt: Oni Con 2027 / October 1st - 3rd 2027 / Houston Marriott Westchase / 2900 Briarpark Dr / Houston, TX 77042
+    note: Separate text blocks on the homepage, joined with slashes; the "O" of "Oni" is the logo graphic. The Hilton Galveston Island Resort hotel block is no longer shown; "Book Your Hotel Room" now links to a Marriott group reservation. Galveston-era text survives only in the page's hidden embedded data.
+  - source: oni-con-2027-hotel-announcement
+    facts: [existence, venue, city]
+    checked_at: 2026-10-13
+    excerpt: Want to book your room for Oni-Con 2027 early? Our room block at The Houston Marriott Westchase is open! … When you stay on site the fun never ends!
+    note: Dated organizer post tagged "Official Oni-Con is at Houston Marriott Westchase. ... Houston". It settles the city against the Early-Bird Registration cart linked from oni-con.net (onicon23.reg-it.org), which still reads "Oct 1st-3rd, 2027 Galveston, TX".
+last_verified_at: 2026-10-13
+updated_at: 2026-10-13
 revision: 0
