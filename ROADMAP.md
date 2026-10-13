@@ -132,7 +132,7 @@ Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page
 ## M5 — Search and discovery
 
 - [x] SEO audit of the live site: indexing, titles and descriptions, internal links, crawl errors (Search Console's crawl reports get a second look once Google has crawled the site)
-- [ ] Structured data checked with Google's Rich Results Test: `Event` for dated editions (scheduled, postponed, cancelled), plus `BreadcrumbList` and `WebSite`
+- [x] Structured data checked with Google's Rich Results Test: `Event` for dated editions (scheduled, postponed, cancelled), plus `BreadcrumbList` and `WebSite` (2026-10-13: all 16 convention pages have valid Events and Breadcrumbs, and Contribute has valid Breadcrumbs. The only warnings are for optional fields we have no sourced data for. `WebSite` passes the Schema Markup Validator, since the Rich Results Test doesn't cover site names.)
 - [ ] Region pages, and city pages where enough conventions exist to be useful, generated from the data
 - [ ] AI answer engines: `llms.txt` and plain factual summaries they can cite
 - [ ] Core Web Vitals: lab checks on every page type, and field data from Search Console once there's enough traffic
