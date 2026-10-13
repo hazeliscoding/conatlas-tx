@@ -171,7 +171,7 @@ const { cities = [], total } = Astro.props;
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
   }
   .filters__label {
     font: var(--type-meta);
@@ -179,6 +179,11 @@ const { cities = [], total } = Astro.props;
     letter-spacing: var(--tracking-wide);
     color: var(--text-muted);
     margin-right: 4px;
+    /* Level with the first line of chips (32px tall, below 2px of scroller padding). */
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding-top: 2px;
   }
   .filters__scroll {
     flex: 1 1 0%;
