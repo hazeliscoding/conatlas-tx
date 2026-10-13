@@ -14,6 +14,9 @@ const PAGES = {
 // Two saved conventions, so the Saved page and the Save buttons show their saved state.
 const SAVED = ['ushicon-2027', 'san-japan-2027'];
 
+// For looking at locally; CI doesn't keep them, and its headless Chromium sometimes fails a capture.
+test.skip(!!process.env.CI, 'screenshots are for local design review');
+
 for (const theme of ['light', 'dark']) {
   for (const [name, path] of Object.entries(PAGES)) {
     test(`screenshot ${name} (${theme})`, async ({ page }, info) => {
