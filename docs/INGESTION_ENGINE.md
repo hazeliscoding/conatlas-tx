@@ -19,15 +19,15 @@ research ──▶ data/drafts/ ──▶ pnpm data:diff ──▶ maintainer ap
 
 ## Commands
 
-| Command                         | What it does                                                                                    | Writes                  |
-| ------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------- |
-| `pnpm data:validate`            | Checks every published record and cross-record rule.                                            | nothing                 |
-| `pnpm data:report`              | Lists what is due for a re-check, most urgent first, and counts waiting drafts.                 | nothing                 |
-| `pnpm data:propose <record...>` | Copies published records into `data/drafts/` as a starting point for edits.                     | `data/drafts/` only     |
-| `pnpm data:diff`                | Shows each draft field by field and checks the published data as it would be with every draft.  | nothing                 |
-| `pnpm data:promote <record...>` | Publishes the named drafts (or `--all`) if they pass every check, and removes them from drafts. | `data/`, `data/drafts/` |
+| Command                         | What it does                                                                                                        | Writes                  |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `pnpm data:validate`            | Checks every published record and cross-record rule.                                                                | nothing                 |
+| `pnpm data:report`              | Lists what is due for a re-check, most urgent first, counts waiting drafts and names any record that fails to load. | nothing                 |
+| `pnpm data:propose <record...>` | Copies published records into `data/drafts/` as a starting point for edits.                                         | `data/drafts/` only     |
+| `pnpm data:diff`                | Shows each draft field by field and checks the published data as it would be with every draft.                      | nothing                 |
+| `pnpm data:promote <record...>` | Publishes the named drafts (or `--all`) if they pass every check, and removes them from drafts.                     | `data/`, `data/drafts/` |
 
-A record is written `editions/san-japan-2027`, or just `san-japan-2027` when the id is unambiguous. Every command takes `--data <dir>` and `--today YYYY-MM-DD`; `today` defaults to the date in America/Chicago. Exit codes: `0` success, `1` errors found (nothing written), `2` usage error.
+A record is written `editions/san-japan-2027`, or just `san-japan-2027` when the id is unambiguous. Anything else (another path, upper case) is refused before a file is touched. Every command takes `--data <dir>` and `--today YYYY-MM-DD`; `today` defaults to the date in America/Chicago. Exit codes: `0` success, `1` errors found, `2` usage error. On `1` or `2`, nothing was written: `propose` and `promote` check every record before copying any.
 
 ## What `data:diff` reports
 
@@ -39,11 +39,11 @@ For each draft, its status (`new`, `changed`, `no changes`) and the fields that 
 | Verification | `sources`       | `evidence`, `last_verified_at`, `last_attempted_at` | `last_checked`, `access_notes`, `notes` |
 | Bookkeeping  |                 | `updated_at`, `revision`                            |                                         |
 
-Facts are what visitors and calendar apps see. A draft that changes only verification is a re-check, not a correction. Values are compared regardless of key order. Evidence lists are summarized as a count and the latest check date.
+Facts are what visitors and calendar apps see. A draft that changes only verification is a re-check, not a correction, but its evidence is public too: the verification panel on each convention page shows every entry's source, quote and note. So `data:diff` prints changed evidence entries in full, the old ones marked `-` and the new ones `+`. Values are compared regardless of key order.
 
 Then the issues, which block promotion when they are errors:
 
-- **Revision:** a changed edition's `revision` must be the published one plus 1 if any fact changed, and unchanged otherwise. It feeds the calendar files' `SEQUENCE`, so calendar apps pick up changed facts.
+- **Revision:** a changed edition's `revision` must be the published one plus 1 if any fact changed, and unchanged otherwise. It feeds the calendar files' `SEQUENCE`, so calendar apps pick up changed facts. A calendar title includes the convention's name, so renaming a convention counts as a fact change for each of its editions: every one needs a draft with its revision raised.
 - **`updated_at`:** a warning if an edited record still carries the published date (unless that date is today).
 - **No changes:** a warning that the draft matches the published record and can be deleted.
 - **Possible duplicates** (warnings, for a human to judge): a new convention with the same website host as another or a near-identical name (letter-pair similarity of 0.8 or more, ignoring case, spacing and punctuation); a new edition overlapping another edition of the same series, or one in the same city; a new source with the same URL as another, ignoring a trailing slash.
@@ -51,7 +51,7 @@ Then the issues, which block promotion when they are errors:
 
 ## Promotion
 
-`pnpm data:promote` needs the drafts named explicitly, or `--all`. It loads every draft (any draft that fails to load stops it), then runs the same checks as `data:diff` on the published data with only the selected drafts applied. Any error stops it with nothing written, so drafts that depend on each other (a new convention and its source) are promoted together. If everything passes, it copies each selected draft over its published file, byte for byte, and deletes the draft. Committing is left to the maintainer.
+`pnpm data:promote` needs the drafts named explicitly, or `--all`, not both. Each name must match a draft that loaded under exactly that id. It loads every draft (any draft that fails to load stops it), then runs the same checks as `data:diff` on the published data with only the selected drafts applied. Any error stops it with nothing written, so drafts that depend on each other (a new convention and its source) are promoted together. If everything passes, it copies each selected draft over its published file, byte for byte, and only then deletes the drafts. Committing is left to the maintainer.
 
 The skills run `data:promote` only after the maintainer approves the specific drafts in the terminal.
 

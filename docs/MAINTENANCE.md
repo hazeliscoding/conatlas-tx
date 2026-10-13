@@ -15,7 +15,7 @@ Check more often in the weeks before a con. Organizers move venues and cancel la
 Run `pnpm data:diff`. For each draft:
 
 - **Facts** changed: open the evidence URL and find the quoted words on the organizer's page. Ask whether this is the organizer saying it, for this year's edition.
-- **Verification only:** a re-check that confirmed the same facts. Skim the dates; nothing visible changes except "Last checked".
+- **Verification only:** a re-check that confirmed the same facts. The dates on the site don't change, but the verification panel does: read every quote and note marked `+`, because they appear on the convention's page.
 - **Possible duplicates:** decide whether the "new" convention is one we already list.
 - **Errors** must be fixed before publishing; `data:diff` says how.
 
@@ -26,10 +26,12 @@ Delete any draft you don't want: remove its file from `data/drafts/`.
 ```sh
 pnpm data:promote editions/san-japan-2027 sources/san-japan-site   # or --all
 pnpm data:validate
-git add data && git commit
+git add data/conventions data/editions data/sources
+git add -u data/drafts   # only removals of drafts that were committed earlier
+git commit
 ```
 
-Commit messages follow Conventional Commits: `fix(data): …` for corrections, `feat(data): …` for new conventions or editions, `chore(data): re-verify …` for checks that changed no facts. Push, and CI rebuilds the site. Until the deploy workflow exists (milestone M4), the site isn't public.
+Staging those paths, rather than all of `data/`, keeps drafts you haven't approved out of the commit. Commit messages follow Conventional Commits: `fix(data): …` for corrections, `feat(data): …` for new conventions or editions, `chore(data): re-verify …` for checks that changed no facts. Push, and CI rebuilds the site. Until the deploy workflow exists (milestone M4), the site isn't public.
 
 The site decides what is "upcoming" from the build date, so it needs a rebuild at least daily once deployed; otherwise an edition stays listed until the next push.
 
@@ -48,7 +50,7 @@ Reply with what changed and close the issue from the commit (`Closes #12` in the
 
 ## When a check fails
 
-If an organizer's site is down or the page is gone, change no facts. Set `last_attempted_at` to today in a draft, with a note. `pnpm data:report` lists it as a failed check until a later check succeeds. If the organizer stays unreachable for weeks, raise it in an issue rather than guessing.
+If an organizer's site is down or the page is gone, change no facts. In a draft, set `last_attempted_at` and `updated_at` to today, and note the problem in the source's `access_notes` (evidence notes are public, access notes aren't). `pnpm data:report` lists it as a failed check until a later check succeeds; that check moves `last_attempted_at` up to the same day as `last_verified_at`. If the organizer stays unreachable for weeks, raise it in an issue rather than guessing.
 
 ## Conduct and security reports
 
