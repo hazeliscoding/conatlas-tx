@@ -199,6 +199,8 @@ const { cities = [], total } = Astro.props;
     gap: 8px;
     overflow-x: auto;
     padding: 2px 2px 4px;
+    /* Room past the last chip, so it can scroll clear of the faded edge. */
+    padding-inline-end: 34px;
     scrollbar-width: none;
     /* Fade the last visible chip so the row reads as scrollable. */
     mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
@@ -208,6 +210,7 @@ const { cities = [], total } = Astro.props;
       flex-wrap: wrap;
       overflow: visible;
       mask-image: none;
+      padding-inline-end: 2px;
     }
   }
   .filters__applied {
@@ -260,18 +263,6 @@ const { cities = [], total } = Astro.props;
     color: var(--text-inverse);
     border-color: var(--brand-plum);
   }
-  @media (forced-colors: active) {
-    .tag:has(input:focus-visible) {
-      outline: 2px solid CanvasText;
-      outline-offset: 2px;
-    }
-    .tag:has(input:checked) {
-      forced-color-adjust: none;
-      background: Highlight;
-      color: HighlightText;
-      border-color: Highlight;
-    }
-  }
   :global([data-theme='dark']) .tag:has(input:checked) {
     background: var(--brand-lavender);
     color: var(--text-on-brand);
@@ -323,5 +314,19 @@ const { cities = [], total } = Astro.props;
   }
   .tag__x:focus-visible {
     outline: 2px solid var(--focus-ring);
+  }
+  /* After the dark-theme chip rule, so contrast themes win in both site themes. */
+  @media (forced-colors: active) {
+    .tag:has(input:focus-visible) {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
+    .tag:has(input:checked),
+    :global([data-theme='dark']) .tag:has(input:checked) {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+      border-color: Highlight;
+    }
   }
 </style>
