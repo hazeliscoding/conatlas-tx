@@ -112,6 +112,12 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
     list-style: none;
     font: var(--type-body-sm);
   }
+  /* On phones the URL takes its own line under the label and Subscribe. */
+  @media (max-width: 767px) {
+    .feeds__url {
+      grid-column: 1 / -1;
+    }
+  }
   .feeds__row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -123,9 +129,6 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
   @media (min-width: 768px) {
     .feeds__row {
       grid-template-columns: 180px auto minmax(0, 1fr);
-    }
-    .feeds__url {
-      grid-column: auto;
     }
   }
   .feeds__label {
@@ -145,7 +148,6 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
     min-height: var(--touch-min);
   }
   .feeds__url {
-    grid-column: 1 / -1;
     font: var(--type-caption);
     color: var(--text-2);
     overflow-wrap: anywhere;
