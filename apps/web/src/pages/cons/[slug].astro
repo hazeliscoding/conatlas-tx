@@ -115,18 +115,25 @@ const google = e.status === 'confirmed' && !ended && googleCalendarUrl(e, eventD
 const current = siblings
   .filter((s) => s.status !== 'completed' && (!s.end_date || s.end_date >= today))
   .sort((a, b) => (a.start_date ?? '9999').localeCompare(b.start_date ?? '9999'))[0];
+// Everything that has ended, so an edition still awaiting its "completed" status stays linked.
 const past = siblings
-  .filter((s) => s.status === 'completed')
+  .filter((s) => s.status === 'completed' || (s.end_date !== undefined && s.end_date < today))
   .sort((a, b) => (b.start_date ?? '').localeCompare(a.start_date ?? ''));
 ---
 
 <Base
   title={title}
-  description={
-    start && end
-      ? `${title}, ${formatDateRange(start, end)} in ${e.city}, Texas. Dates, venue and official sources, checked against the organizer's site.`
-      : `${title} in ${e.city}, Texas. Dates not announced yet; venue and official sources, checked against the organizer's site.`
-  }
+  description={`${
+    cancelled
+      ? `${title} in ${e.city}, Texas, is cancelled.`
+      : e.status === 'postponed'
+        ? `${title} in ${e.city}, Texas, is postponed and awaiting new dates.`
+        : !start || !end
+          ? `${title} in ${e.city}, Texas. Dates not announced yet.`
+          : ended
+            ? `${title} ran ${formatDateRange(start, end)} in ${e.city}, Texas.`
+            : `${title}, ${formatDateRange(start, end)} in ${e.city}, Texas.`
+  } Dates, venue and official sources, checked against the organizer's site.`}
 >
   {event && (
     <script
