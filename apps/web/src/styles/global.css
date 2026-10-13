@@ -57,6 +57,16 @@
   --shadow-3: var(--shadow-3);
 }
 
+/* The sticky header would cover whatever focus or an anchor link scrolls to. */
+html {
+  scroll-padding-top: calc(var(--header-h-mobile) + 8px);
+}
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: calc(var(--header-h) + 8px);
+  }
+}
+
 /* Focus rings are box-shadows, which forced-colors mode (Windows contrast themes) drops. */
 @media (forced-colors: active) {
   :focus-visible {
