@@ -53,3 +53,12 @@ test('Saved and not-found pages stay out of search', async ({ page }) => {
     await expect(page.locator('meta[name="robots"]'), path).toHaveAttribute('content', 'noindex');
   }
 });
+
+test('robots.txt allows crawling and points to the sitemap', async ({ request }) => {
+  const response = await request.get('robots.txt');
+  expect(response.status()).toBe(200);
+  const body = await response.text();
+  expect(body).toContain('User-agent: *');
+  expect(body).toContain(`Sitemap: ${SITE}sitemap.xml`);
+  expect(body).not.toMatch(/Disallow:\s*\S/);
+});
