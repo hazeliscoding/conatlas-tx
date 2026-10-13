@@ -105,7 +105,7 @@ test('every contribution path opens an issue form that exists', async ({ page })
 
 test('reporting from a convention page prefills the forms', async ({ page }) => {
   await page.goto(`cons/${upcoming.slug}/`);
-  await page.getByRole('link', { name: 'Report a problem' }).click();
+  await page.getByRole('link', { name: 'Suggest a correction' }).click();
   await expect(page).toHaveURL(new RegExp(`/contribute/\\?con=${upcoming.id}$`));
   await expect(page.locator('[data-report]')).toContainText(title);
 
