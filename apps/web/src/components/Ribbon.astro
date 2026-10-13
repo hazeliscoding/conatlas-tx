@@ -32,7 +32,8 @@ const Label = heading ? 'h2' : 'span';
     clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 50%, 100% 100%, 0 100%);
     white-space: nowrap;
   }
-  :global([data-theme='dark']) .ribbon {
+  /* :where() keeps this at the tone classes' specificity, so a toned ribbon keeps its tone. */
+  :global(:where([data-theme='dark'])) .ribbon {
     background: var(--brand-lavender);
     color: var(--text-on-brand);
   }
