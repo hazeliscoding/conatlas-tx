@@ -43,7 +43,7 @@ A 1990s anime magazine layout: big rounded display type, dusty pink, lavender an
 - **Cards:** near-white surface, 1px border, radius 14, shadow 1; hover adds shadow 2 and the strong border. Event cards lead with a date block (month eyebrow and big day numeral) in a tinted column.
 - **Layout:** sticky header (64px desktop, 56px mobile), 12-column grid at 1024px and up, single column under 768px. The calendar grid is desktop-only; mobile gets a grouped agenda list.
 - **Transparency and blur:** only the dialog scrim (55% plum) and the sticky header (surface at 92% with 8px blur).
-- **Motifs:** four-petal flower, four-point sparkle, ribbon-tab section label. Bullets, empty-state ornaments, hero corners. At most two per screen, always `aria-hidden`.
+- **Motifs:** five-petal flower, four-point sparkle, ribbon-tab section label. Bullets, empty-state ornaments, hero corners. At most two per screen, always `aria-hidden`.
 
 ## Icons
 
@@ -57,7 +57,7 @@ WCAG 2.2 AA. Text at least 4.5:1, large text and UI 3:1. Visible 2px focus ring.
 
 The design-system readme references files that were not in the project: `DESIGN_SYSTEM.md` (developer spec), `UI_MOCKUPS.md`, `tailwind.tokens.cjs`, `guidelines/`, `assets/` (flower, sparkle, dot-grid, illustration SVGs), `brief.md` and `ui_kits/`. Where they matter:
 
-- The flower and sparkle paths come from the `Motif` component instead of the missing SVG assets.
+- The flower and sparkle paths come from the `Motif` component instead of the missing SVG assets. The design's flower had six uneven petals; on 2026-10-13 the maintainer chose a redrawn five-petal flower (even petals, optically centered), used in `Motif.astro` and `favicon.svg`.
 - Tailwind mapping is written fresh in `global.css`.
 - The prototype's own screens and the `_ref/components` code stand in for the missing mockups and spec.
 - The prototype shows a "Dates unconfirmed" state for dates from a community submission. Under the data policy those dates aren't published, so that state isn't implemented.
