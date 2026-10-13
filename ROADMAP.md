@@ -26,6 +26,14 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-12** — A touring brand (KimoKawaii, Animeverse Fest) is one series with an edition per city, labelled like `Houston 2027`.
 - **2026-10-12** — East Texas cities such as Tyler belong to North Texas until the design adds a region for them.
 - **2026-10-12** — A series with no announced next edition keeps only its latest completed edition, so the site can say the next dates aren't announced.
+- **2026-10-12** — The saved list is browser-local: edition ids in `localStorage` under `conatlas-saved`. Cards offer Save except for a past edition standing in for its series, and a convention page offers it until the edition ends. Unsaving on the Saved page keeps the card until the page is left, in place of the design's undo toast and remove-confirmation dialog.
+- **2026-10-12** — The Save button's label carries its state ("Save", "Saved"), so it has no `aria-pressed`; a toggle's name shouldn't change with its state.
+- **2026-10-12** — "Add to calendar" is a `<details>` menu with a static `.ics` per edition and a Google Calendar link, shown for upcoming confirmed editions. The design's "Copy dates as text" is left out.
+- **2026-10-12** — Calendar files use UID `<edition id>@conatlas-tx`, SEQUENCE from `revision`, DTSTAMP from `updated_at`, and all-day dates with an exclusive end. Cancelled and postponed editions are `STATUS:CANCELLED` with the status in the title.
+- **2026-10-12** — Feeds live at `feeds/all.ics` and `feeds/<region>.ics` and keep past editions, so calendar apps don't drop events that already happened. A region gets its feed once it has a dated edition, because iCalendar needs at least one event.
+- **2026-10-12** — The design's five report paths share the roadmap's four issue forms: dates and venue both open the correction form. The Contribute page prefills a convention only from known edition ids, and never on the new-convention form.
+- **2026-10-12** — The maintainer contact for conduct reports, security reports and people without a GitHub account is a Proton Pass alias, conatlas-tx.landing118@passfwd.com.
+- **2026-10-12** — Public pages describe verification by what readers can check (organizer sources, human review), not by the tools used. `docs/DATA_POLICY.md` documents the research process.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -56,13 +64,15 @@ Done when: someone can find, filter and open every seeded convention with no Jav
 
 ## M2 — Personal planning
 
-- [ ] Browser-local bookmarks and the Saved page
-- [ ] `.ics` download per edition and for the saved list
-- [ ] Static `.ics` feeds: all upcoming, and one per region
-- [ ] Contribute page and GitHub issue forms (new convention, correction, cancellation or postponement, broken link)
-- [ ] `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`
+- [x] Browser-local bookmarks and the Saved page
+- [x] `.ics` download per edition and for the saved list
+- [x] Static `.ics` feeds: all upcoming, and one per region
+- [x] Contribute page and GitHub issue forms (new convention, correction, cancellation or postponement, broken link)
+- [x] `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`
 
 Done when: bookmarks survive a reload, generated calendars parse with an iCalendar parser, and every contribution path opens the right issue form.
+
+Status 2026-10-12: all three are covered by end-to-end tests (82 pass). Every feed and edition `.ics` parses with ical.js, and the icalendar.org validator accepts `feeds/all.ics` and an edition file. Waiting on the maintainer's review.
 
 ## M3 — Claude-assisted ingestion
 
