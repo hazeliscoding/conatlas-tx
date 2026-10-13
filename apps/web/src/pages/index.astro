@@ -8,6 +8,7 @@ import Ribbon from '../components/Ribbon.astro';
 import Timeline from '../components/Timeline.astro';
 import ViewTabs from '../components/ViewTabs.astro';
 import Base from '../layouts/Base.astro';
+import { REGIONS, REGION_NAMES } from '@conatlas/core';
 import { getUpcoming, href } from '../lib/data.ts';
 
 const listings = getUpcoming();
@@ -16,6 +17,30 @@ const cities = [...new Set(listings.map((e) => e.city))].sort();
 const upcoming = listings.filter((e) => !e.awaitingNext);
 const verified = upcoming.filter((e) => e.status === 'confirmed').length;
 const upcomingCities = new Set(upcoming.map((e) => e.city)).size;
+const regions = REGIONS.map((id) => {
+  const here = upcoming.filter((e) => e.region === id);
+  const names = [...new Set(here.map((e) => e.city))];
+  return {
+    id,
+    name: REGION_NAMES[id],
+    count: here.length,
+    cities: names.length ? names.join(' · ') : 'No upcoming listings',
+  };
+});
+const STEPS = [
+  {
+    title: 'Official site only',
+    text: "Dates and venues come from the organizer's own website or announcement. Nothing is copied from third-party listings.",
+  },
+  {
+    title: 'Human-reviewed changes',
+    text: 'Every edit is a reviewed change to a public data file. Each listing shows the day it was last checked.',
+  },
+  {
+    title: 'Honest about unknowns',
+    text: 'Unannounced dates are never guessed onto a weekend. They sit in their own "Dates not announced" group until confirmed.',
+  },
+];
 ---
 
 <Base>
@@ -91,6 +116,44 @@ const upcomingCities = new Set(upcoming.map((e) => e.city)).size;
     </>
   )}
 
+  <section id="regions" class="grid gap-4">
+    <Ribbon tone="lavender" rule heading>
+      Explore by Texas region
+    </Ribbon>
+    <ul class="regions">
+      {regions.map((r) => (
+        <li>
+          <a
+            class="region"
+            href={href(`?region=${r.id}#upcoming`)}
+            aria-label={`${r.name}, ${r.count} upcoming ${r.count === 1 ? 'convention' : 'conventions'}`}
+          >
+            <span class="region__top">
+              <span class="region__name">{r.name}</span>
+              <span class="region__count">{r.count}</span>
+            </span>
+            <span class="region__cities">{r.cities}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="grid gap-4">
+    <Ribbon tone="sage" rule heading>
+      How we verify events
+    </Ribbon>
+    <ol class="steps">
+      {STEPS.map((step, i) => (
+        <li class="step">
+          <span class="step__n">STEP 0{i + 1}</span>
+          <h3 class="step__title">{step.title}</h3>
+          <p class="step__text">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
   <section class="flex flex-wrap items-center justify-between gap-4 rounded-md border-[1.5px] border-dashed border-border-strong px-6 py-5">
     <div class="grid gap-1">
       <strong class="[font:var(--type-h4)]">Know a con we're missing?</strong>
@@ -105,3 +168,87 @@ const upcomingCities = new Set(upcoming.map((e) => e.city)).size;
     </Button>
   </section>
 </Base>
+
+<style>
+  .regions,
+  .steps {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .regions {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+  .steps {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .region {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    box-sizing: border-box;
+    height: 100%;
+    min-height: 88px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-1);
+    color: var(--text);
+    text-decoration: none;
+    transition:
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+  .region:hover {
+    box-shadow: var(--shadow-2);
+    border-color: var(--border-strong);
+  }
+  .region:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .region__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .region__name {
+    font: var(--type-h4);
+  }
+  .region__count {
+    font: var(--type-date-day);
+    font-size: 24px;
+    color: var(--brand-pink-ink);
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .region__cities {
+    font: var(--type-caption);
+    color: var(--text-muted);
+  }
+  .step {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 18px;
+    background: var(--surface-2);
+    border-radius: var(--radius-md);
+  }
+  .step__n {
+    font: var(--type-pixel);
+    letter-spacing: 0.08em;
+    color: var(--text-2);
+  }
+  .step__title {
+    margin: 0;
+    font: var(--type-h4);
+  }
+  .step__text {
+    margin: 0;
+    font: var(--type-body-sm);
+    color: var(--text-2);
+  }
+</style>
