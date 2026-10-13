@@ -24,7 +24,11 @@ const ics = JSON.stringify({ empty: calendar('My ConAtlas TX list', []), events 
 );
 ---
 
-<Base title="Saved" description="The Texas anime conventions you saved, kept in this browser.">
+<Base
+  title="Saved"
+  description="The Texas anime conventions you saved, kept in this browser."
+  noindex
+>
   <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
     <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: 'Saved' }]} />
     <div class="grid gap-3">

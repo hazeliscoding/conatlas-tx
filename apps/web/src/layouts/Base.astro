@@ -6,12 +6,17 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  /** Keep the page out of search results (personal or error pages). */
+  noindex?: boolean;
 }
 
 const {
   title = 'ConAtlas TX',
   description = 'Discover your next anime adventure. A free, community-maintained calendar of anime conventions in Texas.',
+  noindex = false,
 } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const image = new URL(`${import.meta.env.BASE_URL}og.png`, Astro.site).href;
 const pageTitle =
   title === 'ConAtlas TX' ? `${title} · Texas anime convention calendar` : `${title} · ConAtlas TX`;
 ---
@@ -24,7 +29,23 @@ const pageTitle =
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ConAtlas TX" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="ConAtlas TX, a Texas anime convention calendar: discover your next anime adventure."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <slot name="head" />
     <meta name="generator" content={Astro.generator} />
     <script is:inline>
       // Apply the saved theme (or the system preference) before first paint, so there's no flash.
