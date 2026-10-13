@@ -1,6 +1,7 @@
 ---
 // Site footer: blurb, discovery and project links, and the affiliation notice.
-import { REPO_URL, href } from '../lib/data.ts';
+import { REGION_NAMES, REGIONS } from '@conatlas/core';
+import { REPO_URL, href, regionHref } from '../lib/data.ts';
 import Motif from './Motif.astro';
 ---
 
@@ -26,6 +27,11 @@ import Motif from './Motif.astro';
         <li>
           <a href={href('calendar/')}>Month calendar</a>
         </li>
+        {REGIONS.map((region) => (
+          <li>
+            <a href={regionHref(region)}>{REGION_NAMES[region]}</a>
+          </li>
+        ))}
       </ul>
     </nav>
     <nav aria-label="Contribute">

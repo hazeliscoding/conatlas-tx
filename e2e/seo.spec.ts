@@ -1,6 +1,8 @@
 import { fileURLToPath } from 'node:url';
 import { loadDataset } from '../packages/core/src/load.ts';
 import { todayIn } from '../packages/core/src/dates.ts';
+import { REGIONS } from '../packages/core/src/schema.ts';
+import { cityPath, pagedCities, regionPath, upcoming } from './places.ts';
 import { expect, test, type Page } from '@playwright/test';
 
 const { dataset } = loadDataset(fileURLToPath(new URL('../data', import.meta.url)));
@@ -100,7 +102,12 @@ test('every dated edition carries event data with its status, built only from it
 });
 
 test('breadcrumb data matches the visible breadcrumb', async ({ page }) => {
-  const paths = [...dataset.editions.map((e) => `cons/${e.slug}/`), 'contribute/'];
+  const paths = [
+    ...dataset.editions.map((e) => `cons/${e.slug}/`),
+    'contribute/',
+    ...REGIONS.map((r) => regionPath(r).slice(1)),
+    ...pagedCities.map((c) => cityPath(c).slice(1)),
+  ];
   for (const path of paths) {
     await page.goto(path);
     const lists = ofType(await jsonLd(page), 'BreadcrumbList');
@@ -162,4 +169,23 @@ test('every month heading on the home page links to an indexable calendar page',
 test("the current month's dated page points search engines at /calendar/", async ({ page }) => {
   await page.goto(`calendar/${todayIn('America/Chicago').slice(0, 7)}/`);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${SITE}calendar/`);
+});
+
+test('region and city pages follow the index rules', async ({ page, request }) => {
+  const xml = await (await request.get('sitemap.xml')).text();
+  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!);
+  for (const region of REGIONS) {
+    const listed = upcoming.some((e) => e.region === region);
+    expect(locs.includes(new URL(regionPath(region), SITE).href), region).toBe(listed);
+    if (!listed) {
+      await page.goto(regionPath(region));
+      await expect(page.locator('meta[name="robots"]'), region).toHaveAttribute(
+        'content',
+        'noindex',
+      );
+    }
+  }
+  expect(locs.filter((loc) => loc.includes('/cities/')).sort()).toEqual(
+    pagedCities.map((city) => new URL(cityPath(city), SITE).href).sort(),
+  );
 });

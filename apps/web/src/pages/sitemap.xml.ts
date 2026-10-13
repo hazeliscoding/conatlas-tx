@@ -1,10 +1,11 @@
 // Every indexable page for search engines, with each convention page's last edit; robots.txt
 // points here. Left out: Saved and 404 (noindex), the current month's dated page (/calendar/ is
-// its canonical), and months with nothing on them (noindex).
-import { todayIn } from '@conatlas/core';
+// its canonical), months with nothing on them and regions with nothing upcoming (noindex), and
+// cities without a page of their own (redirects).
+import { REGIONS, todayIn } from '@conatlas/core';
 import type { APIRoute } from 'astro';
 import { calendarMonths, inMonth } from '../lib/calendar.ts';
-import { detailHref, getDataset, getUpcoming, href } from '../lib/data.ts';
+import { cityPages, detailHref, getDataset, getUpcoming, href, regionHref } from '../lib/data.ts';
 
 export const GET: APIRoute = ({ site }) => {
   const listings = getUpcoming();
@@ -15,6 +16,10 @@ export const GET: APIRoute = ({ site }) => {
     ...later
       .filter((month) => inMonth(listings, month).length > 0)
       .map((month) => ({ path: href(`calendar/${month}/`) })),
+    ...REGIONS.filter((region) => listings.some((e) => e.region === region && !e.awaitingNext)).map(
+      (region) => ({ path: regionHref(region) }),
+    ),
+    ...[...cityPages(listings).values()].map((path) => ({ path })),
     ...getDataset().editions.map((e) => ({ path: detailHref(e), lastmod: e.updated_at })),
     { path: href('about/') },
     { path: href('contribute/') },

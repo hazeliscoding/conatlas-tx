@@ -11,6 +11,8 @@ const PAGES = [
   'about/',
   'saved/',
   'contribute/?con=ushicon-2027',
+  'regions/gulf-coast/',
+  'regions/west-texas/',
 ];
 
 for (const theme of ['light', 'dark']) {
@@ -28,3 +30,19 @@ for (const theme of ['light', 'dark']) {
     });
   }
 }
+
+// City pages come and go with the data, so check whichever the sitemap lists first.
+test('a city page has no serious accessibility issues', async ({ page, request }) => {
+  const xml = await (await request.get('sitemap.xml')).text();
+  const city = xml.match(/<loc>[^<]*?(\/cities\/[^<]+)<\/loc>/)?.[1];
+  test.skip(!city, 'no city has a page today');
+  await page.goto(city!);
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+    .analyze();
+  expect(
+    violations
+      .filter((v) => v.impact === 'serious' || v.impact === 'critical')
+      .map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+  ).toEqual([]);
+});

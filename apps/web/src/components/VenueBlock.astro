@@ -9,9 +9,14 @@ interface Props {
   region?: string;
   /** Bordered card with address and map link; otherwise a compact line. */
   card?: boolean;
+  /** Link the region label to its page. */
+  regionHref?: string;
+  /** Link the city to its page, when it has one. */
+  cityHref?: string;
 }
 
-const { name, address, city, region, card = false } = Astro.props;
+const { name, address, city, region, card = false, regionHref, cityHref } = Astro.props;
+const Region = regionHref ? 'a' : 'span';
 // OpenStreetMap: an open map with no account or tracking, matching the site's no-third-party stance.
 const mapHref = card
   ? `https://www.openstreetmap.org/search?query=${encodeURIComponent(address ?? `${name ?? ''} ${city}, TX`)}`
@@ -25,15 +30,18 @@ const mapHref = card
   <div>
     {name && <div class="venue__name">{name}</div>}
     <div class="venue__city">
-      {city}, TX
+      {cityHref ? <a href={cityHref}>{city}</a> : city}, TX
       {region && (
         <>
           {' '}
-          <span class="venue__region">{region}</span>
+          <Region class="venue__region" href={regionHref}>
+            {region}
+          </Region>
         </>
       )}
     </div>
     {card && address && <div class="venue__addr">{address}</div>}
+    <slot />
   </div>
   {mapHref && (
     <a class="venue__map" href={mapHref} target="_blank" rel="noopener noreferrer">
@@ -67,6 +75,9 @@ const mapHref = card
     font: var(--type-meta);
     text-transform: uppercase;
     letter-spacing: var(--tracking-wide);
+  }
+  /* As a link it takes the site's link color; lavender ink is also the visited-link color. */
+  span.venue__region {
     color: var(--brand-lavender-ink);
   }
   .venue__addr {
@@ -74,6 +85,8 @@ const mapHref = card
     color: var(--text-muted);
   }
   .venue--card {
+    /* Spare height in a stretched card goes above the map link, so links line up in a row. */
+    grid-template-rows: 1fr auto;
     padding: 16px;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);

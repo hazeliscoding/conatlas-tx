@@ -3,7 +3,7 @@ import { todayIn } from '@conatlas/core';
 import CalendarView from '../../components/CalendarView.astro';
 import Base from '../../layouts/Base.astro';
 import { calendarMonths, inMonth, monthTitle, nextMonth, type Month } from '../../lib/calendar.ts';
-import { getUpcoming, href } from '../../lib/data.ts';
+import { andList, getUpcoming, href } from '../../lib/data.ts';
 
 // Every month keeps its URL once published, so links and search results never hit a 404. The
 // current month's page points search engines at /calendar/, which shows the same month, and
@@ -26,12 +26,7 @@ if (gone) return Astro.redirect(href('calendar/'), 301);
 
 const title = monthTitle(month);
 const names = inMonth(getUpcoming(), month).map((e) => e.title);
-const listed =
-  names.length > 4
-    ? `${names.slice(0, 4).join(', ')} and ${names.length - 4} more`
-    : names.length > 1
-      ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`
-      : names[0];
+const listed = andList(names, 4);
 ---
 
 <Base

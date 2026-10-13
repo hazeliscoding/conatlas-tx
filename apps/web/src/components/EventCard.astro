@@ -13,9 +13,11 @@ interface Props {
   tone?: Tone;
   /** Smaller card for secondary lists: no region eyebrow, year or official link, icon-only Save. */
   compact?: boolean;
+  /** The region label above the title; off on a region's own page, where it would repeat. */
+  eyebrow?: boolean;
 }
 
-const { listing: e, tone, compact } = Astro.props;
+const { listing: e, tone, compact, eyebrow = true } = Astro.props;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const start = e.start_date;
 const end = e.end_date ?? start;
@@ -52,7 +54,7 @@ const titleId = `ev-${e.id}`;
     cancelled={cancelled}
   />
   <div class="ev__body">
-    {!compact && <div class="ev__eyebrow">{REGION_NAMES[e.region]}</div>}
+    {!compact && eyebrow && <div class="ev__eyebrow">{REGION_NAMES[e.region]}</div>}
     <h3 class="ev__title" id={titleId}>
       <a href={detailHref(e)}>{e.displayName}</a>
     </h3>

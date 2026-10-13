@@ -7,6 +7,8 @@ import EventCard from './EventCard.astro';
 
 interface Props {
   listings: Listing[];
+  /** Passed to each card: false on region and city pages. */
+  eyebrow?: boolean;
 }
 
 const MONTHS = [
@@ -72,7 +74,7 @@ for (const listing of Astro.props.listings) {
         </div>
         <div class="tl__list">
           {listings.map((listing, i) => (
-            <EventCard listing={listing} tone={TONES[(gi + i) % 3]} />
+            <EventCard listing={listing} tone={TONES[(gi + i) % 3]} eyebrow={Astro.props.eyebrow} />
           ))}
         </div>
       </section>

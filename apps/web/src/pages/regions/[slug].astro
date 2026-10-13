@@ -1,0 +1,28 @@
+---
+import { REGION_NAMES, REGIONS } from '@conatlas/core';
+import PlaceView from '../../components/PlaceView.astro';
+import Base from '../../layouts/Base.astro';
+import { getUpcoming, placeDescription, slug } from '../../lib/data.ts';
+
+// Every region always has a page; one with nothing upcoming stays out of search.
+export function getStaticPaths() {
+  return REGIONS.map((region) => ({
+    params: { slug: slug(REGION_NAMES[region]) },
+    props: { region },
+  }));
+}
+
+const { region } = Astro.props;
+const listings = getUpcoming().filter((e) => e.region === region);
+const name = REGION_NAMES[region];
+// Search titles name the state when the region's name doesn't ("Texas Gulf Coast").
+const place = name.includes('Texas') ? name : `Texas ${name}`;
+---
+
+<Base
+  title={`${place} anime conventions`}
+  description={placeDescription(place, listings)}
+  noindex={!listings.some((e) => !e.awaitingNext)}
+>
+  <PlaceView region={region} listings={listings} />
+</Base>

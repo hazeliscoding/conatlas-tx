@@ -51,6 +51,45 @@ export function postalAddress(e: Pick<Edition, 'city' | 'venue'>) {
   };
 }
 
+/** "A", "A and B", "A, B and C"; past `max` items, "A, B, C and 2 more". */
+export function andList(items: string[], max = Infinity): string {
+  const shown = items.length > max ? [...items.slice(0, max), `${items.length - max} more`] : items;
+  return shown.length > 1
+    ? `${shown.slice(0, -1).join(', ')} and ${shown.at(-1)}`
+    : (shown[0] ?? '');
+}
+
+/** URL slug for a place name: "College Station" → "college-station", accents dropped. */
+export const slug = (name: string) =>
+  name
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+export const regionHref = (region: Region) => href(`regions/${slug(REGION_NAMES[region])}/`);
+
+/**
+ * Cities with a page of their own, to its address: three or more upcoming conventions (the
+ * 2026-10-13 decision), counted as the home page counts them.
+ */
+export function cityPages(listings: Listing[] = getUpcoming()): Map<string, string> {
+  const counts = new Map<string, number>();
+  for (const e of listings) if (!e.awaitingNext) counts.set(e.city, (counts.get(e.city) ?? 0) + 1);
+  return new Map(
+    [...counts].filter(([, n]) => n >= 3).map(([city]) => [city, href(`cities/${slug(city)}/`)]),
+  );
+}
+
+/** Search description for a region or city page, built only from its listings. */
+export function placeDescription(place: string, listings: Listing[]): string {
+  const titles = listings.filter((e) => !e.awaitingNext).map((e) => e.title);
+  return titles.length
+    ? `We list ${titles.length} upcoming ${place} anime ${titles.length === 1 ? 'convention' : 'conventions'}: ${andList(titles, 3)}. Checked against official sources.`
+    : `We don't list an upcoming ${place} anime convention yet. Conventions appear here once a maintainer confirms them against an official source.`;
+}
+
 /** An edition's full name, e.g. "San Japan 2027" or "KimoKawaii Conroe 2027". */
 export const editionTitle = (edition: Edition, seriesName: string) =>
   `${seriesName} ${edition.edition}`;

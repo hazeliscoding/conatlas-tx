@@ -9,7 +9,7 @@ import Timeline from '../components/Timeline.astro';
 import ViewTabs from '../components/ViewTabs.astro';
 import Base from '../layouts/Base.astro';
 import { REGIONS, REGION_NAMES } from '@conatlas/core';
-import { getUpcoming, href } from '../lib/data.ts';
+import { getUpcoming, href, regionHref } from '../lib/data.ts';
 
 const listings = getUpcoming();
 const cities = [...new Set(listings.map((e) => e.city))].sort();
@@ -138,7 +138,7 @@ const STEPS = [
     <ul class="regions">
       {regions.map((r) => (
         <li>
-          <a class="region" href={href(`?region=${r.id}#upcoming`)}>
+          <a class="region" href={regionHref(r.id)}>
             <span class="region__top">
               <span class="region__name">{r.name}</span>
               <span class="region__count">

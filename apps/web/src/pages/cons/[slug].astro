@@ -30,6 +30,8 @@ import {
   getUpcoming,
   href,
   postalAddress,
+  regionHref,
+  cityPages,
 } from '../../lib/data.ts';
 
 interface Props {
@@ -73,6 +75,7 @@ const [, em, ed] = end ? end.split('-').map(Number) : [];
 const cancelled = e.status === 'cancelled';
 const ended = e.status === 'completed' || (end !== undefined && end < today);
 const longDate = (d: string) => formatDateRange(d, d);
+const cityHref = cityPages().get(e.city);
 const description = e.description ?? series.description;
 // Event structured data for every edition with dates, carrying its status: Google asks that a
 // cancelled or postponed event keep its dates and say so. Every value is one the page shows;
@@ -256,10 +259,13 @@ const past = siblings
               address={e.venue.address}
               city={e.city}
               region={REGION_NAMES[e.region]}
+              regionHref={regionHref(e.region)}
+              cityHref={cityHref}
             />
           ) : (
             <p class="m-0 [font:var(--type-body-sm)] text-text-muted">
-              Venue not announced yet. City: {e.city}, {REGION_NAMES[e.region]}.
+              Venue not announced yet. City: {cityHref ? <a href={cityHref}>{e.city}</a> : e.city},{' '}
+              <a href={regionHref(e.region)}>{REGION_NAMES[e.region]}</a>.
             </p>
           )}
         </section>

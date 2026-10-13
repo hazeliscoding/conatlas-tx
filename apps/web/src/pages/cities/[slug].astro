@@ -1,0 +1,32 @@
+---
+import PlaceView from '../../components/PlaceView.astro';
+import Base from '../../layouts/Base.astro';
+import {
+  cityPages,
+  getDataset,
+  getUpcoming,
+  placeDescription,
+  regionHref,
+  slug,
+} from '../../lib/data.ts';
+
+// Every city in the data keeps a URL. Below three upcoming conventions it redirects to its
+// region, like a passed calendar month, so links and search results never hit a 404.
+export function getStaticPaths() {
+  const pages = cityPages();
+  const regions = new Map(getDataset().editions.map((e) => [e.city, e.region]));
+  return [...regions].map(([city, region]) => ({
+    params: { slug: slug(city) },
+    props: { city, region, page: pages.has(city) },
+  }));
+}
+
+const { city, region, page } = Astro.props;
+// A 301 makes Astro write an immediate refresh, which search engines treat as permanent.
+if (!page) return Astro.redirect(regionHref(region), 301);
+const listings = getUpcoming().filter((e) => e.city === city);
+---
+
+<Base title={`${city} anime conventions`} description={placeDescription(city, listings)}>
+  <PlaceView region={region} city={city} listings={listings} />
+</Base>

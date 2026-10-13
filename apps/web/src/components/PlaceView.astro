@@ -1,0 +1,216 @@
+---
+// The body of a region or city page: what we list there and when the next one is, the
+// conventions themselves, their venues (city pages) and calendar feeds. Every sentence is built
+// from the listings, so nothing here says more than the data does.
+import { formatDateRange, REGION_NAMES, todayIn, type Region } from '@conatlas/core';
+import {
+  andList,
+  cityPages,
+  detailHref,
+  getFeeds,
+  href,
+  placeDescription,
+  regionHref,
+  type Listing,
+} from '../lib/data.ts';
+import Breadcrumb from './Breadcrumb.astro';
+import Button from './Button.astro';
+import EmptyState from './EmptyState.astro';
+import Icon from './Icon.astro';
+import Ribbon from './Ribbon.astro';
+import Subscribe from './Subscribe.astro';
+import Timeline from './Timeline.astro';
+import VenueBlock from './VenueBlock.astro';
+
+interface Props {
+  region: Region;
+  /** Set on a city page. */
+  city?: string;
+  /** The place's listings from getUpcoming(), awaiting-next ones included. */
+  listings: Listing[];
+}
+
+const { region, city, listings } = Astro.props;
+const regionName = REGION_NAMES[region];
+const name = city ?? regionName;
+const today = todayIn('America/Chicago');
+const upcoming = listings.filter((e) => !e.awaitingNext);
+const awaiting = listings.filter((e) => e.awaitingNext).map((e) => e.displayName);
+const plural = (n: number) => (n === 1 ? 'convention' : 'conventions');
+// A region page names its cities, a city page its conventions, soonest first.
+const named = city ? upcoming.map((e) => e.displayName) : [...new Set(upcoming.map((e) => e.city))];
+// The soonest edition with organizer-confirmed dates; postponed and undated ones never lead.
+const next = upcoming.find((e) => e.start_date && e.status === 'confirmed');
+const flagged = (['postponed', 'cancelled'] as const)
+  .map((status) => ({
+    status,
+    names: upcoming.filter((e) => e.status === status).map((e) => e.displayName),
+  }))
+  .filter(({ names }) => names.length > 0);
+const opening = upcoming.length
+  ? `We list ${upcoming.length} upcoming anime ${plural(upcoming.length)} in ${city ? `${city}: ${andList(named)}` : andList(named)}.`
+  : `We don't list an upcoming ${name} anime convention yet.`;
+// "Next up: <link>, Oct 31, 2026, at Venue in City." The link is the only markup in the lead.
+const nextLabel = next && (next.start_date! <= today ? 'On now:' : 'Next up:');
+const nextRest =
+  next &&
+  `, ${formatDateRange(next.start_date!, next.end_date ?? next.start_date!)}${next.venue ? `, at ${next.venue.name}` : ''}${city ? '' : next.venue ? ` in ${next.city}` : `, in ${next.city}`}.`;
+const closing = [
+  ...flagged.map(
+    ({ status, names }) => `${andList(names)} ${names.length === 1 ? 'is' : 'are'} ${status}.`,
+  ),
+  ...(awaiting.length ? [`Next dates aren't announced yet for ${andList(awaiting)}.`] : []),
+].join(' ');
+const checked = listings.map((e) => e.last_verified_at).sort()[0];
+const guides = city ? [] : [...cityPages()].filter(([c]) => upcoming.some((e) => e.city === c));
+const hasFeed = region in getFeeds();
+const note = !hasFeed
+  ? `${regionName} gets its own feed once a convention there has dates.`
+  : city
+    ? `${city} has no feed of its own; subscribe to the ${regionName} feed for its conventions.`
+    : undefined;
+
+// City pages group their conventions by venue, soonest first; a past venue may not host the
+// next edition, so awaiting-next series are left out.
+const venues = new Map<string, Listing[]>();
+for (const e of upcoming)
+  if (e.venue) venues.set(e.venue.name, [...(venues.get(e.venue.name) ?? []), e]);
+const noVenue = upcoming.filter((e) => !e.venue);
+const suffix = (e: Listing) =>
+  e.status === 'cancelled'
+    ? ' · cancelled'
+    : e.status === 'postponed'
+      ? ' · postponed'
+      : e.start_date
+        ? ''
+        : ' · dates not announced';
+---
+
+<div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
+  <Breadcrumb
+    items={[
+      { label: 'Explore', href: href() },
+      ...(city ? [{ label: regionName, href: regionHref(region) }] : []),
+      { label: name },
+    ]}
+  />
+
+  <div class="grid gap-3">
+    <h1 class="m-0 [font:var(--type-h1)] text-balance">{name} anime conventions</h1>
+    {listings.length > 0 && (
+      <p class="m-0 max-w-[60ch] [font:var(--type-body-lg)] text-pretty text-text-2">
+        {/* Line breaks between expressions render as nothing, so sentences carry their own space. */}
+        {opening}
+        {next && (
+          <span>
+            {' '}
+            {nextLabel} <a href={detailHref(next)}>{next.displayName}</a>
+            <span>{nextRest}</span>
+          </span>
+        )}
+        {closing && ` ${closing}`}
+      </p>
+    )}
+    {guides.length > 0 && (
+      <p class="m-0 [font:var(--type-body-sm)] text-text-2">
+        {guides.length === 1 ? 'City guide' : 'City guides'}:{' '}
+        {guides.map(([c, h], i) => (
+          <>
+            {i > 0 && ' · '}
+            <a href={h}>{c} anime conventions</a>
+          </>
+        ))}
+      </p>
+    )}
+    {checked && listings.length > 0 && (
+      <p class="m-0 flex items-center gap-1.5 [font:var(--type-caption)] text-text-muted">
+        <Icon name="badge-check" size={14} />
+        Every listing here was checked against official sources on{' '}
+        {formatDateRange(checked, checked)} or later.
+      </p>
+    )}
+  </div>
+
+  <div class="grid grid-cols-[minmax(0,1fr)] gap-4">
+    <Ribbon rule heading={listings.length === 0}>
+      Upcoming
+    </Ribbon>
+    {listings.length > 0 ? (
+      <>
+        <Timeline listings={listings} eyebrow={false} />
+        <p class="m-0 [font:var(--type-body-sm)]">
+          Know a {name} con we're missing? <a href={href('contribute/')}>Suggest a convention</a>
+        </p>
+      </>
+    ) : (
+      <EmptyState title="Nothing here yet" description={placeDescription(name, [])}>
+        <Button variant="soft" href={href('contribute/')}>
+          <Icon name="plus" size={16} />
+          Suggest a convention
+        </Button>
+        <Button variant="secondary" href={href()}>
+          See all upcoming conventions
+        </Button>
+      </EmptyState>
+    )}
+  </div>
+
+  {city && (venues.size > 0 || noVenue.length > 0) && (
+    <section class="grid gap-3">
+      <Ribbon tone="lavender" rule heading>
+        Venues
+      </Ribbon>
+      {venues.size > 0 && (
+        <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-3 p-0">
+          {[...venues].map(([venue, here]) => (
+            <li class="grid">
+              <VenueBlock
+                card
+                name={venue}
+                address={here.find((e) => e.venue?.address)?.venue?.address}
+                city={city}
+              >
+                <ul class="m-0 mt-2 grid gap-1 [font:var(--type-body-sm)]">
+                  {here.map((e) => (
+                    <li>
+                      <a href={detailHref(e)}>{e.displayName}</a>
+                      {e.start_date && (
+                        <>
+                          {' · '}
+                          <time
+                            datetime={
+                              e.start_date === (e.end_date ?? e.start_date)
+                                ? e.start_date
+                                : `${e.start_date}/${e.end_date}`
+                            }
+                          >
+                            {formatDateRange(e.start_date, e.end_date ?? e.start_date)}
+                          </time>
+                        </>
+                      )}
+                      {suffix(e)}
+                    </li>
+                  ))}
+                </ul>
+              </VenueBlock>
+            </li>
+          ))}
+        </ul>
+      )}
+      {noVenue.length > 0 && (
+        <p class="m-0 [font:var(--type-body-sm)] text-text-muted">
+          Venue not announced yet:{' '}
+          {noVenue.map((e, i) => (
+            <>
+              {i > 0 && (i === noVenue.length - 1 ? ' and ' : ', ')}
+              <a href={detailHref(e)}>{e.displayName}</a>
+            </>
+          ))}
+          .
+        </p>
+      )}
+    </section>
+  )}
+
+  <Subscribe feeds={[region, 'all']} note={note} />
+</div>
