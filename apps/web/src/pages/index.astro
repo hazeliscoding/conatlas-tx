@@ -24,7 +24,8 @@ const regions = REGIONS.map((id) => {
     id,
     name: REGION_NAMES[id],
     count: here.length,
-    cities: names.length ? names.join(' · ') : 'No upcoming listings',
+    // A no-break space keeps each dot with the city before it, so no line starts with one.
+    cities: names.length ? names.join('\u00a0· ') : 'No upcoming listings',
   };
 });
 const STEPS = [
