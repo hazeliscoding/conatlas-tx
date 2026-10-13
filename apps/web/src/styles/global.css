@@ -56,3 +56,11 @@
   --shadow-2: var(--shadow-2);
   --shadow-3: var(--shadow-3);
 }
+
+/* Focus rings are box-shadows, which forced-colors mode (Windows contrast themes) drops. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid CanvasText !important;
+    outline-offset: 2px;
+  }
+}
