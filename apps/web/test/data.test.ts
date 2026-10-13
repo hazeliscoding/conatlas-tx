@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { REGIONS } from '@conatlas/core';
+import { REGIONS, type Edition } from '@conatlas/core';
 import {
   andList,
   cityPages,
+  editionSummary,
   placeDescription,
   postalAddress,
   regionHref,
@@ -100,6 +101,52 @@ describe('place pages', () => {
     );
     expect(placeDescription('West Texas', [listing('Old 2026', 'X', true)])).toBe(
       "We don't list an upcoming West Texas anime convention yet. Conventions appear here once a maintainer confirms them against an official source.",
+    );
+  });
+});
+
+describe('editionSummary', () => {
+  const edition = (fields: Partial<Edition>) =>
+    ({
+      edition: '2027',
+      city: 'Houston',
+      status: 'confirmed',
+      start_date: '2027-03-05',
+      end_date: '2027-03-07',
+      venue: { name: 'Hall A' },
+      last_verified_at: '2026-10-12',
+      ...fields,
+    }) as Edition;
+  const con = { name: 'Some Con' };
+  const checked = 'ConAtlas TX checked these details against official sources on Oct 12, 2026.';
+
+  it('says what, where and when for an upcoming edition, and who runs it when known', () => {
+    expect(editionSummary(edition({}), con, '2026-10-13')).toBe(
+      `Some Con 2027 is an anime convention in Houston, Texas, on Mar 5–7, 2027, at Hall A. ${checked}`,
+    );
+    expect(editionSummary(edition({}), { ...con, organizer: 'Org LLC' }, '2026-10-13')).toContain(
+      "at Hall A. It's run by Org LLC. ConAtlas",
+    );
+  });
+
+  it('describes past, cancelled, postponed and undated editions as they are', () => {
+    expect(editionSummary(edition({ status: 'completed' }), con, '2027-04-01')).toBe(
+      `Some Con 2027 was an anime convention in Houston, Texas, held Mar 5–7, 2027, at Hall A. ${checked}`,
+    );
+    expect(editionSummary(edition({ status: 'cancelled' }), con, '2026-10-13')).toBe(
+      `Some Con 2027, an anime convention in Houston, Texas, planned for Mar 5–7, 2027, at Hall A, was cancelled. ${checked}`,
+    );
+    expect(editionSummary(edition({ status: 'postponed' }), con, '2026-10-13')).toBe(
+      `Some Con 2027, an anime convention in Houston, Texas, is postponed, and new dates haven't been announced. ${checked}`,
+    );
+    expect(
+      editionSummary(
+        edition({ status: 'dates_tba', start_date: undefined, end_date: undefined }),
+        con,
+        '2026-10-13',
+      ),
+    ).toBe(
+      `Some Con 2027 is an anime convention in Houston, Texas. Its dates haven't been announced yet; the venue is Hall A. ${checked}`,
     );
   });
 });

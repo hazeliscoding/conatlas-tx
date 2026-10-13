@@ -1,11 +1,13 @@
 import { resolve } from 'node:path';
 import {
+  formatDateRange,
   REGION_NAMES,
   todayIn,
   validateDataset,
   type Dataset,
   type Edition,
   type Region,
+  type Series,
 } from '@conatlas/core';
 import { loadDataset } from '@conatlas/core/load';
 
@@ -88,6 +90,38 @@ export function placeDescription(place: string, listings: Listing[]): string {
   return titles.length
     ? `We list ${titles.length} upcoming ${place} anime ${titles.length === 1 ? 'convention' : 'conventions'}: ${andList(titles, 3)}. Checked against official sources.`
     : `We don't list an upcoming ${place} anime convention yet. Conventions appear here once a maintainer confirms them against an official source.`;
+}
+
+/**
+ * A plain summary of an edition built only from its record: what, where, when, who runs it and
+ * when it was last checked. The convention page's About section and llms.txt both use it, so
+ * they always say the same thing.
+ */
+export function editionSummary(
+  e: Edition,
+  series: Pick<Series, 'name' | 'organizer'>,
+  today = todayIn('America/Chicago'),
+): string {
+  const title = editionTitle(e, series.name);
+  const where = `${e.city}, Texas`;
+  const start = e.start_date;
+  const end = e.end_date ?? start;
+  const when = start && end ? formatDateRange(start, end) : undefined;
+  const at = e.venue ? `, at ${e.venue.name}` : '';
+  const ended = e.status === 'completed' || (end !== undefined && end < today);
+  const lead =
+    e.status === 'cancelled'
+      ? `${title}, an anime convention in ${where}${when ? `, planned for ${when}${at}` : ''}, was cancelled.`
+      : e.status === 'postponed'
+        ? `${title}, an anime convention in ${where}, is postponed, and new dates haven't been announced.`
+        : !when
+          ? `${title} is an anime convention in ${where}. Its dates haven't been announced yet${e.venue ? `; the venue is ${e.venue.name}` : ''}.`
+          : ended
+            ? `${title} was an anime convention in ${where}, held ${when}${at}.`
+            : `${title} is an anime convention in ${where}, on ${when}${at}.`;
+  const by = series.organizer ? ` It's run by ${series.organizer}.` : '';
+  const checked = formatDateRange(e.last_verified_at, e.last_verified_at);
+  return `${lead}${by} ConAtlas TX checked these details against official sources on ${checked}.`;
 }
 
 /** An edition's full name, e.g. "San Japan 2027" or "KimoKawaii Conroe 2027". */

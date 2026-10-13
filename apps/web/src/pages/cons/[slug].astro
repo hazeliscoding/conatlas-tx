@@ -24,6 +24,7 @@ import VenueBlock from '../../components/VenueBlock.astro';
 import Base from '../../layouts/Base.astro';
 import {
   detailHref,
+  editionSummary,
   editionTitle,
   eventDetails,
   getDataset,
@@ -240,14 +241,15 @@ const past = siblings
 
     <div class="detail-cols">
       <div class="grid min-w-0 content-start gap-6">
-        {description && (
-          <section class="grid gap-3">
-            <Ribbon rule heading>
-              About
-            </Ribbon>
-            <p class="m-0 max-w-[68ch] text-pretty text-text-2">{description}</p>
-          </section>
-        )}
+        <section class="grid gap-3">
+          <Ribbon rule heading>
+            About
+          </Ribbon>
+          <p class="m-0 max-w-[68ch] text-pretty text-text-2" data-summary>
+            {editionSummary(e, series, today)}
+          </p>
+          {description && <p class="m-0 max-w-[68ch] text-pretty text-text-2">{description}</p>}
+        </section>
         <section class="grid gap-3">
           <Ribbon tone="sage" rule heading>
             Venue
