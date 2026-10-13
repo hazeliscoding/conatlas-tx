@@ -10,6 +10,7 @@ import {
   type Series,
   type Source,
 } from '@conatlas/core';
+import BookmarkButton from '../../components/BookmarkButton.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Button from '../../components/Button.astro';
 import DateBlock from '../../components/DateBlock.astro';
@@ -96,7 +97,10 @@ const past = siblings
           <StatusLine edition={e} badge />
           <span class="eyebrow">{REGION_NAMES[e.region]}</span>
         </div>
-        <h1 class:list={['m-0 [font:var(--type-h1)] text-balance', cancelled && 'struck']}>
+        <h1
+          id="con-title"
+          class:list={['m-0 [font:var(--type-h1)] text-balance', cancelled && 'struck']}
+        >
           {name}
         </h1>
         <span class="pixel">{e.edition}</span>
@@ -155,6 +159,7 @@ const past = siblings
     )}
 
     <div class="flex flex-wrap items-center gap-2.5">
+      {!ended && !cancelled && <BookmarkButton id={e.id} describedby="con-title" />}
       <Button variant="secondary" href={e.url} external>
         Visit official site
       </Button>

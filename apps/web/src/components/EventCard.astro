@@ -1,8 +1,9 @@
 ---
-// The discovery unit: date block, name, dates and venue, status, official link.
+// The discovery unit: date block, name, dates and venue, status, save toggle, official link.
 // The title links to the detail page and stretches over the whole card.
 import { REGION_NAMES, dayCount, formatDateRange, weekday } from '@conatlas/core';
 import { detailHref, type Listing } from '../lib/data.ts';
+import BookmarkButton from './BookmarkButton.astro';
 import DateBlock, { type Tone } from './DateBlock.astro';
 import Icon from './Icon.astro';
 import StatusLine from './StatusLine.astro';
@@ -21,6 +22,7 @@ const [, em, ed] = end ? end.split('-').map(Number) : [];
 const cancelled = e.status === 'cancelled';
 // A past edition standing in for a series whose next dates aren't announced: no date claims.
 const dated = start && end && !e.awaitingNext;
+const savable = !e.awaitingNext;
 const titleId = `ev-${e.id}`;
 ---
 
@@ -74,6 +76,7 @@ const titleId = `ev-${e.id}`;
     </div>
   </div>
   <div class="ev__actions">
+    {savable && <BookmarkButton id={e.id} describedby={titleId} />}
     <a class="ev__official" href={e.url} target="_blank" rel="noopener noreferrer">
       Official site <Icon name="external-link" size={12} label="(opens in new tab)" />
     </a>

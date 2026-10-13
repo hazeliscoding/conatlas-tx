@@ -1,0 +1,123 @@
+---
+// The browser-local saved list. Every savable listing is rendered and the script shows the saved
+// ones, so the page stays static. Export joins the saved events into one .ics file.
+import { calendar, editionEvent } from '@conatlas/calendar';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Button from '../components/Button.astro';
+import EmptyState from '../components/EmptyState.astro';
+import Icon from '../components/Icon.astro';
+import Ribbon from '../components/Ribbon.astro';
+import Timeline from '../components/Timeline.astro';
+import Base from '../layouts/Base.astro';
+import { eventDetails, getUpcoming, href } from '../lib/data.ts';
+
+const listings = getUpcoming().filter((e) => !e.awaitingNext);
+const events: Record<string, string> = {};
+for (const e of listings) {
+  const event = e.status === 'confirmed' && editionEvent(e, eventDetails(e, e.title));
+  if (event) events[e.id] = event;
+}
+// Escape "<" so no value can close the script element early.
+const ics = JSON.stringify({ empty: calendar('My ConAtlas TX list', []), events }).replace(
+  /</g,
+  '\\u003c',
+);
+---
+
+<Base title="Saved" description="The Texas anime conventions you saved, kept in this browser.">
+  <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
+    <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: 'Saved' }]} />
+    <div class="grid gap-3">
+      <Ribbon rule>Your list</Ribbon>
+      <div class="flex flex-wrap items-baseline justify-between gap-4">
+        <h1 class="m-0 [font:var(--type-h1)]" data-saved-heading>
+          Your saved conventions
+        </h1>
+        <Button variant="secondary" data-saved-export hidden>
+          <Icon name="calendar-plus" size={16} />
+          Export all (.ics)
+        </Button>
+      </div>
+    </div>
+
+    <p class="m-0 max-w-[68ch] text-text-2" data-saved-nojs>
+      Your list lives in this browser's storage, so showing it needs JavaScript. Every convention is
+      still on the <a href={href()}>Explore</a> page.
+    </p>
+    <div data-saved-list hidden>
+      <Timeline listings={listings} />
+    </div>
+    <EmptyState
+      title="Your con adventure starts here."
+      description="Save the conventions you're interested in and they'll show up here."
+      data-saved-empty
+      hidden
+    >
+      <Button href={href()}>Browse upcoming conventions</Button>
+      <Button variant="secondary" href={href('calendar/')}>
+        Open the calendar
+      </Button>
+    </EmptyState>
+
+    <div class="flex max-w-[68ch] items-start gap-2.5 rounded-md bg-surface-2 px-4 py-3.5 [font:var(--type-body-sm)] text-text-2">
+      <Icon name="info" size={18} />
+      <span>
+        <b class="text-text">Stored in this browser only.</b> Your list lives on this device, in
+        this browser. There's no account, nothing is uploaded, and it won't follow you to another
+        phone or computer. Clearing site data removes it. Export to .ics to keep a copy.
+      </span>
+    </div>
+  </div>
+  <script type="application/json" id="saved-ics" set:html={ics} />
+</Base>
+
+<script>
+  import { getSaved, onSavedChange } from '../lib/saved.ts';
+
+  const list = document.querySelector<HTMLElement>('[data-saved-list]')!;
+  const cards = [...list.querySelectorAll<HTMLElement>('[data-listing]')];
+  const known = new Set(cards.map((card) => card.dataset.listing!));
+  const heading = document.querySelector('[data-saved-heading]')!;
+  const exportButton = document.querySelector<HTMLButtonElement>('[data-saved-export]')!;
+  const { empty, events } = JSON.parse(document.getElementById('saved-ics')!.textContent!) as {
+    empty: string;
+    events: Record<string, string>;
+  };
+  const plural = (n: number) => `${n} ${n === 1 ? 'convention' : 'conventions'}`;
+  const savedHere = () => getSaved().filter((id) => known.has(id));
+
+  // Cards saved when the page opened stay listed after an unsave, so it's one click to undo.
+  const shown = new Set(savedHere());
+  cards.forEach((card) => (card.hidden = !shown.has(card.dataset.listing!)));
+  list.querySelectorAll<HTMLElement>('[data-filter-group]').forEach((group) => {
+    const n = group.querySelectorAll('[data-listing]:not([hidden])').length;
+    group.hidden = n === 0;
+    group.querySelector('[data-group-count]')!.textContent = plural(n);
+  });
+  list.hidden = shown.size === 0;
+  document.querySelector<HTMLElement>('[data-saved-empty]')!.hidden = shown.size > 0;
+  document.querySelector<HTMLElement>('[data-saved-nojs]')!.hidden = true;
+
+  onSavedChange(() => {
+    const saved = savedHere();
+    heading.textContent = saved.length
+      ? `${saved.length} saved ${saved.length === 1 ? 'convention' : 'conventions'}`
+      : 'Your saved conventions';
+    exportButton.hidden = !saved.some((id) => id in events);
+  });
+
+  exportButton.addEventListener('click', () => {
+    const saved = new Set(getSaved());
+    const chosen = cards.map((card) => card.dataset.listing!).filter((id) => saved.has(id));
+    const body = chosen.flatMap((id) => events[id] ?? []).join('');
+    const file = new Blob([empty.replace('END:VCALENDAR\r\n', `${body}END:VCALENDAR\r\n`)], {
+      type: 'text/calendar;charset=utf-8',
+    });
+    const link = Object.assign(document.createElement('a'), {
+      href: URL.createObjectURL(file),
+      download: 'conatlas-tx-saved.ics',
+    });
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  });
+</script>

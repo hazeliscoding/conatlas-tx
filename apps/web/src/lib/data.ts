@@ -30,11 +30,17 @@ export const detailHref = (edition: Pick<Edition, 'slug'>) => href(`cons/${editi
 export const editionTitle = (edition: Edition, seriesName: string) =>
   `${seriesName} ${edition.edition}`;
 
+/** What calendar apps show for an edition, and the page they link back to. */
+export const eventDetails = (edition: Edition, title: string) => ({
+  summary: title,
+  pageUrl: new URL(detailHref(edition), import.meta.env.SITE).href,
+});
+
 /**
  * An edition with the name to show for it. `awaitingNext` marks a series' latest past edition
  * when the organizer hasn't announced the next one, so the series stays findable.
  */
-export type Listing = Edition & { displayName: string; awaitingNext?: boolean };
+export type Listing = Edition & { displayName: string; title: string; awaitingNext?: boolean };
 
 /**
  * Editions that haven't ended as of the build, soonest first, undated last; then one
@@ -48,6 +54,7 @@ export function getUpcoming(): Listing[] {
   const toListing = (e: Edition): Listing => ({
     ...e,
     displayName: e.name ?? names.get(e.series) ?? e.series,
+    title: editionTitle(e, names.get(e.series) ?? e.series),
   });
   const upcoming = editions
     .filter((e) => e.status !== 'completed' && (!e.end_date || e.end_date >= today))

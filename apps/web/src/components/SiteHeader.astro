@@ -1,13 +1,14 @@
 ---
 // Sticky header: wordmark, primary nav and the theme switch. Under 768px the nav moves into a
 // <details> menu, which opens and closes without JavaScript.
-import { href } from '../lib/data.ts';
+import { getUpcoming, href } from '../lib/data.ts';
 import Icon, { type IconName } from './Icon.astro';
 import ThemeSwitch from './ThemeSwitch.astro';
 
 const NAV: { label: string; path: string; icon: IconName }[] = [
   { label: 'Explore', path: href(), icon: 'list' },
   { label: 'Calendar', path: href('calendar/'), icon: 'calendar' },
+  { label: 'Saved', path: href('saved/'), icon: 'bookmark' },
   { label: 'About', path: href('about/'), icon: 'info' },
 ];
 const path = Astro.url.pathname;
@@ -16,9 +17,14 @@ const current = (item: (typeof NAV)[number]) =>
   item.path === href()
     ? path === href() || path.startsWith(href('cons/'))
     : path.startsWith(item.path);
+// The Saved badge counts only editions the Saved page can show, not ones that have since ended.
+const savable = getUpcoming()
+  .filter((e) => !e.awaitingNext)
+  .map((e) => e.id)
+  .join(' ');
 ---
 
-<header class="hdr">
+<header class="hdr" data-savable={savable}>
   <a class="hdr__skip" href="#main">
     Skip to content
   </a>
@@ -31,6 +37,7 @@ const current = (item: (typeof NAV)[number]) =>
       {NAV.map((item) => (
         <a class="hdr__link" href={item.path} aria-current={current(item) ? 'page' : undefined}>
           {item.label}
+          {item.label === 'Saved' && <span class="hdr__count" data-saved-count hidden />}
         </a>
       ))}
     </nav>
@@ -52,6 +59,7 @@ const current = (item: (typeof NAV)[number]) =>
               >
                 <Icon name={item.icon} size={20} />
                 {item.label}
+                {item.label === 'Saved' && <span class="hdr__count" data-saved-count hidden />}
               </a>
             ))}
           </nav>
@@ -63,6 +71,22 @@ const current = (item: (typeof NAV)[number]) =>
     </div>
   </div>
 </header>
+
+<script>
+  import { getSaved, onSavedChange } from '../lib/saved.ts';
+
+  const savable = new Set(
+    document.querySelector<HTMLElement>('[data-savable]')!.dataset.savable!.split(' '),
+  );
+  const badges = document.querySelectorAll<HTMLElement>('[data-saved-count]');
+  onSavedChange(() => {
+    const n = getSaved().filter((id) => savable.has(id)).length;
+    badges.forEach((badge) => {
+      badge.textContent = String(n);
+      badge.hidden = n === 0;
+    });
+  });
+</script>
 
 <style>
   .hdr {
@@ -155,6 +179,14 @@ const current = (item: (typeof NAV)[number]) =>
   .mobnav__link:focus-visible {
     outline: none;
     box-shadow: var(--shadow-focus);
+  }
+  .hdr__count {
+    margin-left: 6px;
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--brand-pink-ink);
+    font: var(--type-meta);
   }
   .hdr__right {
     margin-left: auto;

@@ -1,0 +1,98 @@
+---
+// Save toggle for the browser-local list (aria-pressed). Hidden until its script runs, since
+// saving needs storage. `describedby` names what's being saved when the label alone is "Save".
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  describedby?: string;
+}
+
+const { id, describedby } = Astro.props;
+---
+
+<button
+  type="button"
+  class="bm"
+  aria-pressed="false"
+  aria-describedby={describedby}
+  data-save={id}
+  hidden
+>
+  <span class="bm__i bm__off">
+    <Icon name="bookmark" size={18} />
+  </span>
+  <span class="bm__i bm__on">
+    <Icon name="bookmark-check" size={18} strokeWidth={2.2} />
+  </span>
+  <span class="bm__off">Save</span>
+  <span class="bm__on">Saved</span>
+</button>
+
+<script>
+  import { getSaved, onSavedChange, setSaved } from '../lib/saved.ts';
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-save]');
+  buttons.forEach((button) => {
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      const id = button.dataset.save!;
+      const saved = getSaved();
+      const save = !saved.includes(id);
+      setSaved(save ? [...saved, id] : saved.filter((x) => x !== id));
+      if (save) button.classList.add('bm--pop');
+    });
+    button.addEventListener('animationend', () => button.classList.remove('bm--pop'));
+  });
+  onSavedChange(() => {
+    const saved = new Set(getSaved());
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(saved.has(b.dataset.save!))));
+  });
+</script>
+
+<style>
+  .bm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: var(--touch-min);
+    height: var(--touch-min);
+    padding: 0 12px;
+    border-radius: var(--radius-button);
+    border: var(--border-w) solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text-2);
+    font: var(--type-button);
+    cursor: pointer;
+    transition: var(--transition-color);
+  }
+  .bm:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .bm:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .bm[aria-pressed='true'] {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--brand-pink-ink);
+  }
+  .bm[aria-pressed='true'] .bm__off,
+  .bm[aria-pressed='false'] .bm__on {
+    display: none;
+  }
+  .bm__i {
+    display: grid;
+  }
+  .bm--pop .bm__i {
+    animation: bm-pop var(--dur-slow) var(--ease-pop);
+  }
+  @keyframes bm-pop {
+    50% {
+      transform: scale(1.25);
+    }
+  }
+</style>
