@@ -7,12 +7,22 @@ const PAGES = {
   calendar: 'calendar/2027-01/',
   detail: 'cons/ushicon-2027/',
   about: 'about/',
+  saved: 'saved/',
+  contribute: 'contribute/?con=ushicon-2027',
 };
+// Two saved conventions, so the Saved page and the Save buttons show their saved state.
+const SAVED = ['ushicon-2027', 'san-japan-2027'];
 
 for (const theme of ['light', 'dark']) {
   for (const [name, path] of Object.entries(PAGES)) {
     test(`screenshot ${name} (${theme})`, async ({ page }, info) => {
-      await page.addInitScript((t) => localStorage.setItem('theme', t), theme);
+      await page.addInitScript(
+        ([t, saved]) => {
+          localStorage.setItem('theme', t);
+          localStorage.setItem('conatlas-saved', saved);
+        },
+        [theme, JSON.stringify(SAVED)],
+      );
       await page.goto(path);
       await page.screenshot({
         path: `test-results/screens/${info.project.name}-${theme}-${name}.png`,

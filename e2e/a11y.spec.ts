@@ -9,6 +9,8 @@ const PAGES = [
   'cons/ushicon-2027/',
   'cons/anime-matsuri-2026/',
   'about/',
+  'saved/',
+  'contribute/?con=ushicon-2027',
 ];
 
 for (const theme of ['light', 'dark']) {
