@@ -30,10 +30,11 @@ const { title, prev, next, today } = Astro.props;
       <Icon name="chevron-left" size={20} />
     </span>
   )}
-  <h2 class="mnav__title">
-    {title}
+  <!-- The tagline sits outside the heading, so the heading's text is just the month. -->
+  <div class="mnav__title">
+    <h2 class="[font:inherit]">{title}</h2>
     <small aria-hidden="true">TX · CON CALENDAR</small>
-  </h2>
+  </div>
   {next ? (
     <a class="iconbtn" href={next} data-keep-filters aria-label="Next month" title="Next month">
       <Icon name="chevron-right" size={20} />

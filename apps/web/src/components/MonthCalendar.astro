@@ -29,8 +29,9 @@ const variant = (e: Listing) =>
     : e.status === 'postponed'
       ? 'warning'
       : `c${colors.get(e.id)}`;
+// Name and city first, in the order they're shown, so the visible text starts the link's name.
 const label = (e: Listing) =>
-  `${e.displayName}, ${formatDateRange(e.start_date!, e.end_date!)}, ${e.city}${e.status === 'cancelled' ? ', cancelled' : e.status === 'postponed' ? ', postponed' : ''}`;
+  `${e.displayName}, ${e.city}, ${formatDateRange(e.start_date!, e.end_date!)}${e.status === 'cancelled' ? ', cancelled' : e.status === 'postponed' ? ', postponed' : ''}`;
 
 const agenda = weeks
   .flatMap((w) => w.days)
@@ -147,8 +148,7 @@ const agenda = weeks
           >
             {e.status === 'cancelled' && <Icon name="circle-x" size={14} strokeWidth={2.2} />}
             {e.status === 'postponed' && <Icon name="triangle-alert" size={14} strokeWidth={2.2} />}
-            <span>{e.displayName}</span>
-            <small>{e.city}</small>
+            <span>{e.displayName}</span> <small>{e.city}</small>
           </a>
         ))}
       </div>
