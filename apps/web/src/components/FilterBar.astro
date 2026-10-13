@@ -141,10 +141,18 @@ const { cities = [], total } = Astro.props;
       );
     };
 
+    // The clear buttons hide themselves, so focus moves to the first chip instead of the page.
     const clear = () => {
       form.reset();
       update();
+      form.querySelector('input')?.focus();
     };
+    // On phones the chips scroll sideways; bring a focused chip clear of the fading edge.
+    form.addEventListener('focusin', (event) =>
+      (event.target as Element)
+        .closest('.tag')
+        ?.scrollIntoView({ block: 'nearest', inline: 'center' }),
+    );
     form.addEventListener('change', update);
     form.addEventListener('submit', (event) => event.preventDefault());
     form.querySelector('[data-clear]')?.addEventListener('click', clear);
@@ -252,6 +260,18 @@ const { cities = [], total } = Astro.props;
     background: var(--brand-plum);
     color: var(--text-inverse);
     border-color: var(--brand-plum);
+  }
+  @media (forced-colors: active) {
+    .tag:has(input:focus-visible) {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
+    .tag:has(input:checked) {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+      border-color: Highlight;
+    }
   }
   :global([data-theme='dark']) .tag:has(input:checked) {
     background: var(--brand-lavender);
