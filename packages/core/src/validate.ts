@@ -163,7 +163,7 @@ function checkEvidence(
     error('last_verified_at is later than every evidence check; verification needs evidence');
   }
   if (e.last_attempted_at && e.last_attempted_at < e.last_verified_at) {
-    error('last_attempted_at is earlier than last_verified_at');
+    error('last_attempted_at is earlier than last_verified_at; a successful check moves it up too');
   }
   if (e.updated_at > today) error('updated_at is in the future');
 }
