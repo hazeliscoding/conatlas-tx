@@ -1,0 +1,134 @@
+---
+// "Add to calendar" menu: a <details> disclosure of plain links, so it works without JavaScript.
+// The script only closes it on Escape or an outside click.
+import Icon from './Icon.astro';
+
+interface Props {
+  /** The edition's static .ics file. */
+  ics: string;
+  google: string;
+}
+
+const { ics, google } = Astro.props;
+---
+
+<details class="exp" data-menu>
+  <summary class="exp__btn">
+    <Icon name="calendar-plus" size={16} />
+    Add to calendar
+    <Icon name="chevron-down" size={16} />
+  </summary>
+  <ul class="exp__menu">
+    <li>
+      <a class="exp__item" href={ics} download>
+        <Icon name="calendar-plus" size={16} />
+        <span>Download .ics</span>
+        <small>Apple, Outlook</small>
+      </a>
+    </li>
+    <li>
+      <a class="exp__item" href={google} target="_blank" rel="noopener noreferrer">
+        <Icon name="calendar" size={16} />
+        <span>Google Calendar</span>
+        <small>
+          opens web <Icon name="external-link" size={11} label="(opens in new tab)" />
+        </small>
+      </a>
+    </li>
+  </ul>
+</details>
+
+<script>
+  const menus = document.querySelectorAll<HTMLDetailsElement>('details[data-menu]');
+  document.addEventListener('click', (event) => {
+    menus.forEach((menu) => {
+      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+    });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    menus.forEach((menu) => {
+      if (!menu.open) return;
+      menu.open = false;
+      menu.querySelector('summary')!.focus();
+    });
+  });
+</script>
+
+<style>
+  .exp {
+    position: relative;
+  }
+  .exp__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: var(--control-h-md);
+    padding: 0 var(--space-4);
+    border: var(--border-w) solid var(--border-strong);
+    border-radius: var(--radius-button);
+    background: var(--surface);
+    color: var(--text);
+    font: var(--type-button);
+    white-space: nowrap;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: var(--transition-color);
+  }
+  .exp__btn::-webkit-details-marker {
+    display: none;
+  }
+  .exp__btn:hover {
+    background: var(--surface-2);
+    border-color: var(--text-2);
+  }
+  .exp__btn:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .exp[open] .exp__btn :global(svg:last-child) {
+    transform: rotate(180deg);
+  }
+  .exp__menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: var(--z-dropdown);
+    display: grid;
+    min-width: 240px;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-2);
+  }
+  .exp__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: var(--touch-min);
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font: var(--type-body-sm);
+    text-decoration: none;
+  }
+  .exp__item:hover {
+    background: var(--surface-2);
+  }
+  .exp__item:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--focus-ring);
+  }
+  .exp__item small {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: auto;
+    font: var(--type-caption);
+    color: var(--text-muted);
+  }
+</style>

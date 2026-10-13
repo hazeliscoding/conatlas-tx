@@ -10,16 +10,18 @@ import {
   type Series,
   type Source,
 } from '@conatlas/core';
+import { googleCalendarUrl } from '@conatlas/calendar';
 import BookmarkButton from '../../components/BookmarkButton.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Button from '../../components/Button.astro';
+import CalendarExport from '../../components/CalendarExport.astro';
 import DateBlock from '../../components/DateBlock.astro';
 import Icon from '../../components/Icon.astro';
 import Ribbon from '../../components/Ribbon.astro';
 import StatusLine from '../../components/StatusLine.astro';
 import VenueBlock from '../../components/VenueBlock.astro';
 import Base from '../../layouts/Base.astro';
-import { detailHref, editionTitle, getDataset, href } from '../../lib/data.ts';
+import { detailHref, editionTitle, eventDetails, getDataset, href } from '../../lib/data.ts';
 
 interface Props {
   edition: Edition;
@@ -63,6 +65,7 @@ const cancelled = e.status === 'cancelled';
 const ended = e.status === 'completed' || (end !== undefined && end < today);
 const longDate = (d: string) => formatDateRange(d, d);
 const description = e.description ?? series.description;
+const google = e.status === 'confirmed' && !ended && googleCalendarUrl(e, eventDetails(e, title));
 // The edition to point a past page at: the soonest sibling that hasn't ended.
 const current = siblings
   .filter((s) => s.status !== 'completed' && (!s.end_date || s.end_date >= today))
@@ -160,6 +163,7 @@ const past = siblings
 
     <div class="flex flex-wrap items-center gap-2.5">
       {!ended && !cancelled && <BookmarkButton id={e.id} describedby="con-title" />}
+      {google && <CalendarExport ics={href(`cons/${e.slug}.ics`)} google={google} />}
       <Button variant="secondary" href={e.url} external>
         Visit official site
       </Button>
