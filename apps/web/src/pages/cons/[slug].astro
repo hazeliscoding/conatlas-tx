@@ -209,13 +209,14 @@ const past = siblings
     {ended && !cancelled && (
       <div class="banner banner--neutral" role="status">
         <Icon name="calendar" size={18} />
-        <span>This edition has ended. Kept for reference.</span>
-        {current ? (
+        <span>
+          This edition has ended. Kept for reference.
+          {!current && " The organizer hasn't announced the next one yet."}
+        </span>
+        {current && (
           <a class="banner__link" href={detailHref(current)}>
             See the current edition →
           </a>
-        ) : (
-          <span>The organizer hasn't announced the next one yet.</span>
         )}
       </div>
     )}
