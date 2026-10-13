@@ -59,8 +59,7 @@ const { cities = [], total } = Astro.props;
       </Button>
     </span>
     <span class="filters__count" aria-live="polite" data-result-count>
-      {total}
-      {total === 1 ? 'convention' : 'conventions'}
+      {`${total} ${total === 1 ? 'convention' : 'conventions'}`}
     </span>
   </div>
   <template data-applied-tag>
