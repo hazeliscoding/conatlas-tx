@@ -99,7 +99,8 @@ export function diffDrafts(published: Dataset, drafts: Dataset): RecordDiff[] {
 
 /**
  * Bookkeeping a draft needs before it can be published, beyond what validateDataset checks:
- * `revision` goes up by one exactly when a published fact changes, and edits get a new `updated_at`.
+ * `revision` goes up by one exactly when a published fact changes (including its series' name,
+ * which is part of its calendar title), and edits get a new `updated_at`.
  */
 export function checkDrafts(
   diffs: RecordDiff[],
@@ -110,6 +111,18 @@ export function checkDrafts(
   const issues: Issue[] = [];
   const old = new Map(published.editions.map((e) => [e.id, e]));
   const next = new Map(drafts.editions.map((e) => [e.id, e]));
+  // Calendar titles include the series name, so renaming a series changes every edition's facts.
+  const names = new Map(published.series.map((s) => [s.id, s.name]));
+  const renamed = new Set(
+    drafts.series.filter((s) => names.has(s.id) && names.get(s.id) !== s.name).map((s) => s.id),
+  );
+  for (const e of published.editions.filter((e) => renamed.has(e.series) && !next.has(e.id))) {
+    issues.push({
+      level: 'error',
+      record: `editions/${e.id}`,
+      message: `conventions/${e.series} was renamed, which changes this edition's calendar title; propose it and set revision to ${e.revision + 1}`,
+    });
+  }
   for (const diff of diffs) {
     const record = `${diff.kind}/${diff.id}`;
     if (diff.status === 'unchanged') {
@@ -129,12 +142,15 @@ export function checkDrafts(
       continue;
     }
     if (diff.status !== 'changed') continue;
-    const expected = before.revision + (diff.facts.length > 0 ? 1 : 0);
+    const rename = renamed.has(after.series);
+    const expected = before.revision + (diff.facts.length > 0 || rename ? 1 : 0);
     if (after.revision !== expected) {
       const message =
         diff.facts.length > 0
           ? `published facts changed (${diff.facts.map((f) => f.field).join(', ')}); set revision to ${expected}`
-          : `revision changes only when a published fact does; set it back to ${expected}`;
+          : rename
+            ? `its convention was renamed, which changes its calendar title; set revision to ${expected}`
+            : `revision changes only when a published fact does; set it back to ${expected}`;
       issues.push({ level: 'error', record, message });
     }
     if (after.updated_at === before.updated_at && before.updated_at !== today) {

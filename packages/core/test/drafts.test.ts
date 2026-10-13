@@ -101,6 +101,24 @@ describe('checkDrafts', () => {
     expect(check(edition)).toEqual(['warning: matches the published record; delete the draft']);
   });
 
+  it('treats renaming a convention as a fact change for each of its editions', () => {
+    const series = { ...base.series[0]!, name: 'Lone Star Anime Festival' };
+    const issues = (d: Dataset) =>
+      checkDrafts(diffDrafts(base, d), base, d, '2026-10-02').map(
+        (i) => `${i.record}: ${i.message}`,
+      );
+    expect(issues({ ...none, series: [series] })).toEqual([
+      `editions/${edition.id}: conventions/lone-star-anime-fest was renamed, which changes this edition's calendar title; propose it and set revision to 1`,
+      `editions/${tba.id}: conventions/lone-star-anime-fest was renamed, which changes this edition's calendar title; propose it and set revision to 1`,
+    ]);
+    const bumped = (e: Edition, revision: number) => ({ ...e, revision, updated_at: '2026-10-02' });
+    expect(
+      issues({ ...none, series: [series], editions: [bumped(edition, 0), bumped(tba, 1)] }),
+    ).toEqual([
+      `editions/${edition.id}: its convention was renamed, which changes its calendar title; set revision to 1`,
+    ]);
+  });
+
   it('expects a new edition to start at revision 0', () => {
     const added = { ...edition, id: 'new-2026', slug: 'new-2026', revision: 3 };
     expect(check(added)).toEqual(['warning: a new edition starts at revision 0']);
