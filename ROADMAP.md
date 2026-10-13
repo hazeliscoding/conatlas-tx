@@ -124,7 +124,7 @@ Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page
 
 ## M5 — Search and discovery
 
-- [ ] SEO audit of the live site: indexing, titles and descriptions, internal links, crawl errors
+- [x] SEO audit of the live site: indexing, titles and descriptions, internal links, crawl errors (Search Console's crawl reports get a second look once Google has crawled the site)
 - [ ] Structured data checked with Google's Rich Results Test: `Event` for confirmed editions, plus `BreadcrumbList` and `WebSite`
 - [ ] Region pages, and city pages where enough conventions exist to be useful, generated from the data
 - [ ] AI answer engines: `llms.txt` and plain factual summaries they can cite
