@@ -44,7 +44,7 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-13** — Problems reaching a site go in the source's `access_notes`, which isn't shown on the site; evidence notes are public.
 - **2026-10-13** — A recap sign-off such as "We'll see you at Anime Matsuri 2027!" doesn't announce the next edition. Without dates, a window or a location from the organizer, the series keeps "Next dates not announced".
 - **2026-10-13** — Shared Claude Code skills live in `.claude/skills/` and are committed; the rest of `.claude/` stays ignored.
-- **2026-10-13** — The flower mark (favicon, hero, footer and empty-state motif) is redrawn in M4. The design's path has six uneven petals and sits half a unit low in its box, while the design system describes a four-petal flower. The new path goes back to the claude.ai/design project so the two stay in sync.
+- **2026-10-13** — The flower mark (favicon, hero, footer and empty-state motif) is redrawn in M4. The design's path has six uneven petals and sits half a unit low in its box, while the design system described a four-petal flower. From seven drafts drawn from geometry (even petals, optically centered) and a three-reviewer shortlist, the maintainer chose five round petals, so the design system now describes a five-petal flower. The new path goes back to the claude.ai/design project so the two stay in sync.
 - **2026-10-13** — M4 starts with the logo and an Impeccable design review, so the accessibility, performance and screenshot work that follows checks the final look.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
@@ -100,7 +100,7 @@ Status 2026-10-13: a live refresh of five conventions staged 19 drafts, a second
 
 ## M4 — Production readiness
 
-- [ ] Logo: redraw the flower mark with even petals, centered in its box, and check it with the wordmark, favicon and every motif at each size and in both themes
+- [x] Logo: redraw the flower mark with even petals, centered in its box, and check it with the wordmark, favicon and every motif at each size and in both themes
 - [ ] Impeccable design review of every page type (desktop and mobile, light and dark), fixing what it finds
 - [ ] Accessibility review (keyboard, screen reader, reduced motion, zoom)
 - [ ] SEO: metadata, canonical URLs, sitemap, Open Graph, event structured data for confirmed dates only
