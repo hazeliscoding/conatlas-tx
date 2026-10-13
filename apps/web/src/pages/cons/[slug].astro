@@ -29,6 +29,7 @@ import {
   getDataset,
   getUpcoming,
   href,
+  postalAddress,
 } from '../../lib/data.ts';
 
 interface Props {
@@ -73,33 +74,26 @@ const cancelled = e.status === 'cancelled';
 const ended = e.status === 'completed' || (end !== undefined && end < today);
 const longDate = (d: string) => formatDateRange(d, d);
 const description = e.description ?? series.description;
-// Event structured data only where the organizer confirmed the dates: not for undated,
-// postponed or cancelled editions. Every value is one the page shows.
+// Event structured data for every edition with dates, carrying its status: Google asks that a
+// cancelled or postponed event keep its dates and say so. Every value is one the page shows;
+// the venue name and organizer are left out when the data has none.
 const event =
-  start && end && (e.status === 'confirmed' || e.status === 'completed')
+  start && end
     ? {
         '@context': 'https://schema.org',
         '@type': 'Event',
         name: title,
         startDate: start,
         endDate: end,
-        eventStatus: 'https://schema.org/EventScheduled',
-        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        eventStatus: `https://schema.org/${cancelled ? 'EventCancelled' : e.status === 'postponed' ? 'EventPostponed' : 'EventScheduled'}`,
         location: {
           '@type': 'Place',
-          name: e.venue?.name ?? `${e.city}, Texas`,
-          address: e.venue?.address ?? {
-            '@type': 'PostalAddress',
-            addressLocality: e.city,
-            addressRegion: 'TX',
-            addressCountry: 'US',
-          },
+          ...(e.venue && { name: e.venue.name }),
+          address: postalAddress(e),
         },
-        organizer: {
-          '@type': 'Organization',
-          name: series.organizer ?? series.name,
-          url: series.website,
-        },
+        ...(series.organizer && {
+          organizer: { '@type': 'Organization', name: series.organizer },
+        }),
         url: new URL(detailHref(e), Astro.site).href,
         ...(description && { description }),
       }

@@ -1,10 +1,18 @@
 import { fileURLToPath } from 'node:url';
 import { loadDataset } from '../packages/core/src/load.ts';
 import { todayIn } from '../packages/core/src/dates.ts';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const { dataset } = loadDataset(fileURLToPath(new URL('../data', import.meta.url)));
 const SITE = 'https://conatlas-tx.vercel.app/';
+
+/** Every JSON-LD block on the page, parsed (a block that isn't valid JSON fails the test). */
+const jsonLd = async (page: Page): Promise<Record<string, unknown>[]> =>
+  (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) =>
+    JSON.parse(text),
+  );
+const ofType = (blocks: Record<string, unknown>[], type: string) =>
+  blocks.filter((b) => b['@type'] === type);
 
 test('the sitemap lists every indexable page, each with matching canonical and social tags', async ({
   page,
@@ -27,24 +35,95 @@ test('the sitemap lists every indexable page, each with matching canonical and s
     await expect(head.locator('meta[property="og:url"]'), path).toHaveAttribute('content', loc);
     await expect(head.locator('meta[name="robots"]'), path).toHaveCount(0);
     titles.add(await page.title());
+    // The site name lives on the home page only, and only convention pages describe an event.
+    const blocks = await jsonLd(page);
+    expect(ofType(blocks, 'WebSite'), path).toEqual(
+      path === ''
+        ? [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'ConAtlas TX', url: SITE }]
+        : [],
+    );
+    if (!path.startsWith('cons/')) expect(ofType(blocks, 'Event'), path).toEqual([]);
   }
   expect(titles.size, 'every page has its own title').toBe(locs.length);
 });
 
-test('event data appears only for editions with confirmed dates', async ({ page }) => {
+test('every dated edition carries event data with its status, built only from its record', async ({
+  page,
+}) => {
+  const STATUS = {
+    confirmed: 'EventScheduled',
+    completed: 'EventScheduled',
+    postponed: 'EventPostponed',
+    cancelled: 'EventCancelled',
+  } as Record<string, string>;
   for (const edition of dataset.editions) {
     await page.goto(`cons/${edition.slug}/`);
-    const scripts = page.locator('script[type="application/ld+json"]');
-    if (edition.status === 'confirmed' || edition.status === 'completed') {
-      const data = JSON.parse((await scripts.first().textContent())!);
-      expect(data, edition.id).toMatchObject({
-        '@type': 'Event',
-        startDate: edition.start_date,
-        endDate: edition.end_date,
-      });
-    } else {
-      await expect(scripts, edition.id).toHaveCount(0);
+    const events = ofType(await jsonLd(page), 'Event');
+    if (!edition.start_date) {
+      expect(events, edition.id).toEqual([]);
+      continue;
     }
+    expect(events, edition.id).toHaveLength(1);
+    const event = events[0] as {
+      location: { name?: string; address: Record<string, string> };
+      organizer?: Record<string, string>;
+    } & Record<string, unknown>;
+    const series = dataset.series.find((s) => s.id === edition.series)!;
+    expect(event, edition.id).toMatchObject({
+      startDate: edition.start_date,
+      endDate: edition.end_date,
+      eventStatus: `https://schema.org/${STATUS[edition.status]}`,
+      url: `${SITE}cons/${edition.slug}/`,
+    });
+    expect(event.location.name, edition.id).toBe(edition.venue?.name);
+    const { address } = event.location;
+    expect(address, edition.id).toMatchObject({
+      addressLocality: edition.city,
+      addressRegion: 'TX',
+      addressCountry: 'US',
+    });
+    // A street and ZIP only ever come from the venue address the page shows, split exactly.
+    if (address.streetAddress) {
+      const shown = edition.venue?.address ?? '';
+      expect(shown.startsWith(`${address.streetAddress}, ${edition.city}, `), edition.id).toBe(
+        true,
+      );
+      expect(shown.endsWith(` ${address.postalCode}`), edition.id).toBe(true);
+    }
+    expect(event.organizer, edition.id).toEqual(
+      series.organizer ? { '@type': 'Organization', name: series.organizer } : undefined,
+    );
+    for (const key of ['eventAttendanceMode', 'image', 'offers', 'performer']) {
+      expect(event, `${edition.id} ${key}`).not.toHaveProperty(key);
+    }
+  }
+});
+
+test('breadcrumb data matches the visible breadcrumb', async ({ page }) => {
+  const paths = [...dataset.editions.map((e) => `cons/${e.slug}/`), 'contribute/'];
+  for (const path of paths) {
+    await page.goto(path);
+    const lists = ofType(await jsonLd(page), 'BreadcrumbList');
+    expect(lists, path).toHaveLength(1);
+    const items = lists[0]!.itemListElement as { position: number; name: string; item?: string }[];
+    const crumbs = page.locator('nav[aria-label="Breadcrumb"] li');
+    expect(
+      items.map((i) => i.name),
+      path,
+    ).toEqual((await crumbs.allTextContents()).map((t) => t.trim()));
+    expect(
+      items.map((i) => i.position),
+      path,
+    ).toEqual(items.map((_, i) => i + 1));
+    const hrefs = await crumbs.evaluateAll((lis) =>
+      lis.map((li) => li.querySelector('a')?.href ?? null),
+    );
+    // Linked crumbs point where their link goes (on the production host); the last has none.
+    expect(
+      items.map((i) => i.item ?? null),
+      path,
+    ).toEqual(hrefs.map((h) => (h ? new URL(new URL(h).pathname, SITE).href : null)));
+    expect(items.at(-1)!.item, path).toBeUndefined();
   }
 });
 

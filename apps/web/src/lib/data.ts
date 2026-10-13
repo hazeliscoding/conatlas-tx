@@ -35,6 +35,22 @@ export const href = (path = '') => `${import.meta.env.BASE_URL}${path}`;
 /** An edition's detail page. */
 export const detailHref = (edition: Pick<Edition, 'slug'>) => href(`cons/${edition.slug}/`);
 
+// "<number> <street>, <city>, TX <ZIP>" and nothing else: a suite, a landmark or a missing ZIP
+// keeps the address at city level rather than risk splitting it wrong.
+const STREET_ADDRESS = /^(\d[^,]*), ([^,]+), (?:TX|Texas) (\d{5})$/;
+
+/** A schema.org PostalAddress built only from the venue address and city the page shows. */
+export function postalAddress(e: Pick<Edition, 'city' | 'venue'>) {
+  const m = STREET_ADDRESS.exec(e.venue?.address ?? '');
+  return {
+    '@type': 'PostalAddress',
+    ...(m && m[2] === e.city && { streetAddress: m[1], postalCode: m[3] }),
+    addressLocality: e.city,
+    addressRegion: 'TX',
+    addressCountry: 'US',
+  };
+}
+
 /** An edition's full name, e.g. "San Japan 2027" or "KimoKawaii Conroe 2027". */
 export const editionTitle = (edition: Edition, seriesName: string) =>
   `${seriesName} ${edition.edition}`;

@@ -28,6 +28,13 @@ const regions = REGIONS.map((id) => {
     cities: names.length ? names.join('\u00a0· ') : 'No upcoming listings',
   };
 });
+// The site's name for search results; it matches og:site_name and the title.
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'ConAtlas TX',
+  url: new URL(href(), Astro.site).href,
+};
 const STEPS = [
   {
     title: 'Official site only',
@@ -51,6 +58,7 @@ const STEPS = [
     name="google-site-verification"
     content="GX70Ol62uOHT-yuGzrRKexJDnSKl7nIhmuhnbulJtP0"
   />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(website)} />
   <section class="relative grid gap-[18px] overflow-hidden rounded-lg border border-border bg-surface p-[clamp(24px,4vw,44px)]">
     <Motif
       kind="flower"
