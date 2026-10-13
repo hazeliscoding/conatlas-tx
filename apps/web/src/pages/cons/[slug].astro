@@ -18,7 +18,7 @@ import Ribbon from '../../components/Ribbon.astro';
 import StatusLine from '../../components/StatusLine.astro';
 import VenueBlock from '../../components/VenueBlock.astro';
 import Base from '../../layouts/Base.astro';
-import { detailHref, getDataset, href } from '../../lib/data.ts';
+import { detailHref, editionTitle, getDataset, href } from '../../lib/data.ts';
 
 interface Props {
   edition: Edition;
@@ -53,6 +53,7 @@ const FACT_LABELS = {
 };
 const today = todayIn('America/Chicago');
 const name = e.name ?? series.name;
+const title = editionTitle(e, series.name);
 const start = e.start_date;
 const end = e.end_date ?? start;
 const [, sm, sd] = start ? start.split('-').map(Number) : [];
@@ -70,10 +71,7 @@ const past = siblings
   .sort((a, b) => (b.start_date ?? '').localeCompare(a.start_date ?? ''));
 ---
 
-<Base
-  title={`${name} ${e.edition}`}
-  description={`Dates, venue and official sources for ${name} ${e.edition}.`}
->
+<Base title={title} description={`Dates, venue and official sources for ${title}.`}>
   <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
     <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: name }]} />
 

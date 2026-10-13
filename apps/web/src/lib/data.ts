@@ -26,6 +26,10 @@ export const href = (path = '') => `${import.meta.env.BASE_URL}${path}`;
 /** An edition's detail page. */
 export const detailHref = (edition: Pick<Edition, 'slug'>) => href(`cons/${edition.slug}/`);
 
+/** An edition's full name, e.g. "San Japan 2027" or "KimoKawaii Conroe 2027". */
+export const editionTitle = (edition: Edition, seriesName: string) =>
+  `${seriesName} ${edition.edition}`;
+
 /**
  * An edition with the name to show for it. `awaitingNext` marks a series' latest past edition
  * when the organizer hasn't announced the next one, so the series stays findable.
