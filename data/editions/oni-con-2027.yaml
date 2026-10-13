@@ -7,6 +7,7 @@ start_date: 2027-10-01
 end_date: 2027-10-03
 venue:
   name: Houston Marriott Westchase
+  address: 2900 Briarpark Dr, Houston, TX 77042
 city: Houston
 region: gulf-coast
 timezone: America/Chicago
@@ -24,4 +25,4 @@ evidence:
     note: Dated organizer post tagged "Official Oni-Con is at Houston Marriott Westchase. ... Houston". It settles the city against the Early-Bird Registration cart linked from oni-con.net (onicon23.reg-it.org), which still reads "Oct 1st-3rd, 2027 Galveston, TX".
 last_verified_at: 2026-10-13
 updated_at: 2026-10-13
-revision: 0
+revision: 1
