@@ -37,6 +37,11 @@ export function dayCount(start: IsoDate, end: IsoDate): number {
   return Math.round((toUtc(end).getTime() - toUtc(start).getTime()) / 86_400_000) + 1;
 }
 
+/** Whole days from one date to another; negative when `to` is earlier. */
+export function daysBetween(from: IsoDate, to: IsoDate): number {
+  return dayCount(from, to) - 1;
+}
+
 /** "Oct 31, 2026", "Dec 4–6, 2026", "Jan 30 – Feb 1, 2027", "Dec 31, 2026 – Jan 2, 2027". */
 export function formatDateRange(start: IsoDate, end: IsoDate, { year = true } = {}): string {
   const [sy, sm, sd] = start.split('-').map(Number) as [number, number, number];
