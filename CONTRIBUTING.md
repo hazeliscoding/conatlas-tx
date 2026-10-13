@@ -11,8 +11,6 @@ Pick the form that fits:
 - [Report a cancellation or postponement](https://github.com/hazeliscoding/conatlas-tx/issues/new?template=status-change.yml)
 - [Fix an official link](https://github.com/hazeliscoding/conatlas-tx/issues/new?template=broken-link.yml)
 
-The site's [Contribute page](https://hazeliscoding.github.io/conatlas-tx/contribute/) links to the same forms.
-
 ## The data rules
 
 - **Official sources only.** Every date, venue, city and status comes from the organizer: their website, an announcement, a feed, or their own social account. Third-party listings and fan wikis are leads, never sources.
