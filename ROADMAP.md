@@ -56,6 +56,13 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-13** — The site serves `robots.txt`, built from `site`: everything is allowed (Saved and 404 must stay fetchable so their noindex is seen) and it names the sitemap. This replaces the "no `robots.txt`" note in the SEO basics decision above.
 - **2026-10-13** — Calendar month URLs never break. Every month from the current one to the last listed event has `/calendar/YYYY-MM/`. The current month's page names `/calendar/` as its canonical, and months that have passed redirect there with an immediate refresh, which search engines treat as a permanent move. Months with no conventions are noindex and left out of the sitemap. Month titles and descriptions name the month and the conventions in it. This replaces the 2026-10-12 rule that the current month has no page of its own.
 - **2026-10-13** — The first M5 audit (four auditors, each checked by a skeptic) confirmed 17 findings, merged into nine fixes. The description of an ended, cancelled or postponed edition now says so, and the past-editions list includes every ended edition, so none is left without links. Long-cache headers for `/_astro/` files wait for the Core Web Vitals item, and region links for the region pages item. Month pages were reachable only through Next links, up to 13 clicks from home. The maintainer chose to make each month heading on the timeline a link to its calendar month. It looks the same at rest and gets the link color and a 2px underline on hover, so every month with conventions is one click from home.
+- **2026-10-13** — Structured data follows Google's Event documentation as of 2026-10-13:
+  - **Event data:** every edition with dates gets it, with its status (scheduled, postponed or cancelled). A postponed or cancelled event keeps its dates, as Google asks. This replaces "Event data for confirmed dates only" in the SEO basics decision.
+  - **Address:** it's split into street and ZIP only when it reads exactly "<number street>, <city>, TX <ZIP>"; otherwise it stays at city level.
+  - **Venue and organizer:** they appear only when the data has them, with no city or convention name standing in. The online-event property is gone, since Google dropped it in 2025.
+  - **Left out:** image, offers and performer, since nothing licensed or sourced can fill them.
+  - **Breadcrumbs and site name:** pages with a visible breadcrumb carry the same trail as `BreadcrumbList`, and the home page carries `WebSite` for the site name.
+  - **Validation:** every page passes the Schema Markup Validator with no errors or warnings.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -125,7 +132,7 @@ Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page
 ## M5 — Search and discovery
 
 - [x] SEO audit of the live site: indexing, titles and descriptions, internal links, crawl errors (Search Console's crawl reports get a second look once Google has crawled the site)
-- [ ] Structured data checked with Google's Rich Results Test: `Event` for confirmed editions, plus `BreadcrumbList` and `WebSite`
+- [ ] Structured data checked with Google's Rich Results Test: `Event` for dated editions (scheduled, postponed, cancelled), plus `BreadcrumbList` and `WebSite`
 - [ ] Region pages, and city pages where enough conventions exist to be useful, generated from the data
 - [ ] AI answer engines: `llms.txt` and plain factual summaries they can cite
 - [ ] Core Web Vitals: lab checks on every page type, and field data from Search Console once there's enough traffic
