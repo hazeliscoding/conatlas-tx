@@ -12,13 +12,7 @@ interface Props {
 const { id, describedby } = Astro.props;
 ---
 
-<button
-  type="button"
-  class="bm"
-  aria-describedby={describedby}
-  data-save={id}
-  hidden
->
+<button type="button" class="bm" aria-describedby={describedby} data-save={id} hidden>
   <span class="bm__i bm__off">
     <Icon name="bookmark" size={18} />
   </span>
