@@ -1,0 +1,7 @@
+id: halloweebtown-tickets
+series: halloweebtown
+url: https://www.halloweebtown.com/tickets-1
+type: official_site
+supports: [tickets]
+last_checked: 2026-10-13
+access_notes: Organizer ticket page, linked as "TICKETS" in the site menu. Its "Buy Tickets" button goes to ticketspotapp.com/e/halloweebtown; VIP goes to an application form at halloweebtown.com/vip-tix.

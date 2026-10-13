@@ -12,12 +12,17 @@ city: Grapevine
 region: north
 timezone: America/Chicago
 url: https://www.halloweebtown.com/
+tickets_url: https://www.halloweebtown.com/tickets-1
 evidence:
   - source: halloweebtown-site
     facts: [existence, dates, venue, city]
-    checked_at: 2026-10-12
+    checked_at: 2026-10-13
     excerpt: October 31, 2026 10am - 7pm Grapevine Convention Center 1209 S Main St, Grapevine, TX 76051
     note: The same page lists "Friday VIP only 5pm-7pm"; the advertised general-admission day is Saturday, October 31.
-last_verified_at: 2026-10-12
-updated_at: 2026-10-12
-revision: 0
+  - source: halloweebtown-tickets
+    facts: [tickets]
+    checked_at: 2026-10-13
+    excerpt: General Admission (Saturday) Buy Tickets VIP (Friday + Saturday) Apply Here
+last_verified_at: 2026-10-13
+updated_at: 2026-10-13
+revision: 1

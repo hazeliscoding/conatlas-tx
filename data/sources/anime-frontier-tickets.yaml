@@ -1,0 +1,7 @@
+id: anime-frontier-tickets
+series: anime-frontier
+url: https://animefrontier.com/tickets/
+type: official_site
+supports: [tickets]
+last_checked: 2026-10-13
+access_notes: Organizer ticket page, linked as "BUY" in the site header and "GET BADGES" on the homepage; /badges/ redirects here. Its "BUY NOW" button goes to checkout.conventions.leapevent.tech/eh/Anime_Frontier_2026.
