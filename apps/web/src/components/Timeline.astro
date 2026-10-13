@@ -49,6 +49,7 @@ for (const listing of Astro.props.listings) {
         <div class="tl__head">
           <h2 class="tl__month" id={`tl-${key}`}>
             {UNDATED[key] ?? MONTHS[month! - 1]}
+            {!UNDATED[key] && <span class="sr-only"> {year}</span>}
           </h2>
           {!UNDATED[key] && <span class="tl__year">{year}</span>}
           <span class="tl__count" data-group-count>
