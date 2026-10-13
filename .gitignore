@@ -10,8 +10,11 @@ playwright-report/
 .DS_Store
 Thumbs.db
 
-# Local Claude Code settings stay local; shared skills are committed.
-.claude/settings.local.json
+# The maintainer's global gitignore excludes .claude/. Commit only the shared skills; local
+# settings (which hold machine paths) stay out.
+!.claude/
+.claude/*
+!.claude/skills/
 
 # The maintainer's global gitignore excludes these; this repo commits them.
 !AGENTS.md
