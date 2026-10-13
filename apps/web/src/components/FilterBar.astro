@@ -98,7 +98,8 @@ const { cities = [], total } = Astro.props;
           (!regions.length || regions.includes(card.dataset.region!)) &&
           (!cities.length || cities.includes(card.dataset.city!));
         card.hidden = !match;
-        if (match) shown.add(card.dataset.listing!);
+        // Cards inside [data-uncounted] (the calendar's undated list) filter but aren't counted.
+        if (match && !card.closest('[data-uncounted]')) shown.add(card.dataset.listing!);
       }
       for (const group of groups) {
         const n = group.querySelectorAll('[data-listing]:not([hidden])').length;
@@ -187,6 +188,15 @@ const { cities = [], total } = Astro.props;
     overflow-x: auto;
     padding: 2px 2px 4px;
     scrollbar-width: none;
+    /* Fade the last visible chip so the row reads as scrollable. */
+    mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+  }
+  @media (min-width: 768px) {
+    .filters__scroll {
+      flex-wrap: wrap;
+      overflow: visible;
+      mask-image: none;
+    }
   }
   .filters__applied {
     display: flex;
