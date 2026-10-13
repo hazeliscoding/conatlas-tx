@@ -1,0 +1,304 @@
+---
+// Ways to report a missing con or a correction. Each path opens a GitHub issue form; arriving from
+// a convention page (`?con=<edition id>`) prefills its name.
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Button from '../components/Button.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
+import Ribbon from '../components/Ribbon.astro';
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, REPO_URL, editionTitle, getDataset, href } from '../lib/data.ts';
+
+const PATHS: { icon: IconName; title: string; desc: string; form: string; prefix: string }[] = [
+  {
+    icon: 'calendar-plus',
+    title: 'Suggest a missing convention',
+    desc: "A Texas anime con we don't list yet. Include the organizer's URL.",
+    form: 'new-convention',
+    prefix: '[New con]',
+  },
+  {
+    icon: 'calendar-clock',
+    title: 'Report incorrect dates',
+    desc: 'Dates changed, or we got them wrong. Link to the official announcement.',
+    form: 'correction',
+    prefix: '[Dates]',
+  },
+  {
+    icon: 'map-pin',
+    title: 'Report a venue change',
+    desc: 'New building, new city, or a venue we have wrong.',
+    form: 'correction',
+    prefix: '[Venue]',
+  },
+  {
+    icon: 'circle-x',
+    title: 'Report a cancellation or postponement',
+    desc: "Tell us where the organizer said so and we'll update the status.",
+    form: 'status-change',
+    prefix: '[Status]',
+  },
+  {
+    icon: 'link',
+    title: 'Fix an official link',
+    desc: 'Dead or wrong organizer or ticket URL.',
+    form: 'broken-link',
+    prefix: '[Link]',
+  },
+];
+const issueUrl = (form: string, prefix: string) =>
+  `${REPO_URL}/issues/new?${new URLSearchParams({ template: `${form}.yml`, title: `${prefix}: ` })}`;
+// mailto: wants %20 for spaces; many mail apps show a "+" literally.
+const mailUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('ConAtlas TX correction')}`;
+
+const { series, editions } = getDataset();
+const names = new Map(series.map((s) => [s.id, s.name]));
+const titles = Object.fromEntries(
+  editions.map((e) => [e.id, editionTitle(e, names.get(e.series) ?? e.series)]),
+);
+// Escape "<" so no value can close the script element early.
+const titlesJson = JSON.stringify(titles).replace(/</g, '\\u003c');
+---
+
+<Base
+  title="Contribute"
+  description="Suggest a missing Texas anime convention or report a wrong date, venue or link."
+>
+  <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
+    <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: 'Contribute' }]} />
+    <div class="grid gap-3">
+      <Ribbon rule>Contribute</Ribbon>
+      <h1 class="m-0 [font:var(--type-h1)] text-balance">Help keep the Texas con calendar right</h1>
+      <p class="m-0 max-w-[60ch] text-pretty text-text-2">
+        ConAtlas is maintained by fans. Missing a convention, or spotted a wrong date? Open an issue
+        and a maintainer will check it against the organizer's site before anything is published.
+      </p>
+      <p class="report" data-report hidden>
+        Reporting:
+        <span class="report__tag">
+          <span data-report-name></span>
+          <button
+            type="button"
+            class="report__x"
+            aria-label="Stop reporting this convention"
+            data-report-clear
+          >
+            <Icon name="x" size={12} strokeWidth={2.2} />
+          </button>
+        </span>
+      </p>
+    </div>
+
+    <ul class="paths">
+      {PATHS.map((p) => (
+        <li>
+          <a
+            class="path"
+            href={issueUrl(p.form, p.prefix)}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-issue={p.form}
+            data-prefix={p.prefix}
+          >
+            <span class="path__icons">
+              <Icon name={p.icon} size={22} />
+              <Icon name="external-link" size={14} label="(opens in new tab)" />
+            </span>
+            <strong class="path__title">{p.title}</strong>
+            <span class="path__desc">{p.desc}</span>
+            <span class="path__note">Opens a GitHub issue form</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] items-start gap-6">
+      <section class="grid gap-3">
+        <Ribbon tone="sage" rule>
+          What to include
+        </Ribbon>
+        <ul class="steps">
+          <li>Convention name</li>
+          <li>Official organizer URL</li>
+          <li>City and venue, if known</li>
+          <li>Announced dates, if known</li>
+          <li>What's wrong and what it should say</li>
+          <li>Links to official sources that back it up</li>
+        </ul>
+      </section>
+      <section class="grid gap-3">
+        <Ribbon tone="lavender" rule>
+          What happens next
+        </Ribbon>
+        <ol class="steps">
+          <li>A maintainer reads your issue and opens the organizer's site.</li>
+          <li>
+            If it checks out, the change goes into the public data file with a note of the source.
+          </li>
+          <li>The site rebuilds and the listing shows a new "last checked" date.</li>
+        </ol>
+        <p class="m-0 [font:var(--type-caption)] text-text-muted">
+          Reviews usually take a few days. Nothing is published without a human looking at it.
+        </p>
+      </section>
+    </div>
+
+    <div class="nogh">
+      <div class="grid gap-1">
+        <strong class="[font:var(--type-h4)]">No GitHub account?</strong>
+        <span class="[font:var(--type-body-sm)] text-text-2">
+          Email the maintainers with the same details. We'll file the issue for you.
+        </span>
+      </div>
+      <Button variant="soft" href={mailUrl} data-mail>
+        <Icon name="mail" size={16} />
+        Email the maintainers
+      </Button>
+    </div>
+  </div>
+  <script type="application/json" id="report-titles" set:html={titlesJson} />
+</Base>
+
+<script>
+  const titles = JSON.parse(document.getElementById('report-titles')!.textContent!) as Record<
+    string,
+    string
+  >;
+  const report = document.querySelector<HTMLElement>('[data-report]')!;
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('a[data-issue], a[data-mail]')];
+  const base = new Map(links.map((link) => [link, link.href]));
+
+  const render = (name?: string) => {
+    links.forEach((link) => {
+      const url = new URL(base.get(link)!);
+      if (name && link.dataset.issue) {
+        url.searchParams.set('title', `${link.dataset.prefix}: ${name}`);
+        if (link.dataset.issue !== 'new-convention') url.searchParams.set('convention', name);
+      } else if (name) {
+        url.searchParams.set('subject', `ConAtlas TX correction: ${name}`);
+      }
+      // URLSearchParams writes spaces as "+", which mail apps can show literally.
+      link.href = url.href.replaceAll('+', '%20');
+    });
+    report.hidden = !name;
+    report.querySelector('[data-report-name]')!.textContent = name ?? '';
+  };
+
+  // Only known edition ids are accepted, so the page never echoes arbitrary text from the URL.
+  const id = new URLSearchParams(location.search).get('con') ?? '';
+  render(Object.hasOwn(titles, id) ? titles[id] : undefined);
+  report.querySelector('[data-report-clear]')!.addEventListener('click', () => {
+    history.replaceState(history.state, '', location.pathname);
+    render();
+    links[0]!.focus();
+  });
+</script>
+
+<style>
+  .report {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font: var(--type-body-sm);
+    color: var(--text-2);
+  }
+  .report__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 4px 2px 12px;
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--brand-pink-ink);
+    font-weight: 600;
+  }
+  .report__x {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .report__x:hover {
+    background: color-mix(in oklab, currentColor 12%, transparent);
+  }
+  .report__x:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .paths {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .path {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    height: 100%;
+    min-height: 120px;
+    padding: 18px;
+    box-sizing: border-box;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-1);
+    color: var(--text);
+    text-decoration: none;
+    transition:
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+  .path:hover {
+    box-shadow: var(--shadow-2);
+    border-color: var(--border-strong);
+  }
+  .path:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  .path__icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    color: var(--brand-pink-ink);
+  }
+  .path__title {
+    font: var(--type-h4);
+  }
+  .path__desc {
+    font: var(--type-body-sm);
+    color: var(--text-2);
+  }
+  .path__note {
+    font: var(--type-caption);
+    color: var(--text-muted);
+  }
+  .steps {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding-left: 20px;
+    font: var(--type-body-sm);
+    color: var(--text-2);
+  }
+  .nogh {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 20px;
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+  }
+</style>

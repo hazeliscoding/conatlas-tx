@@ -19,6 +19,8 @@ export function getDataset(): Dataset {
 }
 
 export const REPO_URL = 'https://github.com/hazeliscoding/conatlas-tx';
+/** Maintainer contact for people without a GitHub account; forwards to the maintainer. */
+export const CONTACT_EMAIL = 'conatlas-tx.landing118@passfwd.com';
 
 /** A site path under the deploy base, e.g. `href('calendar/')`. */
 export const href = (path = '') => `${import.meta.env.BASE_URL}${path}`;

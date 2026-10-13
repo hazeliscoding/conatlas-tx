@@ -8,7 +8,7 @@ import Ribbon from '../components/Ribbon.astro';
 import Timeline from '../components/Timeline.astro';
 import ViewTabs from '../components/ViewTabs.astro';
 import Base from '../layouts/Base.astro';
-import { getUpcoming } from '../lib/data.ts';
+import { getUpcoming, href } from '../lib/data.ts';
 
 const listings = getUpcoming();
 const cities = [...new Set(listings.map((e) => e.city))].sort();
@@ -82,4 +82,18 @@ const cities = [...new Set(listings.map((e) => e.city))].sort();
       </EmptyState>
     </>
   )}
+
+  <section class="flex flex-wrap items-center justify-between gap-4 rounded-md border-[1.5px] border-dashed border-border-strong px-6 py-5">
+    <div class="grid gap-1">
+      <strong class="[font:var(--type-h4)]">Know a con we're missing?</strong>
+      <span class="[font:var(--type-body-sm)] text-text-2">
+        ConAtlas is community-maintained. Suggestions and corrections are welcome, with or without a
+        GitHub account.
+      </span>
+    </div>
+    <Button variant="soft" href={href('contribute/')}>
+      <Icon name="plus" size={16} />
+      Suggest a convention
+    </Button>
+  </section>
 </Base>

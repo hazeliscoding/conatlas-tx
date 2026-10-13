@@ -1,7 +1,8 @@
 ---
-// Sticky header: wordmark, primary nav and the theme switch. Under 768px the nav moves into a
-// <details> menu, which opens and closes without JavaScript.
+// Sticky header: wordmark, primary nav, the theme switch and "Suggest a con". Under 768px the nav
+// moves into a <details> menu, which opens and closes without JavaScript.
 import { getUpcoming, href } from '../lib/data.ts';
+import Button from './Button.astro';
 import Icon, { type IconName } from './Icon.astro';
 import ThemeSwitch from './ThemeSwitch.astro';
 
@@ -44,6 +45,10 @@ const savable = getUpcoming()
     <div class="hdr__right">
       <div class="hdr__desk">
         <ThemeSwitch />
+        <Button variant="soft" size="sm" href={href('contribute/')}>
+          <Icon name="plus" size={14} />
+          Suggest a con
+        </Button>
       </div>
       <details class="hdr__mob">
         <summary class="hdr__menu" aria-label="Menu">
@@ -62,6 +67,10 @@ const savable = getUpcoming()
                 {item.label === 'Saved' && <span class="hdr__count" data-saved-count hidden />}
               </a>
             ))}
+            <a class="mobnav__link" href={href('contribute/')}>
+              <Icon name="plus" size={20} />
+              Suggest a con
+            </a>
           </nav>
           <div class="mobnav__foot">
             <ThemeSwitch label="Dark mode" />

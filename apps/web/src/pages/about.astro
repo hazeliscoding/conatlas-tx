@@ -2,7 +2,7 @@
 import Button from '../components/Button.astro';
 import Ribbon from '../components/Ribbon.astro';
 import Base from '../layouts/Base.astro';
-import { REPO_URL } from '../lib/data.ts';
+import { REPO_URL, href } from '../lib/data.ts';
 
 const issues = `${REPO_URL}/issues`;
 const policy = `${REPO_URL}/blob/main/docs/DATA_POLICY.md`;
@@ -67,8 +67,9 @@ const policy = `${REPO_URL}/blob/main/docs/DATA_POLICY.md`;
     <section id="contribute">
       <h2>How to contribute</h2>
       <p>
-        Suggest a missing con or report a correction by <a href={issues}>opening an issue</a> with a
-        link to the organizer's own page. Code and data live on GitHub under open licenses.
+        Suggest a missing con or report a correction on the{' '}
+        <a href={href('contribute/')}>Contribute page</a>, with a link to the organizer's own page.
+        Code and data live on GitHub under open licenses.
       </p>
       <div class="flex flex-wrap gap-2.5">
         <Button variant="secondary" href={REPO_URL} external>
