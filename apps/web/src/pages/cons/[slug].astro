@@ -89,7 +89,14 @@ const past = siblings
   .sort((a, b) => (b.start_date ?? '').localeCompare(a.start_date ?? ''));
 ---
 
-<Base title={title} description={`Dates, venue and official sources for ${title}.`}>
+<Base
+  title={title}
+  description={
+    start && end
+      ? `${title}, ${formatDateRange(start, end)} in ${e.city}, Texas. Dates, venue and official sources, checked against the organizer's site.`
+      : `${title} in ${e.city}, Texas. Dates not announced yet; venue and official sources, checked against the organizer's site.`
+  }
+>
   <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
     <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: name }]} />
 

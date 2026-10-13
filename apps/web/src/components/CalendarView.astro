@@ -2,7 +2,7 @@
 // The calendar page body for one month. `/calendar/` shows the build's current month;
 // every other month in range has its own `/calendar/YYYY-MM/` page.
 import { todayIn } from '@conatlas/core';
-import { calendarMonths, type Month } from '../lib/calendar.ts';
+import { calendarMonths, monthTitle, type Month } from '../lib/calendar.ts';
 import { getFeeds, getUpcoming, href } from '../lib/data.ts';
 import EventCard from './EventCard.astro';
 import FilterBar from './FilterBar.astro';
@@ -17,26 +17,12 @@ interface Props {
 }
 
 const { month } = Astro.props;
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 const today = todayIn('America/Chicago');
 const listings = getUpcoming();
 const months = calendarMonths(today, listings);
 const monthHref = (m: Month) => href(m === months[0] ? 'calendar/' : `calendar/${m}/`);
 const i = months.indexOf(month);
-const title = `${MONTHS[Number(month.slice(5)) - 1]} ${month.slice(0, 4)}`;
+const title = monthTitle(month);
 
 const dated = listings.filter((e) => e.start_date && !e.awaitingNext);
 const inView = dated.filter((e) => e.start_date! <= `${month}-31` && e.end_date! >= `${month}-01`);

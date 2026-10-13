@@ -2,7 +2,7 @@
 import { todayIn } from '@conatlas/core';
 import CalendarView from '../../components/CalendarView.astro';
 import Base from '../../layouts/Base.astro';
-import { calendarMonths } from '../../lib/calendar.ts';
+import { calendarMonths, monthTitle } from '../../lib/calendar.ts';
 import { getUpcoming } from '../../lib/data.ts';
 
 // The current month lives at /calendar/, so it gets no page of its own here.
@@ -14,6 +14,9 @@ export function getStaticPaths() {
 const { month } = Astro.params;
 ---
 
-<Base title="Calendar" description="Texas anime conventions on a month calendar.">
+<Base
+  title={`Calendar · ${monthTitle(month)}`}
+  description={`Anime conventions in Texas in ${monthTitle(month)}, on a month calendar.`}
+>
   <CalendarView month={month} />
 </Base>

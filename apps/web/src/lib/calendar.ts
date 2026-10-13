@@ -77,6 +77,26 @@ export function calendarMonths(today: IsoDate, items: Dated[]): Month[] {
   return months;
 }
 
+const MONTH_NAMES = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+/** "January 2027" for "2027-01". */
+export function monthTitle(month: Month): string {
+  return `${MONTH_NAMES[Number(month.slice(5)) - 1]} ${month.slice(0, 4)}`;
+}
+
 export function nextMonth(month: Month): Month {
   return addDays(`${month}-28`, 7).slice(0, 7);
 }
