@@ -19,6 +19,9 @@ describe('allDayRange', () => {
     expect(allDayRange({ start_date: '2028-02-27', end_date: '2028-02-28' })?.endExclusive).toBe(
       '2028-02-29',
     );
+    expect(allDayRange({ start_date: '2027-02-27', end_date: '2027-02-28' })?.endExclusive).toBe(
+      '2027-03-01',
+    );
   });
 
   it('returns nothing when dates are not announced', () => {
