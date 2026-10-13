@@ -88,6 +88,19 @@ const savable = getUpcoming()
     document.querySelector<HTMLElement>('[data-savable]')!.dataset.savable!.split(' '),
   );
   const badges = document.querySelectorAll<HTMLElement>('[data-saved-count]');
+
+  // The phone menu is a <details>: close it when focus moves out, or on Escape, so it never
+  // covers what gets focus next.
+  const menu = document.querySelector<HTMLDetailsElement>('.hdr__mob')!;
+  menu.addEventListener('focusout', (event) => {
+    const next = event.relatedTarget as Node | null;
+    if (next && !menu.contains(next)) menu.open = false;
+  });
+  menu.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !menu.open) return;
+    menu.open = false;
+    menu.querySelector('summary')!.focus();
+  });
   onSavedChange(() => {
     const n = getSaved().filter((id) => savable.has(id)).length;
     badges.forEach((badge) => {
@@ -237,6 +250,9 @@ const savable = getUpcoming()
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-3);
+    /* At high zoom the menu can be taller than the screen. */
+    max-height: calc(100dvh - var(--header-h-mobile) - 8px);
+    overflow-y: auto;
   }
   .mobnav__list {
     display: grid;
