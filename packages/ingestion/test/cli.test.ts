@@ -1,5 +1,13 @@
 import { spawnSync } from 'node:child_process';
-import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
+import {
+  cpSync,
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -104,6 +112,14 @@ warning sources/lone-star-anime-festival-site: may duplicate sources/lone-star-a
 });
 
 describe('data:report', () => {
+  it('lists records that fail to load instead of skipping them', () => {
+    const dir = copy();
+    writeFileSync(join(dir, 'drafts', 'editions', 'broken.yaml'), 'id: broken\nstatus: rumored\n');
+    const { code, out } = run(['report', '--today', '2026-10-01'], dir);
+    expect(code).toBe(1);
+    expect(out).toContain('drafts/editions/broken:');
+  });
+
   it('lists what is due, most urgent first, and the drafts waiting', () => {
     const { code, out } = run(['report', '--today', '2026-11-02']);
     expect(code).toBe(0);

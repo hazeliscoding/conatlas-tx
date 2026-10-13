@@ -230,7 +230,11 @@ function promote(ctx: Context, refs: string[], everything: boolean): number {
 }
 
 function report(ctx: Context): number {
-  const { published, drafts } = load(ctx);
+  const { published, drafts, issues } = load(ctx);
+  if (issues.length > 0) {
+    printIssues(issues);
+    console.log('\nThese records are left out of the report until they load.\n');
+  }
   const tasks = maintenanceTasks(published, ctx.today);
   const titles = { now: 'Due now', soon: 'Due soon', later: 'When there is time' };
   for (const priority of ['now', 'soon', 'later'] as const) {
@@ -243,7 +247,7 @@ function report(ctx: Context): number {
   if (tasks.length === 0) console.log(`Nothing is due as of ${ctx.today}.\n`);
   const pending = drafts.series.length + drafts.editions.length + drafts.sources.length;
   if (pending > 0) console.log(`${pending} drafts are waiting for review: run pnpm data:diff.`);
-  return 0;
+  return count(issues).errors > 0 ? 1 : 0;
 }
 
 function validate(ctx: Context): number {
