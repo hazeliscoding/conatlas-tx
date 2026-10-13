@@ -31,15 +31,16 @@ Records live one per file in `data/conventions`, `data/editions` and `data/sourc
 
 Astro builds every route to static HTML with trailing slashes (`vercel.json` redirects a path without one):
 
-| Route                                                             | Built from                                                                                                                                |
-| ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `/`                                                               | Upcoming editions grouped by month, region cards, verification steps                                                                      |
-| `/calendar/`, `/calendar/YYYY-MM/`                                | One page per month from the current one to the last listed event (`lib/calendar.ts` lays out the grid)                                    |
-| `/cons/<slug>/`                                                   | One page per edition, past ones included, with its evidence, breadcrumb data and Event structured data with its status for dated editions |
-| `/regions/<slug>/`                                                | Five region pages: a lead written from the data, the region's timeline and its calendar feeds; noindex while nothing is upcoming          |
-| `/cities/<slug>/`                                                 | Cities with three or more upcoming conventions, with their venues; every other city in the data redirects to its region                   |
-| `/cons/<slug>.ics`, `/feeds/<feed>.ics`                           | Calendar files from `packages/calendar`; a region gets a feed once it has a dated edition                                                 |
-| `/saved/`, `/contribute/`, `/about/`, `/404.html`, `/sitemap.xml` | Static pages and the sitemap                                                                                                              |
+| Route                                                             | Built from                                                                                                                                          |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`                                                               | Upcoming editions grouped by month, region cards, verification steps                                                                                |
+| `/calendar/`, `/calendar/YYYY-MM/`                                | One page per month from the current one to the last listed event (`lib/calendar.ts` lays out the grid)                                              |
+| `/cons/<slug>/`                                                   | One page per edition, past ones included, with its evidence, breadcrumb data and Event structured data with its status for dated editions           |
+| `/regions/<slug>/`                                                | Five region pages: a lead written from the data, the region's timeline and its calendar feeds; noindex while nothing is upcoming                    |
+| `/cities/<slug>/`                                                 | Cities with three or more upcoming conventions, with their venues; every other city in the data redirects to its region                             |
+| `/cons/<slug>.ics`, `/feeds/<feed>.ics`                           | Calendar files from `packages/calendar`; a region gets a feed once it has a dated edition                                                           |
+| `/saved/`, `/contribute/`, `/about/`, `/404.html`, `/sitemap.xml` | Static pages and the sitemap                                                                                                                        |
+| `/robots.txt`, `/llms.txt`                                        | Crawler policy (everything allowed, AI crawlers included) and a plain-text guide for AI assistants listing every convention with its page's summary |
 
 Design tokens are copied verbatim from the design system into `apps/web/src/styles/tokens/` and mapped to Tailwind in `global.css`. Components are Astro components with scoped CSS, following [`brand/DESIGN_SYSTEM.md`](brand/DESIGN_SYSTEM.md).
 

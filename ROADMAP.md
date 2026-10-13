@@ -72,6 +72,11 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
   - **Copy:** page copy is only sentences built from the data, plus lines that are true for every region. Region slugs come from the region names, and a unit test pins them.
   - **Search titles:** the Gulf Coast page's search title says "Texas Gulf Coast".
   - **Structured data:** the pages carry only the BreadcrumbList for their visible breadcrumb.
+- **2026-10-13** — AI assistants:
+  - **Crawlers:** search engines and AI crawlers, for search and for training, are all welcome, since the data is CC BY 4.0. `robots.txt` says so and points to `/llms.txt`.
+  - **`llms.txt`:** built with every daily build. It says what the site is and how dates are checked, and lists every listed convention with its summary, plus the regions, Houston's city page, the feeds and the about pages.
+  - **Summaries:** each convention page's About section opens with a plain summary built only from the record: what, where, when, at which venue, who runs it, and when it was last checked. `llms.txt` uses the same sentence, so the two can't disagree.
+  - **Not added:** Google says AI features need no special files, so nothing is written only for AI. `llms-full.txt` and Markdown copies of pages are left out until an assistant we care about uses them.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -143,7 +148,7 @@ Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page
 - [x] SEO audit of the live site: indexing, titles and descriptions, internal links, crawl errors (Search Console's crawl reports get a second look once Google has crawled the site)
 - [x] Structured data checked with Google's Rich Results Test: `Event` for dated editions (scheduled, postponed, cancelled), plus `BreadcrumbList` and `WebSite` (2026-10-13: all 16 convention pages have valid Events and Breadcrumbs, and Contribute has valid Breadcrumbs. The only warnings are for optional fields we have no sourced data for. `WebSite` passes the Schema Markup Validator, since the Rich Results Test doesn't cover site names.)
 - [x] Region pages, and city pages where enough conventions exist to be useful, generated from the data (2026-10-13: five region pages and a Houston city page. Two design-review rounds, and the second found nothing left to fix.)
-- [ ] AI answer engines: `llms.txt` and plain factual summaries they can cite
+- [x] AI answer engines: `llms.txt` and plain factual summaries they can cite (2026-10-13)
 - [ ] Core Web Vitals: lab checks on every page type, and field data from Search Console once there's enough traffic
 - [ ] Google Search Console and Bing Webmaster Tools verified, sitemap submitted (maintainer's accounts)
 
