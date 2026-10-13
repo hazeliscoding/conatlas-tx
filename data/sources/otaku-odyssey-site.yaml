@@ -2,6 +2,7 @@ id: otaku-odyssey-site
 series: otaku-odyssey
 url: https://www.otaku-odyssey.com/
 type: official_site
-supports: [existence, dates, venue, city]
+supports: [existence, dates, venue]
 last_checked: 2026-10-12
 access_notes: Returns HTTP 403 to some fetchers; loads in a browser.
+notes: The FAQ still describes the May 2026 show at the Hilton Dallas Lincoln Center. The homepage ticker says "Dallas, TX"; the city comes from the organizer's posts.
