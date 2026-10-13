@@ -7,7 +7,7 @@ ConAtlas TX is a static site: plain files built from the data in this repository
 - a weakness in the build, CI workflows or dependencies
 - tampered data that could send fans to the wrong place or a fake ticket site
 
-The `main` branch is supported, and so is the site at https://hazeliscoding.github.io/conatlas-tx/ once it's deployed.
+The `main` branch is supported, and so is the site at https://conatlas-tx.vercel.app/.
 
 ## Reporting a vulnerability
 

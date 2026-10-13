@@ -31,9 +31,9 @@ git add -u data/drafts   # only removals of drafts that were committed earlier
 git commit
 ```
 
-Staging those paths, rather than all of `data/`, keeps drafts you haven't approved out of the commit. Commit messages follow Conventional Commits: `fix(data): …` for corrections, `feat(data): …` for new conventions or editions, `chore(data): re-verify …` for checks that changed no facts. Push, and CI rebuilds the site. Until the deploy workflow exists (milestone M4), the site isn't public.
+Staging those paths, rather than all of `data/`, keeps drafts you haven't approved out of the commit. Commit messages follow Conventional Commits: `fix(data): …` for corrections, `feat(data): …` for new conventions or editions, `chore(data): re-verify …` for checks that changed no facts. Push, and the site redeploys once CI passes.
 
-The site decides what is "upcoming" from the build date, so it needs a rebuild at least daily once deployed; otherwise an edition stays listed until the next push.
+The site decides what is "upcoming" from the build date, so the deploy workflow rebuilds it every morning; otherwise an edition would stay listed until the next push.
 
 ## Reports from the issue forms
 

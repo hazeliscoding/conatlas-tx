@@ -4,8 +4,8 @@ Run through this once before announcing the site, and again after any big change
 
 ## Site and deploy
 
-- [ ] GitHub Pages is enabled with **GitHub Actions** as the source (Settings → Pages).
-- [ ] The latest Deploy run succeeded and https://hazeliscoding.github.io/conatlas-tx/ loads.
+- [ ] The Vercel project has no Git connection, and the repository's `production` environment (Settings → Environments) allows only `main` and holds the secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`. There are no repository-level Vercel secrets.
+- [ ] The latest Deploy run succeeded and https://conatlas-tx.vercel.app/ loads; a path without its trailing slash redirects, and a missing page shows the site's 404.
 - [ ] CI is green on `main`.
 - [ ] The daily scheduled Deploy has run at least once (Actions → Deploy).
 
