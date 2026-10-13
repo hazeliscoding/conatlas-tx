@@ -1,6 +1,7 @@
 ---
 // Listings grouped by month; undated ones close the list under "Dates not announced".
-import type { Listing } from '../lib/data.ts';
+import { todayIn } from '@conatlas/core';
+import { href, type Listing } from '../lib/data.ts';
 import type { Tone } from './DateBlock.astro';
 import EventCard from './EventCard.astro';
 
@@ -30,6 +31,11 @@ const UNDATED: Record<string, string> = {
   tba: 'Dates not announced',
   next: 'Next dates not announced',
 };
+// Each month heading links to that month on the calendar, so every month is one click from
+// home. The current month lives at /calendar/, and so do earlier ones: ongoing conventions and
+// saved past editions can start in a month that has already begun or passed.
+const thisMonth = todayIn('America/Chicago').slice(0, 7);
+const monthHref = (key: string) => href(key <= thisMonth ? 'calendar/' : `calendar/${key}/`);
 const groups = new Map<string, Listing[]>();
 for (const listing of Astro.props.listings) {
   const key = listing.awaitingNext ? 'next' : (listing.start_date?.slice(0, 7) ?? 'tba');
@@ -48,8 +54,12 @@ for (const listing of Astro.props.listings) {
       >
         <div class="tl__head">
           <h2 class="tl__month" id={`tl-${key}`}>
-            {UNDATED[key] ?? MONTHS[month! - 1]}
-            {!UNDATED[key] && <span class="sr-only"> {year}</span>}
+            {UNDATED[key] ?? (
+              <a href={monthHref(key)} data-keep-filters>
+                {MONTHS[month! - 1]}
+                <span class="sr-only"> {year}</span>
+              </a>
+            )}
           </h2>
           {!UNDATED[key] && (
             <span class="tl__year" aria-hidden="true">
@@ -111,6 +121,15 @@ for (const listing of Astro.props.listings) {
   .tl__month {
     font: var(--type-h3);
     color: var(--text);
+  }
+  .tl__month a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .tl__month a:hover {
+    color: var(--link);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
   .tl__year {
     font: var(--type-pixel);

@@ -64,6 +64,22 @@ test('robots.txt allows crawling and points to the sitemap', async ({ request })
   expect(body).not.toMatch(/Disallow:\s*\S/);
 });
 
+test('every month heading on the home page links to an indexable calendar page', async ({
+  page,
+}) => {
+  await page.goto('./');
+  const links = await page
+    .locator('.tl__month a')
+    // Paths, not attributes: the filter script rewrites these links' hrefs as absolute URLs.
+    .evaluateAll((as) => as.map((a) => (a as HTMLAnchorElement).pathname));
+  expect(links.length).toBeGreaterThan(0);
+  for (const link of links) {
+    expect(link).toMatch(/^\/calendar\/(\d{4}-\d{2}\/)?$/);
+    expect((await page.goto(link))?.status(), link).toBe(200);
+    await expect(page.locator('meta[name="robots"]'), link).toHaveCount(0);
+  }
+});
+
 test("the current month's dated page points search engines at /calendar/", async ({ page }) => {
   await page.goto(`calendar/${todayIn('America/Chicago').slice(0, 7)}/`);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${SITE}calendar/`);
