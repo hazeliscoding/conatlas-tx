@@ -58,10 +58,14 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
     next={i < months.length - 1 ? monthHref(months[i + 1]!) : undefined}
     today={i > 0 ? monthHref(months[0]!) : undefined}
   />
-  <FilterBar total={inView.length + tba.length} />
+  <FilterBar total={inView.length} />
 </div>
 
 <MonthCalendar month={month} title={title} listings={inView} today={today} />
+<p class="m-0 max-w-[70ch] [font:var(--type-caption)] text-text-muted md:hidden">
+  Struck-through entries are cancelled; amber entries are postponed and awaiting new dates.
+  Conventions are listed only after their dates are checked against the organizer's own site.
+</p>
 
 <section class="grid grid-cols-[minmax(0,1fr)] gap-3">
   <Ribbon tone="lavender" rule heading>
@@ -73,9 +77,9 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
         The organizers of these conventions haven't published their next dates. They're never placed
         on the grid until confirmed.
       </p>
-      <div class="grid gap-3">
+      <div class="grid gap-1.5" data-uncounted>
         {tba.map((listing) => (
-          <EventCard listing={listing} />
+          <EventCard listing={listing} compact />
         ))}
       </div>
     </>
@@ -113,11 +117,6 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
   </ul>
 </section>
 
-<p class="m-0 max-w-[70ch] [font:var(--type-caption)] text-text-muted">
-  Struck-through entries are cancelled; amber entries are postponed and awaiting new dates.
-  Conventions are listed only after their dates are checked against the organizer's own site.
-</p>
-
 <style>
   .feeds {
     display: grid;
@@ -129,7 +128,8 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
   }
   .feeds__row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
     gap: 2px 16px;
     padding: 10px 0;
     border-bottom: 1px dotted var(--border-strong);
@@ -137,7 +137,9 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
   @media (min-width: 768px) {
     .feeds__row {
       grid-template-columns: 180px auto minmax(0, 1fr);
-      align-items: baseline;
+    }
+    .feeds__url {
+      grid-column: auto;
     }
   }
   .feeds__label {
@@ -154,9 +156,10 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
     justify-self: start;
     display: inline-flex;
     align-items: center;
-    min-height: 24px;
+    min-height: var(--touch-min);
   }
   .feeds__url {
+    grid-column: 1 / -1;
     font: var(--type-caption);
     color: var(--text-2);
     overflow-wrap: anywhere;
