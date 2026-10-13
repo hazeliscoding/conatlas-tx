@@ -147,6 +147,7 @@ test('robots.txt allows crawling and points to the sitemap', async ({ request })
   const body = await response.text();
   expect(body).toContain('User-agent: *');
   expect(body).toContain(`Sitemap: ${SITE}sitemap.xml`);
+  expect(body).toContain(`${SITE}llms.txt`);
   expect(body).not.toMatch(/Disallow:\s*\S/);
 });
 
@@ -188,4 +189,23 @@ test('region and city pages follow the index rules', async ({ page, request }) =
   expect(locs.filter((loc) => loc.includes('/cities/')).sort()).toEqual(
     pagedCities.map((city) => new URL(cityPath(city), SITE).href).sort(),
   );
+});
+
+test('llms.txt lists every listed convention with the summary its page shows', async ({
+  page,
+  request,
+}) => {
+  const response = await request.get('llms.txt');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('text/plain');
+  const text = await response.text();
+  expect(text.startsWith('# ConAtlas TX\n\n> ')).toBe(true);
+  const lines = [...text.matchAll(/^- \[[^\]]+\]\((https:\/\/[^)]+\/cons\/[^)]+)\): (.+)$/gm)];
+  for (const edition of upcoming) {
+    expect(text, edition.id).toContain(`${SITE}cons/${edition.slug}/`);
+  }
+  for (const [, link, summary] of lines) {
+    await page.goto(new URL(link!).pathname);
+    await expect(page.locator('[data-summary]'), link).toHaveText(summary!);
+  }
 });
