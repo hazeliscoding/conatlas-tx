@@ -1,8 +1,9 @@
 ---
-// The calendar page body for one month. `/calendar/` shows the build's current month;
-// every other month in range has its own `/calendar/YYYY-MM/` page.
+// The calendar page body for one month. `/calendar/` shows the build's current month, and
+// every month in range also has a `/calendar/YYYY-MM/` page. Links go to `/calendar/` for the
+// current month, the address search engines are pointed at.
 import { todayIn } from '@conatlas/core';
-import { calendarMonths, monthTitle, type Month } from '../lib/calendar.ts';
+import { calendarMonths, inMonth, monthTitle, type Month } from '../lib/calendar.ts';
 import { getFeeds, getUpcoming, href } from '../lib/data.ts';
 import EventCard from './EventCard.astro';
 import FilterBar from './FilterBar.astro';
@@ -24,8 +25,7 @@ const monthHref = (m: Month) => href(m === months[0] ? 'calendar/' : `calendar/$
 const i = months.indexOf(month);
 const title = monthTitle(month);
 
-const dated = listings.filter((e) => e.start_date && !e.awaitingNext);
-const inView = dated.filter((e) => e.start_date! <= `${month}-31` && e.end_date! >= `${month}-01`);
+const inView = inMonth(listings, month);
 const tba = listings.filter((e) => !e.start_date || e.awaitingNext);
 const feeds = Object.entries(getFeeds()).map(([name, label]) => {
   const url = new URL(href(`feeds/${name}.ics`), import.meta.env.SITE).href;

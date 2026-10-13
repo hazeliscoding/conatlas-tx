@@ -4,6 +4,9 @@ import CalendarView from '../../components/CalendarView.astro';
 import Base from '../../layouts/Base.astro';
 ---
 
-<Base title="Calendar" description="Texas anime conventions on a month calendar.">
+<Base
+  title="Texas anime conventions by month"
+  description="Every upcoming anime convention in Texas on a month calendar, with dates checked against each organizer's own site."
+>
   <CalendarView month={todayIn('America/Chicago').slice(0, 7)} />
 </Base>

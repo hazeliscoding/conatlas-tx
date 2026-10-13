@@ -12,6 +12,8 @@ interface Props {
   description?: string;
   /** Keep the page out of search results (personal or error pages). */
   noindex?: boolean;
+  /** The path search engines should use instead, when another page shows the same content. */
+  canonical?: string;
 }
 
 const {
@@ -19,7 +21,7 @@ const {
   description = 'Discover your next anime adventure. A free, community-maintained calendar of anime conventions in Texas.',
   noindex = false,
 } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const canonical = new URL(Astro.props.canonical ?? Astro.url.pathname, Astro.site).href;
 const image = new URL(`${import.meta.env.BASE_URL}og.png`, Astro.site).href;
 const pageTitle =
   title === 'ConAtlas TX' ? `${title} · Texas anime convention calendar` : `${title} · ConAtlas TX`;

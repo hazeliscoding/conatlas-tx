@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { calendarMonths, monthWeeks } from '../src/lib/calendar.ts';
+import { calendarMonths, inMonth, monthWeeks } from '../src/lib/calendar.ts';
 
 const ev = (id: string, start_date?: string, end_date = start_date) => ({
   id,
@@ -51,5 +51,23 @@ describe('calendarMonths', () => {
       '2027-01',
     ]);
     expect(calendarMonths('2026-10-12', [])).toEqual(['2026-10']);
+  });
+});
+
+describe('inMonth', () => {
+  it('keeps dated items that touch the month, including ones crossing its edges', () => {
+    const items = [
+      ev('inside', '2027-01-08', '2027-01-10'),
+      ev('from-december', '2026-12-31', '2027-01-02'),
+      ev('into-february', '2027-01-30', '2027-02-01'),
+      ev('february', '2027-02-05', '2027-02-07'),
+      ev('undated'),
+      { ...ev('stand-in', '2027-01-15'), awaitingNext: true },
+    ];
+    expect(inMonth(items, '2027-01').map((e) => e.id)).toEqual([
+      'inside',
+      'from-december',
+      'into-february',
+    ]);
   });
 });

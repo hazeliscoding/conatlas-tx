@@ -77,6 +77,23 @@ export function calendarMonths(today: IsoDate, items: Dated[]): Month[] {
   return months;
 }
 
+/**
+ * The items on a month's grid: dated ones that touch the month. A past edition standing in for a
+ * series with nothing announced (`awaitingNext`) is never placed on the grid.
+ */
+export function inMonth<T extends Dated & { awaitingNext?: boolean }>(
+  items: T[],
+  month: Month,
+): T[] {
+  return items.filter(
+    (e) =>
+      e.start_date &&
+      !e.awaitingNext &&
+      e.start_date <= `${month}-31` &&
+      (e.end_date ?? e.start_date) >= `${month}-01`,
+  );
+}
+
 const MONTH_NAMES = [
   'January',
   'February',

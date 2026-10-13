@@ -2,21 +2,47 @@
 import { todayIn } from '@conatlas/core';
 import CalendarView from '../../components/CalendarView.astro';
 import Base from '../../layouts/Base.astro';
-import { calendarMonths, monthTitle } from '../../lib/calendar.ts';
-import { getUpcoming } from '../../lib/data.ts';
+import { calendarMonths, inMonth, monthTitle, nextMonth, type Month } from '../../lib/calendar.ts';
+import { getUpcoming, href } from '../../lib/data.ts';
 
-// The current month lives at /calendar/, so it gets no page of its own here.
+// Every month keeps its URL once published, so links and search results never hit a 404. The
+// current month's page points search engines at /calendar/, which shows the same month, and
+// months that have passed redirect there.
 export function getStaticPaths() {
-  const [, ...later] = calendarMonths(todayIn('America/Chicago'), getUpcoming());
-  return later.map((month) => ({ params: { month } }));
+  const FIRST_PAGE = '2026-10'; // the first month that had a page of its own
+  const months = calendarMonths(todayIn('America/Chicago'), getUpcoming());
+  const gone: Month[] = [];
+  for (let m = FIRST_PAGE; m < months[0]!; m = nextMonth(m)) gone.push(m);
+  return [
+    ...gone.map((month) => ({ params: { month }, props: { gone: true, current: false } })),
+    ...months.map((month, i) => ({ params: { month }, props: { gone: false, current: i === 0 } })),
+  ];
 }
 
 const { month } = Astro.params;
+const { gone, current } = Astro.props;
+// A 301 makes Astro write an immediate refresh, which search engines treat as permanent.
+if (gone) return Astro.redirect(href('calendar/'), 301);
+
+const title = monthTitle(month);
+const names = inMonth(getUpcoming(), month).map((e) => e.title);
+const listed =
+  names.length > 4
+    ? `${names.slice(0, 4).join(', ')} and ${names.length - 4} more`
+    : names.length > 1
+      ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`
+      : names[0];
 ---
 
 <Base
-  title={`Calendar · ${monthTitle(month)}`}
-  description={`Anime conventions in Texas in ${monthTitle(month)}, on a month calendar.`}
+  title={`Texas anime conventions in ${title}`}
+  description={
+    names.length
+      ? `${names.length} anime ${names.length === 1 ? 'convention' : 'conventions'} in Texas in ${title}: ${listed}. Dates checked against each organizer's own site.`
+      : `No anime conventions in Texas are listed for ${title} yet. See the calendar for what's coming up and which conventions haven't announced dates.`
+  }
+  canonical={current ? href('calendar/') : undefined}
+  noindex={!current && names.length === 0}
 >
   <CalendarView month={month} />
 </Base>

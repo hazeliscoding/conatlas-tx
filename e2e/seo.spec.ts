@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'node:url';
 import { loadDataset } from '../packages/core/src/load.ts';
+import { todayIn } from '../packages/core/src/dates.ts';
 import { expect, test } from '@playwright/test';
 
 const { dataset } = loadDataset(fileURLToPath(new URL('../data', import.meta.url)));
@@ -61,4 +62,9 @@ test('robots.txt allows crawling and points to the sitemap', async ({ request })
   expect(body).toContain('User-agent: *');
   expect(body).toContain(`Sitemap: ${SITE}sitemap.xml`);
   expect(body).not.toMatch(/Disallow:\s*\S/);
+});
+
+test("the current month's dated page points search engines at /calendar/", async ({ page }) => {
+  await page.goto(`calendar/${todayIn('America/Chicago').slice(0, 7)}/`);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${SITE}calendar/`);
 });

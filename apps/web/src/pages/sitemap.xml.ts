@@ -1,18 +1,20 @@
-// Every indexable page for search engines, with each convention page's last edit. Saved and 404
-// are left out (they're noindex). Submitted through Search Console: a project site can't point
-// to it from robots.txt, which only counts at the domain root.
+// Every indexable page for search engines, with each convention page's last edit; robots.txt
+// points here. Left out: Saved and 404 (noindex), the current month's dated page (/calendar/ is
+// its canonical), and months with nothing on them (noindex).
 import { todayIn } from '@conatlas/core';
 import type { APIRoute } from 'astro';
-import { calendarMonths } from '../lib/calendar.ts';
+import { calendarMonths, inMonth } from '../lib/calendar.ts';
 import { detailHref, getDataset, getUpcoming, href } from '../lib/data.ts';
 
 export const GET: APIRoute = ({ site }) => {
-  // The current month is /calendar/ itself.
-  const [, ...later] = calendarMonths(todayIn('America/Chicago'), getUpcoming());
+  const listings = getUpcoming();
+  const [, ...later] = calendarMonths(todayIn('America/Chicago'), listings);
   const pages: { path: string; lastmod?: string }[] = [
     { path: href() },
     { path: href('calendar/') },
-    ...later.map((month) => ({ path: href(`calendar/${month}/`) })),
+    ...later
+      .filter((month) => inMonth(listings, month).length > 0)
+      .map((month) => ({ path: href(`calendar/${month}/`) })),
     ...getDataset().editions.map((e) => ({ path: detailHref(e), lastmod: e.updated_at })),
     { path: href('about/') },
     { path: href('contribute/') },
