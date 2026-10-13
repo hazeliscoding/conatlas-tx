@@ -35,6 +35,10 @@ const { id, describedby, iconOnly } = Astro.props;
   import { getSaved, onSavedChange, setSaved } from '../lib/saved.ts';
 
   const buttons = document.querySelectorAll<HTMLButtonElement>('[data-save]');
+  // One polite live region for the page, so screen readers hear what a click did.
+  const status = Object.assign(document.createElement('span'), { className: 'sr-only' });
+  status.setAttribute('role', 'status');
+  document.body.append(status);
   buttons.forEach((button) => {
     button.hidden = false;
     button.addEventListener('click', () => {
@@ -42,6 +46,14 @@ const { id, describedby, iconOnly } = Astro.props;
       const saved = getSaved();
       const save = !saved.includes(id);
       setSaved(save ? [...saved, id] : saved.filter((x) => x !== id));
+      const name = document
+        .getElementById(button.getAttribute('aria-describedby') ?? '')
+        ?.textContent?.trim();
+      status.textContent = name
+        ? `${name} ${save ? 'saved' : 'removed from saved'}`
+        : save
+          ? 'Saved'
+          : 'Removed from saved';
       if (save) button.classList.add('bm--pop');
     });
     button.addEventListener('animationend', () => button.classList.remove('bm--pop'));
