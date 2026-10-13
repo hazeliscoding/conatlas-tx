@@ -49,8 +49,9 @@ const { ics, google } = Astro.props;
     if (event.key !== 'Escape') return;
     menus.forEach((menu) => {
       if (!menu.open) return;
+      const inside = menu.contains(document.activeElement);
       menu.open = false;
-      menu.querySelector('summary')!.focus();
+      if (inside) menu.querySelector('summary')!.focus();
     });
   });
 </script>
@@ -104,6 +105,13 @@ const { ics, google } = Astro.props;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-2);
+  }
+  /* On narrow phones the menu opens in place, so it can't run past the screen edge. */
+  @media (max-width: 480px) {
+    .exp__menu {
+      position: static;
+      margin-top: 6px;
+    }
   }
   .exp__item {
     display: flex;
