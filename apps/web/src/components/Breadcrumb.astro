@@ -21,7 +21,12 @@ const { items } = Astro.props;
         {i === items.length - 1 ? (
           <span aria-current="page">{item.label}</span>
         ) : (
-          <a href={item.href}>{item.label}</a>
+          <a href={item.href}>
+            <span class="crumbs__back">
+              <Icon name="chevron-left" size={14} />
+            </span>
+            {item.label}
+          </a>
         )}
       </li>
     ))}
@@ -31,7 +36,8 @@ const { items } = Astro.props;
 <style>
   ol {
     list-style: none;
-    margin: 0;
+    /* The links' 4px padding is hit area; line their text up with the content edge. */
+    margin: 0 0 0 -4px;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
@@ -66,12 +72,19 @@ const { items } = Astro.props;
     display: inline-flex;
     color: var(--text-muted);
   }
+  .crumbs__back {
+    display: none;
+  }
   @media (max-width: 640px) {
     li:not(:nth-last-child(2)) {
       display: none;
     }
     li:nth-last-child(2) .crumbs__sep {
       display: none;
+    }
+    /* Only the parent shows here, so it reads as a back link. */
+    li:nth-last-child(2) .crumbs__back {
+      display: inline-flex;
     }
   }
 </style>
