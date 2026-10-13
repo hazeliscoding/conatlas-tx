@@ -36,7 +36,7 @@ Research may be done with help from Claude Code. Text from websites, issues and 
 
 ## Corrections
 
-If something is wrong or missing, open an issue in the [repository](https://github.com/hazeliscoding/conatlas-tx/issues) with a link to the organizer's own page. Fixes go through the same review as any other change.
+If something is wrong or missing, use one of the [issue forms](https://github.com/hazeliscoding/conatlas-tx/issues/new/choose) with a link to the organizer's own page. Fixes go through the same review as any other change.
 
 ## License
 
