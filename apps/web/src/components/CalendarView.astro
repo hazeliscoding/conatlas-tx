@@ -3,7 +3,7 @@
 // every other month in range has its own `/calendar/YYYY-MM/` page.
 import { todayIn } from '@conatlas/core';
 import { calendarMonths, type Month } from '../lib/calendar.ts';
-import { FEEDS, getUpcoming, href } from '../lib/data.ts';
+import { getFeeds, getUpcoming, href } from '../lib/data.ts';
 import EventCard from './EventCard.astro';
 import FilterBar from './FilterBar.astro';
 import Icon from './Icon.astro';
@@ -41,7 +41,7 @@ const title = `${MONTHS[Number(month.slice(5)) - 1]} ${month.slice(0, 4)}`;
 const dated = listings.filter((e) => e.start_date && !e.awaitingNext);
 const inView = dated.filter((e) => e.start_date! <= `${month}-31` && e.end_date! >= `${month}-01`);
 const tba = listings.filter((e) => !e.start_date || e.awaitingNext);
-const feeds = Object.entries(FEEDS).map(([name, label]) => {
+const feeds = Object.entries(getFeeds()).map(([name, label]) => {
   const url = new URL(href(`feeds/${name}.ics`), import.meta.env.SITE).href;
   return { label, url, webcal: url.replace(/^https:/, 'webcal:') };
 });

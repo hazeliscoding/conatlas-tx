@@ -92,7 +92,10 @@ export function editionEvent(edition: Edition, details: EventDetails): string | 
     .join('');
 }
 
-/** A complete VCALENDAR around VEVENT blocks from editionEvent. With no events it is still a valid empty calendar. */
+/**
+ * A complete VCALENDAR around VEVENT blocks from editionEvent. RFC 5545 requires at least one
+ * event, so only publish it with some; with none it is a template to add events to.
+ */
 export function calendar(name: string, events: string[]): string {
   const head = [
     'BEGIN:VCALENDAR',

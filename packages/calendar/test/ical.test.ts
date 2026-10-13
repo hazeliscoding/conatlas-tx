@@ -121,7 +121,7 @@ describe('editionEvent', () => {
 });
 
 describe('calendar', () => {
-  it('is a valid calendar with no events', () => {
+  it('parses as a template when given no events', () => {
     const { vcalendar, events } = parse(calendar('Texas, all; upcoming \\ soon', []));
     expect(events).toEqual([]);
     expect(value(vcalendar, 'version')).toBe('2.0');

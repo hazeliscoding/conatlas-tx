@@ -1,5 +1,12 @@
 import { resolve } from 'node:path';
-import { REGION_NAMES, todayIn, validateDataset, type Dataset, type Edition } from '@conatlas/core';
+import {
+  REGION_NAMES,
+  todayIn,
+  validateDataset,
+  type Dataset,
+  type Edition,
+  type Region,
+} from '@conatlas/core';
 import { loadDataset } from '@conatlas/core/load';
 
 // Astro runs with apps/web as the working directory.
@@ -32,8 +39,15 @@ export const detailHref = (edition: Pick<Edition, 'slug'>) => href(`cons/${editi
 export const editionTitle = (edition: Edition, seriesName: string) =>
   `${seriesName} ${edition.edition}`;
 
-/** Calendar feeds by URL name (`feeds/<name>.ics`): all of Texas, then one per region. */
-export const FEEDS: Record<string, string> = { all: 'All of Texas', ...REGION_NAMES };
+/**
+ * Calendar feeds by URL name (`feeds/<name>.ics`): all of Texas, then each region with a dated
+ * edition. iCalendar needs at least one event, so a region without any gets no feed yet.
+ */
+export function getFeeds(): Record<string, string> {
+  const dated = new Set(getDataset().editions.flatMap((e) => (e.start_date ? [e.region] : [])));
+  const regions = Object.entries(REGION_NAMES).filter(([region]) => dated.has(region as Region));
+  return { all: 'All of Texas', ...Object.fromEntries(regions) };
+}
 
 /** What calendar apps show for an edition, and the page they link back to. */
 export const eventDetails = (edition: Edition, title: string) => ({

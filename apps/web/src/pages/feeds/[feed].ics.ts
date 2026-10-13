@@ -1,11 +1,14 @@
-// Subscribable feeds: every dated edition in Texas, and one per region. Past editions stay in, so
+// Subscribable feeds: every dated edition in Texas, and one per region that has any. Past editions stay in, so
 // calendar apps don't delete events that already happened.
 import { calendar, editionEvent } from '@conatlas/calendar';
 import type { APIRoute } from 'astro';
-import { FEEDS, editionTitle, eventDetails, getDataset } from '../../lib/data.ts';
+import { editionTitle, eventDetails, getDataset, getFeeds } from '../../lib/data.ts';
 
 export function getStaticPaths() {
-  return Object.entries(FEEDS).map(([feed, label]) => ({ params: { feed }, props: { label } }));
+  return Object.entries(getFeeds()).map(([feed, label]) => ({
+    params: { feed },
+    props: { label },
+  }));
 }
 
 export const GET: APIRoute = ({ params, props }) => {

@@ -57,7 +57,12 @@ test('saved conventions survive a reload, list on the Saved page and export', as
 
 test('every calendar file parses and holds the right editions', async ({ request }) => {
   const dated = dataset.editions.filter((e) => e.start_date);
-  for (const feed of ['all', ...REGIONS]) {
+  // A region gets a feed once it has a dated edition; iCalendar needs at least one event.
+  const regions = REGIONS.filter((region) => dated.some((e) => e.region === region));
+  for (const region of REGIONS.filter((r) => !regions.includes(r))) {
+    expect((await request.get(`feeds/${region}.ics`)).status(), region).toBe(404);
+  }
+  for (const feed of ['all', ...regions]) {
     const response = await request.get(`feeds/${feed}.ics`);
     expect(response.status(), feed).toBe(200);
     const expected = dated.filter((e) => feed === 'all' || e.region === feed);
