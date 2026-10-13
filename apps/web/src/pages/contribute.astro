@@ -101,11 +101,12 @@ const titlesJson = JSON.stringify(titles).replace(/</g, '\\u003c');
           >
             <span class="path__icons">
               <Icon name={p.icon} size={22} />
-              <Icon name="external-link" size={14} label="(opens in new tab)" />
+              <Icon name="external-link" size={14} />
             </span>
             <strong class="path__title">{p.title}</strong>
             <span class="path__desc">{p.desc}</span>
             <span class="path__note">Opens a GitHub issue form</span>
+            <span class="sr-only"> (opens in new tab)</span>
           </a>
         </li>
       ))}
@@ -170,10 +171,12 @@ const titlesJson = JSON.stringify(titles).replace(/</g, '\\u003c');
   const render = (name?: string) => {
     links.forEach((link) => {
       const url = new URL(base.get(link)!);
-      if (name && link.dataset.issue) {
+      const form = link.dataset.issue;
+      // A listed con is never a missing one, so the new-convention form stays blank.
+      if (name && form && form !== 'new-convention') {
         url.searchParams.set('title', `${link.dataset.prefix}: ${name}`);
-        if (link.dataset.issue !== 'new-convention') url.searchParams.set('convention', name);
-      } else if (name) {
+        url.searchParams.set('convention', name);
+      } else if (name && !form) {
         url.searchParams.set('subject', `ConAtlas TX correction: ${name}`);
       }
       // URLSearchParams writes spaces as "+", which mail apps can show literally.

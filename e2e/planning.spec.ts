@@ -107,10 +107,15 @@ test('reporting from a convention page prefills the forms', async ({ page }) => 
   for (const link of await page.locator('a[data-issue]').all()) {
     const url = new URL((await link.getAttribute('href'))!);
     const template = url.searchParams.get('template')!;
+    if (template === 'new-convention.yml') {
+      // A listed con is never a missing one, so this form stays blank.
+      expect(url.searchParams.get('title')).toBe('[New con]: ');
+      expect(url.searchParams.has('convention')).toBe(false);
+      continue;
+    }
     expect(url.searchParams.get('title')).toBe(
       `${await link.getAttribute('data-prefix')}: ${title}`,
     );
-    if (template === 'new-convention.yml') continue;
     expect(url.searchParams.get('convention')).toBe(title);
     // The prefilled field has to exist in the form, or GitHub drops the value.
     expect(readFileSync(`${FORMS_DIR}/${template}`, 'utf8')).toMatch(/^\s+id: convention$/m);
