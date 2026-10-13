@@ -8,7 +8,7 @@ A free, open-source calendar of Texas anime conventions. Static Astro site, YAML
 
 ```sh
 pnpm install
-pnpm dev             # http://localhost:4321/conatlas-tx/ (note the base path)
+pnpm dev             # http://localhost:4321/
 pnpm build           # static site in apps/web/dist
 pnpm typecheck       # tsc for packages, astro check for the site
 pnpm lint

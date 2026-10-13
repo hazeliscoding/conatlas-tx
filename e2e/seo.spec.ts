@@ -3,7 +3,7 @@ import { loadDataset } from '../packages/core/src/load.ts';
 import { expect, test } from '@playwright/test';
 
 const { dataset } = loadDataset(fileURLToPath(new URL('../data', import.meta.url)));
-const SITE = 'https://hazeliscoding.github.io/conatlas-tx/';
+const SITE = 'https://conatlas-tx.vercel.app/';
 
 test('the sitemap lists every indexable page, each with matching canonical and social tags', async ({
   page,

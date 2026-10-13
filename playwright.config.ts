@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 // Tests run against the built site (`pnpm build` first). Locally an already running
 // `pnpm preview` is reused; CI starts its own.
-const baseURL = 'http://localhost:4329/conatlas-tx/';
+const baseURL = 'http://localhost:4329/';
 
 export default defineConfig({
   testDir: 'e2e',

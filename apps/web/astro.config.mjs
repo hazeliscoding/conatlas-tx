@@ -2,11 +2,10 @@
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
-// Primary target is GitHub Pages (project site). For Cloudflare Pages or a custom domain,
-// change `site` and drop `base`; nothing else depends on the host.
+// Hosted on Vercel at the domain root. For another host or a custom domain, change `site` (and
+// SITE in e2e/seo.spec.ts); nothing else depends on the host.
 export default defineConfig({
-  site: 'https://hazeliscoding.github.io',
-  base: '/conatlas-tx',
+  site: 'https://conatlas-tx.vercel.app',
   trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()],

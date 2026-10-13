@@ -56,7 +56,7 @@ test('filters narrow the timeline and round-trip through the URL', async ({ page
   await page.goto('./?region=west');
   await expect(page.locator('[data-filter-empty]')).toBeVisible();
   await page.getByRole('button', { name: 'Clear filters' }).click();
-  await expect(page).toHaveURL(/\/conatlas-tx\/$/);
+  await expect(page).toHaveURL(/:\d+\/$/);
   expect(await page.locator('[data-listing]:visible').count()).toBe(all);
 });
 

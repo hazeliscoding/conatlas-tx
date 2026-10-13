@@ -26,7 +26,7 @@ You need [Node.js 24+](https://nodejs.org) and [pnpm](https://pnpm.io) (`npm ins
 
 ```sh
 pnpm install
-pnpm dev             # open http://localhost:4321/conatlas-tx/
+pnpm dev             # open http://localhost:4321/
 ```
 
 Before you open a pull request, run the same checks as CI:
