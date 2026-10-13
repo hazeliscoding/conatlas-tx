@@ -1,6 +1,7 @@
 ---
-// Save toggle for the browser-local list (aria-pressed). Hidden until its script runs, since
-// saving needs storage. `describedby` names what's being saved when the label alone is "Save".
+// Save toggle for the browser-local list. The label itself carries the state ("Save", "Saved"),
+// so there's no aria-pressed: a toggle's name shouldn't change with its state. Hidden until its
+// script runs, since saving needs storage. `describedby` names what's being saved.
 import Icon from './Icon.astro';
 
 interface Props {
@@ -14,7 +15,6 @@ const { id, describedby } = Astro.props;
 <button
   type="button"
   class="bm"
-  aria-pressed="false"
   aria-describedby={describedby}
   data-save={id}
   hidden
@@ -46,7 +46,7 @@ const { id, describedby } = Astro.props;
   });
   onSavedChange(() => {
     const saved = new Set(getSaved());
-    buttons.forEach((b) => b.setAttribute('aria-pressed', String(saved.has(b.dataset.save!))));
+    buttons.forEach((b) => b.toggleAttribute('data-saved', saved.has(b.dataset.save!)));
   });
 </script>
 
@@ -75,13 +75,13 @@ const { id, describedby } = Astro.props;
     outline: none;
     box-shadow: var(--shadow-focus);
   }
-  .bm[aria-pressed='true'] {
+  .bm[data-saved] {
     background: var(--accent-soft);
     border-color: var(--accent);
     color: var(--brand-pink-ink);
   }
-  .bm[aria-pressed='true'] .bm__off,
-  .bm[aria-pressed='false'] .bm__on {
+  .bm[data-saved] .bm__off,
+  .bm:not([data-saved]) .bm__on {
     display: none;
   }
   .bm__i {

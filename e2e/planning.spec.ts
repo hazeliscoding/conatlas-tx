@@ -29,10 +29,12 @@ test('saved conventions survive a reload, list on the Saved page and export', as
   await page.goto('./');
   const save = page.locator(`[data-listing="${upcoming.id}"] [data-save]`);
   await expect(save).toHaveAccessibleDescription(cardName);
+  await expect(save).toHaveAccessibleName('Save');
   await save.click();
-  await expect(save).toHaveAttribute('aria-pressed', 'true');
+  await expect(save).toHaveAttribute('data-saved');
+  await expect(save).toHaveAccessibleName('Saved');
   await page.reload();
-  await expect(save).toHaveAttribute('aria-pressed', 'true');
+  await expect(save).toHaveAttribute('data-saved');
   await expect(page.locator('[data-saved-count]').first()).toHaveText('1');
 
   await page.goto('saved/');
@@ -46,7 +48,7 @@ test('saved conventions survive a reload, list on the Saved page and export', as
   // Unsaving keeps the card until the page is left, so it can be saved again in one click.
   const card = page.locator(`[data-listing="${upcoming.id}"]`);
   await card.locator('[data-save]').click();
-  await expect(card.locator('[data-save]')).toHaveAttribute('aria-pressed', 'false');
+  await expect(card.locator('[data-save]')).not.toHaveAttribute('data-saved');
   await expect(card).toBeVisible();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your saved conventions');
   await page.reload();
