@@ -1,6 +1,6 @@
 ---
 // Region and city chips that filter `[data-listing]` elements in place; a `[data-filter-group]`
-// hides once all its listings are hidden. Hidden until its script runs, so a visitor without
+// hides once all its listings are hidden. Shown only when JavaScript runs (global.css), so a visitor without
 // JavaScript sees the full page and no dead controls.
 import { REGIONS, REGION_NAMES } from '@conatlas/core';
 import Button from './Button.astro';
@@ -16,7 +16,7 @@ interface Props {
 const { cities = [], total } = Astro.props;
 ---
 
-<form class="filters" aria-label="Filter conventions" data-filters hidden>
+<form class="filters" aria-label="Filter conventions" data-filters>
   <div class="filters__row" role="group" aria-labelledby="filter-region">
     <span class="filters__label" id="filter-region">
       Region
@@ -164,7 +164,6 @@ const { cities = [], total } = Astro.props;
     form.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((input) => {
       input.checked = params.getAll(input.name).includes(input.value);
     });
-    form.hidden = false;
     update();
   }
 </script>

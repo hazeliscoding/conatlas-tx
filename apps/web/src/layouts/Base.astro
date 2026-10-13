@@ -51,7 +51,9 @@ const pageTitle =
     <slot name="head" />
     <meta name="generator" content={Astro.generator} />
     <script is:inline>
-      // Apply the saved theme (or the system preference) before first paint, so there's no flash.
+      // Mark that JavaScript runs, so controls it powers are laid out from the first paint
+      // (global.css hides them otherwise). Then apply the saved theme before paint.
+      document.documentElement.classList.add('js');
       try {
         const saved = localStorage.getItem('theme');
         const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;

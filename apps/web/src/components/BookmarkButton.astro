@@ -1,7 +1,7 @@
 ---
 // Save toggle for the browser-local list. The label itself carries the state ("Save", "Saved"),
-// so there's no aria-pressed: a toggle's name shouldn't change with its state. Hidden until its
-// script runs, since saving needs storage. `describedby` names what's being saved.
+// so there's no aria-pressed: a toggle's name shouldn't change with its state. Shown only when
+// JavaScript runs (global.css), since saving needs storage. `describedby` names what's being saved.
 import Icon from './Icon.astro';
 
 interface Props {
@@ -19,7 +19,6 @@ const { id, describedby, iconOnly } = Astro.props;
   class:list={['bm', iconOnly && 'bm--icon']}
   aria-describedby={describedby}
   data-save={id}
-  hidden
 >
   <span class="bm__i bm__off">
     <Icon name="bookmark" size={18} />
@@ -40,7 +39,6 @@ const { id, describedby, iconOnly } = Astro.props;
   status.setAttribute('role', 'status');
   document.body.append(status);
   buttons.forEach((button) => {
-    button.hidden = false;
     button.addEventListener('click', () => {
       const id = button.dataset.save!;
       const saved = getSaved();

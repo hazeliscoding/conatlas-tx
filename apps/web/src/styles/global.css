@@ -57,6 +57,14 @@
   --shadow-3: var(--shadow-3);
 }
 
+/* Controls that need JavaScript stay out of the page without it, so nobody sees a dead one. */
+html:not(.js) :is([data-filters], [data-save], [data-theme-toggle]) {
+  display: none !important;
+}
+html.js [data-saved-nojs] {
+  display: none !important;
+}
+
 /* The sticky header would cover whatever focus or an anchor link scrolls to. */
 html {
   scroll-padding-top: calc(var(--header-h-mobile) + 8px);

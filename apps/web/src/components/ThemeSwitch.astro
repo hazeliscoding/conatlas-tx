@@ -1,5 +1,5 @@
 ---
-// Dark mode switch. Hidden until its script runs; Base.astro applies the saved theme before paint.
+// Dark mode switch. Shown only when JavaScript runs (global.css); Base.astro applies the saved theme before paint.
 import Icon from './Icon.astro';
 
 interface Props {
@@ -17,7 +17,6 @@ const { label } = Astro.props;
   class="switch"
   aria-label={label ? undefined : 'Dark mode'}
   data-theme-toggle
-  hidden
 >
   <span class="switch__track">
     <span class="switch__thumb">
@@ -39,7 +38,6 @@ const { label } = Astro.props;
     toggles.forEach((t) => t.setAttribute('aria-checked', String(dark)));
   };
   toggles.forEach((toggle) => {
-    toggle.hidden = false;
     toggle.addEventListener('click', () => {
       const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
       document.documentElement.dataset.theme = theme;

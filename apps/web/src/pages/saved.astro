@@ -62,7 +62,26 @@ const ics = JSON.stringify({ empty: calendar('My ConAtlas TX list', []), events 
         Open the calendar
       </Button>
     </EmptyState>
-
+    <script is:inline>
+      // Choose the list or the empty state before first paint, so nothing jumps when the page's
+      // module loads and takes over. Reads the same key as lib/saved.ts.
+      try {
+        const saved = new Set(JSON.parse(localStorage.getItem('conatlas-saved') || '[]'));
+        const list = document.querySelector('[data-saved-list]');
+        let count = 0;
+        for (const card of list.querySelectorAll('[data-listing]')) {
+          card.hidden = !saved.has(card.dataset.listing);
+          if (!card.hidden) count++;
+        }
+        for (const group of list.querySelectorAll('[data-filter-group]')) {
+          group.hidden = !group.querySelector('[data-listing]:not([hidden])');
+        }
+        list.hidden = count === 0;
+        document.querySelector('[data-saved-empty]').hidden = count > 0;
+      } catch {
+        // Storage blocked: the module shows the empty state.
+      }
+    </script>
     <div class="flex max-w-[68ch] items-start gap-2.5 rounded-md bg-surface-2 px-4 py-3.5 [font:var(--type-body-sm)] text-text-2">
       <Icon name="info" size={18} />
       <span>
