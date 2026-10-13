@@ -86,20 +86,22 @@ const ics = JSON.stringify({ empty: calendar('My ConAtlas TX list', []), events 
   const plural = (n: number) => `${n} ${n === 1 ? 'convention' : 'conventions'}`;
   const savedHere = () => getSaved().filter((id) => known.has(id));
 
-  // Cards saved when the page opened stay listed after an unsave, so it's one click to undo.
-  const shown = new Set(savedHere());
-  cards.forEach((card) => (card.hidden = !shown.has(card.dataset.listing!)));
-  list.querySelectorAll<HTMLElement>('[data-filter-group]').forEach((group) => {
-    const n = group.querySelectorAll('[data-listing]:not([hidden])').length;
-    group.hidden = n === 0;
-    group.querySelector('[data-group-count]')!.textContent = plural(n);
-  });
-  list.hidden = shown.size === 0;
-  document.querySelector<HTMLElement>('[data-saved-empty]')!.hidden = shown.size > 0;
+  const emptyState = document.querySelector<HTMLElement>('[data-saved-empty]')!;
   document.querySelector<HTMLElement>('[data-saved-nojs]')!.hidden = true;
+  // Cards stay listed after an unsave until the page is left, so it's one click to undo.
+  const shown = new Set<string>();
 
   onSavedChange(() => {
     const saved = savedHere();
+    saved.forEach((id) => shown.add(id));
+    cards.forEach((card) => (card.hidden = !shown.has(card.dataset.listing!)));
+    list.querySelectorAll<HTMLElement>('[data-filter-group]').forEach((group) => {
+      const n = group.querySelectorAll('[data-listing]:not([hidden])').length;
+      group.hidden = n === 0;
+      group.querySelector('[data-group-count]')!.textContent = plural(n);
+    });
+    list.hidden = shown.size === 0;
+    emptyState.hidden = shown.size > 0;
     heading.textContent = saved.length
       ? `${saved.length} saved ${saved.length === 1 ? 'convention' : 'conventions'}`
       : 'Your saved conventions';
