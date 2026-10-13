@@ -1,5 +1,6 @@
 ---
 import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
 import Ribbon from '../components/Ribbon.astro';
 import Base from '../layouts/Base.astro';
 import { REPO_URL, href } from '../lib/data.ts';
@@ -72,6 +73,10 @@ const policy = `${REPO_URL}/blob/main/docs/DATA_POLICY.md`;
         Code and data live on GitHub under open licenses.
       </p>
       <div class="flex flex-wrap gap-2.5">
+        <Button variant="soft" href={href('contribute/')}>
+          <Icon name="plus" size={16} />
+          Suggest a convention
+        </Button>
         <Button variant="secondary" href={REPO_URL} external>
           Source on GitHub
         </Button>
