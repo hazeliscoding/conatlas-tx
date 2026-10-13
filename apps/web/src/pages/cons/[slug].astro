@@ -73,6 +73,37 @@ const cancelled = e.status === 'cancelled';
 const ended = e.status === 'completed' || (end !== undefined && end < today);
 const longDate = (d: string) => formatDateRange(d, d);
 const description = e.description ?? series.description;
+// Event structured data only where the organizer confirmed the dates: not for undated,
+// postponed or cancelled editions. Every value is one the page shows.
+const event =
+  start && end && (e.status === 'confirmed' || e.status === 'completed')
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Event',
+        name: title,
+        startDate: start,
+        endDate: end,
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        location: {
+          '@type': 'Place',
+          name: e.venue?.name ?? `${e.city}, Texas`,
+          address: e.venue?.address ?? {
+            '@type': 'PostalAddress',
+            addressLocality: e.city,
+            addressRegion: 'TX',
+            addressCountry: 'US',
+          },
+        },
+        organizer: {
+          '@type': 'Organization',
+          name: series.organizer ?? series.name,
+          url: series.website,
+        },
+        url: new URL(detailHref(e), Astro.site).href,
+        ...(description && { description }),
+      }
+    : undefined;
 // Other series coming up in the same region or city, soonest first.
 const nearby = getUpcoming()
   .filter(
@@ -97,6 +128,13 @@ const past = siblings
       : `${title} in ${e.city}, Texas. Dates not announced yet; venue and official sources, checked against the organizer's site.`
   }
 >
+  {event && (
+    <script
+      type="application/ld+json"
+      slot="head"
+      set:html={JSON.stringify(event).replace(/</g, '\\u003c')}
+    />
+  )}
   <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
     <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: name }]} />
 
