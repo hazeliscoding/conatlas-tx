@@ -12,9 +12,9 @@ Thumbs.db
 
 # The maintainer's global gitignore excludes .claude/. Commit only the shared skills; local
 # settings (which hold machine paths) stay out.
-!.claude/
-.claude/*
-!.claude/skills/
+!/.claude/
+/.claude/*
+!/.claude/skills/
 
 # The maintainer's global gitignore excludes these; this repo commits them.
 !AGENTS.md
