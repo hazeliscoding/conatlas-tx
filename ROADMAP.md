@@ -35,6 +35,15 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-12** — The maintainer contact for conduct reports, security reports and people without a GitHub account is a Proton Pass alias, conatlas-tx.landing118@passfwd.com.
 - **2026-10-12** — Public pages describe verification by what readers can check (organizer sources, human review), not by the tools used. `docs/DATA_POLICY.md` documents the research process.
 - **2026-10-12** — Search optimization gets its own milestone, M5, after launch: audits, rich-result checks and field data need the deployed site. M4 keeps the launch basics (metadata, canonical URLs, sitemap, Open Graph, event structured data). Measurement uses Search Console and public tools, never tracking scripts.
+- **2026-10-13** — The data CLI stays offline: research (by a maintainer or the `/conatlas-refresh` and `/conatlas-add` skills) writes complete records to `data/drafts/`, and `data:propose` copies a published record as the starting point.
+- **2026-10-13** — `data:diff` sorts changed fields into facts, verification and bookkeeping, and prints changed evidence in full, because evidence quotes and notes are public on each convention page. Control and bidi characters in draft text are printed as escapes.
+- **2026-10-13** — An edition's `revision` goes up by one exactly when a published fact changes, and a convention rename counts as a fact change for each of its editions (it changes their calendar titles). `data:diff` and `data:promote` enforce it.
+- **2026-10-13** — `data:promote` publishes only drafts named exactly (or `--all`, never both), after checking the published data with just those drafts applied, and removes drafts only once every copy succeeded. Agents run it only after the maintainer approves those drafts in the terminal.
+- **2026-10-13** — Duplicate detection is a warning for a human: the same website host or a near-identical name for a convention, overlapping dates in the same series or city for an edition, the same URL for a source.
+- **2026-10-13** — `data:report` re-checks an upcoming edition every 7 days within 30 days of its start, every 14 within 90, otherwise every 45; undated editions every 30, postponed ones every 14, and a series with nothing upcoming every 30 by its sources' `last_checked`.
+- **2026-10-13** — Problems reaching a site go in the source's `access_notes`, which isn't shown on the site; evidence notes are public.
+- **2026-10-13** — A recap sign-off such as "We'll see you at Anime Matsuri 2027!" doesn't announce the next edition. Without dates, a window or a location from the organizer, the series keeps "Next dates not announced".
+- **2026-10-13** — Shared Claude Code skills live in `.claude/skills/` and are committed; the rest of `.claude/` stays ignored.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -77,13 +86,15 @@ Status 2026-10-12: all three are covered by end-to-end tests (82 pass). Every fe
 
 ## M3 — Claude-assisted ingestion
 
-- [ ] `pnpm data:diff`, `pnpm data:propose`, `pnpm data:report`
-- [ ] Draft staging and explicit promotion
-- [ ] Semantic diff and duplicate detection
-- [ ] `/conatlas-refresh` and `/conatlas-add` skills (un-ignore `.claude/skills/` in `.gitignore`: the maintainer's global gitignore excludes `.claude/`)
-- [ ] `docs/INGESTION_ENGINE.md`, `docs/MAINTENANCE.md`
+- [x] `pnpm data:diff`, `pnpm data:propose`, `pnpm data:report`
+- [x] Draft staging and explicit promotion
+- [x] Semantic diff and duplicate detection
+- [x] `/conatlas-refresh` and `/conatlas-add` skills (un-ignore `.claude/skills/` in `.gitignore`: the maintainer's global gitignore excludes `.claude/`)
+- [x] `docs/INGESTION_ENGINE.md`, `docs/MAINTENANCE.md`
 
 Done when: a refresh stages drafts, the diff report is correct on fixtures, and nothing reaches `data/` without explicit maintainer approval.
+
+Status 2026-10-13: a live refresh of five conventions staged 19 drafts, a second agent re-checked every quote, and the maintainer approved 16 of them (Anime Matsuri 2027 held). The CLI tests compare the full `data:diff` output on a fixture and show that only `data:promote` writes published data, and only for drafts it checked. 68 unit and 82 end-to-end tests pass. Waiting on the maintainer's review.
 
 ## M4 — Production readiness
 
