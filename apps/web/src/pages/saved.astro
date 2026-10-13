@@ -62,6 +62,7 @@ const ics = JSON.stringify({ empty: calendar('My ConAtlas TX list', []), events 
         Open the calendar
       </Button>
     </EmptyState>
+    <script type="application/json" id="saved-ics" set:html={ics} />
     <script is:inline>
       // Choose the list or the empty state before first paint, so nothing jumps when the page's
       // module loads and takes over. Reads the same key as lib/saved.ts.
@@ -78,6 +79,15 @@ const ics = JSON.stringify({ empty: calendar('My ConAtlas TX list', []), events 
         }
         list.hidden = count === 0;
         document.querySelector('[data-saved-empty]').hidden = count > 0;
+        const { events } = JSON.parse(document.getElementById('saved-ics').textContent);
+        const shown = list.querySelectorAll('[data-listing]:not([hidden])');
+        document.querySelector('[data-saved-export]').hidden = ![...shown].some(
+          (card) => card.dataset.listing in events,
+        );
+        if (count > 0) {
+          document.querySelector('[data-saved-heading]').textContent =
+            `${count} saved ${count === 1 ? 'convention' : 'conventions'}`;
+        }
       } catch {
         // Storage blocked: the module shows the empty state.
       }
@@ -91,7 +101,6 @@ const ics = JSON.stringify({ empty: calendar('My ConAtlas TX list', []), events 
       </span>
     </div>
   </div>
-  <script type="application/json" id="saved-ics" set:html={ics} />
 </Base>
 
 <script>

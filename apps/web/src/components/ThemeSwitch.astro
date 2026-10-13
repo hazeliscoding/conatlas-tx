@@ -88,10 +88,11 @@ const { label } = Astro.props;
     color: var(--text-2);
     transition: transform var(--dur-base) var(--ease-out);
   }
-  .switch[aria-checked='true'] .switch__track {
+  /* Drawn from the theme the head script sets before paint, not from aria-checked. */
+  :global([data-theme='dark']) .switch__track {
     background: var(--accent);
   }
-  .switch[aria-checked='true'] .switch__thumb {
+  :global([data-theme='dark']) .switch__thumb {
     transform: translateX(18px);
     color: var(--accent);
   }
@@ -99,8 +100,8 @@ const { label } = Astro.props;
   .switch__moon {
     display: inline-flex;
   }
-  .switch[aria-checked='true'] .switch__sun,
-  .switch[aria-checked='false'] .switch__moon {
+  :global([data-theme='dark']) .switch__sun,
+  :global(:root:not([data-theme='dark'])) .switch__moon {
     display: none;
   }
   .switch:focus-visible {
