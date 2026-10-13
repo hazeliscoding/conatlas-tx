@@ -64,7 +64,7 @@ const feeds = Object.entries(FEEDS).map(([name, label]) => {
 <MonthCalendar month={month} title={title} listings={inView} today={today} />
 
 <section class="grid grid-cols-[minmax(0,1fr)] gap-3">
-  <Ribbon tone="lavender" rule>
+  <Ribbon tone="lavender" rule heading>
     Dates not announced
   </Ribbon>
   {tba.length > 0 ? (
@@ -87,7 +87,7 @@ const feeds = Object.entries(FEEDS).map(([name, label]) => {
 </section>
 
 <section class="grid grid-cols-[minmax(0,1fr)] gap-3">
-  <Ribbon tone="sage" rule>
+  <Ribbon tone="sage" rule heading>
     Subscribe
   </Ribbon>
   <p class="m-0 max-w-[68ch] [font:var(--type-body-sm)] text-text-2">

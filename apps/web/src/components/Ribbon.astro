@@ -4,15 +4,18 @@ interface Props {
   tone?: 'pink' | 'lavender' | 'sage';
   /** Extend a dotted rule to the right. */
   rule?: boolean;
+  /** Render the label as an h2, for ribbons that title a section rather than tag a page. */
+  heading?: boolean;
 }
 
-const { tone, rule = false } = Astro.props;
+const { tone, rule = false, heading = false } = Astro.props;
+const Label = heading ? 'h2' : 'span';
 ---
 
 <div class:list={[rule && 'row']}>
-  <span class:list={['ribbon', tone && `ribbon--${tone}`]}>
+  <Label class:list={['ribbon', tone && `ribbon--${tone}`]}>
     <slot />
-  </span>
+  </Label>
 </div>
 
 <style>

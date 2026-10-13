@@ -178,12 +178,14 @@ const past = siblings
       <div class="grid min-w-0 content-start gap-6">
         {description && (
           <section class="grid gap-3">
-            <Ribbon rule>About</Ribbon>
+            <Ribbon rule heading>
+              About
+            </Ribbon>
             <p class="m-0 max-w-[68ch] text-pretty text-text-2">{description}</p>
           </section>
         )}
         <section class="grid gap-3">
-          <Ribbon tone="sage" rule>
+          <Ribbon tone="sage" rule heading>
             Venue
           </Ribbon>
           {e.venue ? (
@@ -202,7 +204,7 @@ const past = siblings
         </section>
         {past.length > 0 && (
           <section class="grid gap-3">
-            <Ribbon tone="lavender" rule>
+            <Ribbon tone="lavender" rule heading>
               Past editions
             </Ribbon>
             <ul class="m-0 grid gap-1.5 pl-5 [font:var(--type-body-sm)] text-text-2">
