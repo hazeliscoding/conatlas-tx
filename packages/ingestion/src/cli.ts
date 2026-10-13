@@ -158,9 +158,16 @@ function diff(ctx: Context): number {
   return errors > 0 ? 1 : 0;
 }
 
+const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
 /** Finds `<dir>/<kind>/<id>.yaml` for "kind/id" or a bare id. */
 function locate(dir: string, ref: string): { kind: Kind; id: string } {
-  const [kind, id] = ref.includes('/') ? ref.split('/', 2) : [undefined, ref];
+  const parts = ref.split('/');
+  const [kind, id] = parts.length === 2 ? parts : [undefined, parts[0]];
+  // Only plain ids reach the file system, so a ref can't point outside the data directory.
+  if (parts.length > 2 || !ID.test(id ?? '')) {
+    throw new UsageError(`"${ref}" is not a record; write it like editions/san-japan-2027`);
+  }
   if (kind !== undefined && !(KINDS as readonly string[]).includes(kind)) {
     throw new UsageError(`unknown record kind "${kind}" in "${ref}"; use ${KINDS.join(', ')}`);
   }
@@ -176,22 +183,30 @@ function locate(dir: string, ref: string): { kind: Kind; id: string } {
   return { kind: matches[0]!, id: id! };
 }
 
+const unique = (records: { kind: Kind; id: string }[]) => [
+  ...new Map(records.map((r) => [`${r.kind}/${r.id}`, r])).values(),
+];
+
 function propose(ctx: Context, refs: string[]): number {
   if (refs.length === 0) throw new UsageError('name at least one record to propose');
-  for (const ref of refs) {
-    const { kind, id } = locate(ctx.data, ref);
-    const target = join(ctx.drafts, kind, `${id}.yaml`);
-    if (existsSync(target)) throw new UsageError(`${kind}/${id} already has a draft`);
+  // Check every ref before copying any, so a bad one leaves nothing half done.
+  const records = unique(refs.map((ref) => locate(ctx.data, ref)));
+  for (const { kind, id } of records) {
+    if (existsSync(join(ctx.drafts, kind, `${id}.yaml`))) {
+      throw new UsageError(`${kind}/${id} already has a draft`);
+    }
+  }
+  for (const { kind, id } of records) {
     mkdirSync(join(ctx.drafts, kind), { recursive: true });
-    copyFileSync(join(ctx.data, kind, `${id}.yaml`), target);
+    copyFileSync(join(ctx.data, kind, `${id}.yaml`), join(ctx.drafts, kind, `${id}.yaml`));
     console.log(`Copied ${kind}/${id} to drafts. Edit it, then run pnpm data:diff.`);
   }
   return 0;
 }
 
 function promote(ctx: Context, refs: string[], everything: boolean): number {
-  if (refs.length === 0 && !everything) {
-    throw new UsageError('name the drafts to publish, or pass --all');
+  if ((refs.length === 0) === !everything) {
+    throw new UsageError('name the drafts to publish, or pass --all (not both)');
   }
   const { published, drafts, issues: loadIssues } = load(ctx);
   const draftErrors = loadIssues.filter((i) => i.level === 'error');
@@ -200,11 +215,18 @@ function promote(ctx: Context, refs: string[], everything: boolean): number {
     console.log('\nNothing was published. Fix the drafts that fail to load first.');
     return 1;
   }
+  const loaded = (kind: Kind) => (kind === 'conventions' ? drafts.series : drafts[kind]);
   const chosen = everything
-    ? KINDS.flatMap((kind) =>
-        (kind === 'conventions' ? drafts.series : drafts[kind]).map((r) => ({ kind, id: r.id })),
-      )
-    : refs.map((ref) => locate(ctx.drafts, ref));
+    ? KINDS.flatMap((kind) => loaded(kind).map((r) => ({ kind, id: r.id })))
+    : unique(refs.map((ref) => locate(ctx.drafts, ref)));
+  if (chosen.length === 0) {
+    console.log('No drafts to publish.');
+    return 0;
+  }
+  // Publish only what gets checked: each ref must be a draft that loaded under exactly that id.
+  for (const { kind, id } of chosen) {
+    if (!loaded(kind).some((r) => r.id === id)) throw new UsageError(`no draft ${kind}/${id}`);
+  }
   const picked = (kind: Kind) => new Set(chosen.filter((c) => c.kind === kind).map((c) => c.id));
   const selection: Dataset = {
     series: drafts.series.filter((r) => picked('conventions').has(r.id)),
@@ -220,8 +242,11 @@ function promote(ctx: Context, refs: string[], everything: boolean): number {
     console.log('\nNothing was published. Fix these errors, then promote again.');
     return 1;
   }
+  // Copy everything first; drafts are removed only after every copy worked.
   for (const { kind, id } of chosen) {
     copyFileSync(join(ctx.drafts, kind, `${id}.yaml`), join(ctx.data, kind, `${id}.yaml`));
+  }
+  for (const { kind, id } of chosen) {
     unlinkSync(join(ctx.drafts, kind, `${id}.yaml`));
     console.log(`Published ${kind}/${id}`);
   }

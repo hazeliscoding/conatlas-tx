@@ -154,17 +154,42 @@ describe('nothing reaches the published data without an explicit promote', () =>
     ).toBe(before[join('editions', 'lone-star-anime-fest-2026.yaml')]);
   });
 
-  it('refuses to propose over an existing draft or an unknown record', () => {
+  it('refuses to propose over an existing draft or an unknown record, copying nothing', () => {
     const dir = copy();
     expect(run(['propose', 'editions/lone-star-anime-fest-2026'], dir)).toMatchObject({ code: 2 });
     expect(run(['propose', 'no-such-con'], dir)).toMatchObject({ code: 2 });
+    // The first ref is fine and the second isn't: nothing is copied.
+    rmSync(join(dir, 'drafts', 'sources'), { recursive: true });
+    expect(run(['propose', 'lone-star-anime-fest-site', 'no-such-con'], dir).code).toBe(2);
+    expect(existsSync(join(dir, 'drafts', 'sources'))).toBe(false);
   });
 
-  it('refuses to promote without naming drafts', () => {
+  it('accepts only plain record ids, so a ref cannot reach outside the data directory', () => {
+    const dir = copy();
+    const before = published(dir);
+    for (const ref of [
+      'conventions/../../package',
+      'conventions/..\\..\\package',
+      'editions/lone-star-anime-fest-2027/../x',
+      'editions/Lone-Star-Anime-Fest-2027',
+    ]) {
+      expect(run(['promote', ref], dir).err, ref).toContain('is not a record');
+      expect(run(['propose', ref], dir).code, ref).toBe(2);
+    }
+    expect(published(dir)).toEqual(before);
+  });
+
+  it('refuses to promote without naming drafts, or with names and --all', () => {
     const dir = copy();
     const before = published(dir);
     expect(run(['promote'], dir).code).toBe(2);
+    expect(run(['promote', 'lone-star-anime-fest-2026', '--all'], dir).code).toBe(2);
     expect(published(dir)).toEqual(before);
+    rmSync(join(dir, 'drafts'), { recursive: true });
+    expect(run(['promote', '--all'], dir)).toMatchObject({
+      code: 0,
+      out: 'No drafts to publish.\n',
+    });
   });
 
   it('refuses to promote a draft with errors, alone or with --all', () => {
@@ -196,6 +221,24 @@ describe('nothing reaches the published data without an explicit promote', () =>
       ...before,
       [join('editions', 'lone-star-anime-fest-2026.yaml')]: text,
     });
+  });
+
+  it('publishes a record named twice once, together with what it depends on', () => {
+    const dir = copy();
+    const { code, out } = run(
+      [
+        'promote',
+        'lone-star-anime-festival',
+        'conventions/lone-star-anime-festival',
+        'sources/lone-star-anime-festival-site',
+        '--today',
+        '2026-10-01',
+      ],
+      dir,
+    );
+    expect(code).toBe(0);
+    expect(out.match(/^Published /gm)).toHaveLength(2);
+    expect(run(['validate', '--today', '2026-10-01'], dir).code).toBe(0);
   });
 
   it('refuses to promote a new convention without the source it depends on', () => {
