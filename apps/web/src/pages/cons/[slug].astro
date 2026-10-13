@@ -156,12 +156,12 @@ const past = siblings
             See the current edition →
           </a>
         ) : (
-          <span class="banner__link">The organizer hasn't announced the next one yet.</span>
+          <span>The organizer hasn't announced the next one yet.</span>
         )}
       </div>
     )}
 
-    <div class="flex flex-wrap items-center gap-2.5">
+    <div class="actions flex flex-wrap items-center gap-2.5">
       {!ended && <BookmarkButton id={e.id} describedby="con-title" />}
       {google && <CalendarExport ics={href(`cons/${e.slug}.ics`)} google={google} />}
       <Button variant="secondary" href={e.url} external>
@@ -327,6 +327,18 @@ const past = siblings
     margin-left: auto;
     font-weight: 600;
   }
+  /* On phones the actions share each row evenly instead of leaving one alone. */
+  @media (max-width: 640px) {
+    .actions > :global(*) {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+    .actions :global(.exp__btn) {
+      box-sizing: border-box;
+      width: 100%;
+      justify-content: center;
+    }
+  }
   .detail-cols {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -335,7 +347,7 @@ const past = siblings
   }
   @media (min-width: 900px) {
     .detail-cols {
-      grid-template-columns: minmax(0, 1fr) 340px;
+      grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
     }
   }
   .source {
