@@ -34,6 +34,7 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-12** — The design's five report paths share the roadmap's four issue forms: dates and venue both open the correction form. The Contribute page prefills a convention only from known edition ids, and never on the new-convention form.
 - **2026-10-12** — The maintainer contact for conduct reports, security reports and people without a GitHub account is a Proton Pass alias, conatlas-tx.landing118@passfwd.com.
 - **2026-10-12** — Public pages describe verification by what readers can check (organizer sources, human review), not by the tools used. `docs/DATA_POLICY.md` documents the research process.
+- **2026-10-12** — Search optimization gets its own milestone, M5, after launch: audits, rich-result checks and field data need the deployed site. M4 keeps the launch basics (metadata, canonical URLs, sitemap, Open Graph, event structured data). Measurement uses Search Console and public tools, never tracking scripts.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -93,6 +94,17 @@ Done when: a refresh stages drafts, the diff report is correct on fixtures, and 
 - [ ] `docs/ARCHITECTURE.md`, README screenshots, public beta checklist
 
 Done when: all CI gates pass, there are no critical accessibility failures, and the site deploys statically.
+
+## M5 — Search and discovery
+
+- [ ] SEO audit of the live site: indexing, titles and descriptions, internal links, crawl errors
+- [ ] Structured data checked with Google's Rich Results Test: `Event` for confirmed editions, plus `BreadcrumbList` and `WebSite`
+- [ ] Region pages, and city pages where enough conventions exist to be useful, generated from the data
+- [ ] AI answer engines: `llms.txt` and plain factual summaries they can cite
+- [ ] Core Web Vitals: lab checks on every page type, and field data from Search Console once there's enough traffic
+- [ ] Google Search Console and Bing Webmaster Tools verified, sitemap submitted (maintainer's accounts)
+
+Done when: an SEO audit of the live site finds no critical issues, every confirmed edition passes the Rich Results Test, and Search Console reads the sitemap without errors.
 
 ## Later
 
