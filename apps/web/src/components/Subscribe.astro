@@ -1,0 +1,101 @@
+---
+// Calendar feed rows with Subscribe (webcal) links and the plain feed URL for Google Calendar.
+// `feeds` picks and orders feeds by URL name; feeds that don't exist yet are skipped.
+import { getFeeds, href } from '../lib/data.ts';
+import Icon from './Icon.astro';
+import Ribbon from './Ribbon.astro';
+
+interface Props {
+  feeds?: string[];
+  /** A line under the instructions, e.g. why a region has no feed yet. */
+  note?: string;
+}
+
+const all = getFeeds();
+const names = (Astro.props.feeds ?? Object.keys(all)).filter((name) => name in all);
+const feeds = names.map((name) => {
+  const url = new URL(href(`feeds/${name}.ics`), import.meta.env.SITE).href;
+  return { label: all[name]!, url, webcal: url.replace(/^https:/, 'webcal:') };
+});
+---
+
+<section class="grid grid-cols-[minmax(0,1fr)] gap-3">
+  <Ribbon tone="sage" rule heading>
+    Subscribe
+  </Ribbon>
+  <p class="m-0 max-w-[68ch] [font:var(--type-body-sm)] text-text-2">
+    Add a feed to your calendar app and new conventions and date changes appear on their own.
+    Subscribe opens Apple Calendar or Outlook. For Google Calendar, copy the feed link and add it
+    under Other calendars, From URL.
+  </p>
+  {Astro.props.note && (
+    <p class="m-0 max-w-[68ch] [font:var(--type-body-sm)] text-text-2">{Astro.props.note}</p>
+  )}
+  <ul class="feeds">
+    {feeds.map((feed) => (
+      <li class="feeds__row">
+        <span class="feeds__label">
+          <Icon name="rss" size={16} />
+          {feed.label}
+        </span>
+        <a href={feed.webcal}>
+          Subscribe<span class="sr-only"> to {feed.label}</span>
+        </a>
+        <a class="feeds__url" href={feed.url}>
+          {feed.url.replace('https://', '')}
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .feeds {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font: var(--type-body-sm);
+  }
+  /* On phones the URL takes its own line under the label and Subscribe. */
+  @media (max-width: 767px) {
+    .feeds__url {
+      grid-column: 1 / -1;
+    }
+  }
+  .feeds__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 16px;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--border-strong);
+  }
+  @media (min-width: 768px) {
+    .feeds__row {
+      grid-template-columns: 180px auto minmax(0, 1fr);
+    }
+  }
+  .feeds__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .feeds__label :global(svg) {
+    color: var(--text-muted);
+  }
+  .feeds__row a {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-min);
+  }
+  .feeds__url {
+    font: var(--type-caption);
+    color: var(--text-2);
+    overflow-wrap: anywhere;
+  }
+</style>

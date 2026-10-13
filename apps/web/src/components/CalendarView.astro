@@ -4,13 +4,13 @@
 // current month, the address search engines are pointed at.
 import { todayIn } from '@conatlas/core';
 import { calendarMonths, inMonth, monthTitle, type Month } from '../lib/calendar.ts';
-import { getFeeds, getUpcoming, href } from '../lib/data.ts';
+import { getUpcoming, href } from '../lib/data.ts';
 import EventCard from './EventCard.astro';
 import FilterBar from './FilterBar.astro';
-import Icon from './Icon.astro';
 import MonthCalendar from './MonthCalendar.astro';
 import MonthNav from './MonthNav.astro';
 import Ribbon from './Ribbon.astro';
+import Subscribe from './Subscribe.astro';
 import ViewTabs from './ViewTabs.astro';
 
 interface Props {
@@ -27,10 +27,6 @@ const title = monthTitle(month);
 
 const inView = inMonth(listings, month);
 const tba = listings.filter((e) => !e.start_date || e.awaitingNext);
-const feeds = Object.entries(getFeeds()).map(([name, label]) => {
-  const url = new URL(href(`feeds/${name}.ics`), import.meta.env.SITE).href;
-  return { label, url, webcal: url.replace(/^https:/, 'webcal:') };
-});
 ---
 
 <div class="grid grid-cols-[minmax(0,1fr)] gap-4">
@@ -76,80 +72,4 @@ const feeds = Object.entries(getFeeds()).map(([name, label]) => {
   )}
 </section>
 
-<section class="grid grid-cols-[minmax(0,1fr)] gap-3">
-  <Ribbon tone="sage" rule heading>
-    Subscribe
-  </Ribbon>
-  <p class="m-0 max-w-[68ch] [font:var(--type-body-sm)] text-text-2">
-    Add a feed to your calendar app and new conventions and date changes appear on their own.
-    Subscribe opens Apple Calendar or Outlook. For Google Calendar, copy the feed link and add it
-    under Other calendars, From URL.
-  </p>
-  <ul class="feeds">
-    {feeds.map((feed) => (
-      <li class="feeds__row">
-        <span class="feeds__label">
-          <Icon name="rss" size={16} />
-          {feed.label}
-        </span>
-        <a href={feed.webcal}>
-          Subscribe<span class="sr-only"> to {feed.label}</span>
-        </a>
-        <a class="feeds__url" href={feed.url}>
-          {feed.url.replace('https://', '')}
-        </a>
-      </li>
-    ))}
-  </ul>
-</section>
-
-<style>
-  .feeds {
-    display: grid;
-    gap: 2px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font: var(--type-body-sm);
-  }
-  /* On phones the URL takes its own line under the label and Subscribe. */
-  @media (max-width: 767px) {
-    .feeds__url {
-      grid-column: 1 / -1;
-    }
-  }
-  .feeds__row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 2px 16px;
-    padding: 10px 0;
-    border-bottom: 1px dotted var(--border-strong);
-  }
-  @media (min-width: 768px) {
-    .feeds__row {
-      grid-template-columns: 180px auto minmax(0, 1fr);
-    }
-  }
-  .feeds__label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .feeds__label :global(svg) {
-    color: var(--text-muted);
-  }
-  .feeds__row a {
-    justify-self: start;
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--touch-min);
-  }
-  .feeds__url {
-    font: var(--type-caption);
-    color: var(--text-2);
-    overflow-wrap: anywhere;
-  }
-</style>
+<Subscribe />
