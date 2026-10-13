@@ -1,0 +1,15 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": ["apps/web/src/components/MonthCalendar.astro"],
+        "createdAt": "2026-10-13T17:59:26.918Z",
+        "reason": "design-system spec: the ConAtlas TX design system (DESIGN_SYSTEM.md, Calendar) gives calendar spans a 3px left border in the --cal-N-border ink; these are calendar event bars, the legend swatch and agenda rows, not cards"
+      }
+    ]
+  }
+}
