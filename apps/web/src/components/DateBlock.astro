@@ -9,7 +9,7 @@ interface Props {
   endDay?: number;
   weekday?: string;
   tone?: Tone;
-  size?: 'lg';
+  size?: 'lg' | 'sm';
   tentative?: boolean;
   cancelled?: boolean;
 }
@@ -22,7 +22,7 @@ const { month, day, endDay, weekday, tone = 'pink', size, tentative, cancelled }
     'date',
     // Tentative and cancelled blocks have their own look; a tone would override it in dark mode.
     !tentative && !cancelled && `date--${tone}`,
-    size === 'lg' && 'date--lg',
+    size && `date--${size}`,
     tentative && 'date--tentative',
     cancelled && 'date--cancelled',
   ]}
@@ -90,6 +90,13 @@ const { month, day, endDay, weekday, tone = 'pink', size, tentative, cancelled }
   }
   .date--lg .date__d {
     font-size: var(--fs-date-day);
+  }
+  .date--sm {
+    min-width: 52px;
+    padding: 6px;
+  }
+  .date--sm .date__d {
+    font-size: 24px;
   }
   .date--tentative {
     background: transparent;

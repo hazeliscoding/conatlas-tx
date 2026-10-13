@@ -7,20 +7,28 @@ import Icon from './Icon.astro';
 interface Props {
   id: string;
   describedby?: string;
+  /** Icon only, for compact cards; the Save and Saved labels stay for screen readers. */
+  iconOnly?: boolean;
 }
 
-const { id, describedby } = Astro.props;
+const { id, describedby, iconOnly } = Astro.props;
 ---
 
-<button type="button" class="bm" aria-describedby={describedby} data-save={id} hidden>
+<button
+  type="button"
+  class:list={['bm', iconOnly && 'bm--icon']}
+  aria-describedby={describedby}
+  data-save={id}
+  hidden
+>
   <span class="bm__i bm__off">
     <Icon name="bookmark" size={18} />
   </span>
   <span class="bm__i bm__on">
     <Icon name="bookmark-check" size={18} strokeWidth={2.2} />
   </span>
-  <span class="bm__off">Save</span>
-  <span class="bm__on">Saved</span>
+  <span class:list={['bm__off', iconOnly && 'sr-only']}>Save</span>
+  <span class:list={['bm__on', iconOnly && 'sr-only']}>Saved</span>
 </button>
 
 <script>
@@ -60,6 +68,10 @@ const { id, describedby } = Astro.props;
     font: var(--type-button);
     cursor: pointer;
     transition: var(--transition-color);
+  }
+  .bm--icon {
+    padding: 0;
+    width: var(--touch-min);
   }
   .bm:hover {
     border-color: var(--accent);

@@ -11,9 +11,11 @@ import StatusLine from './StatusLine.astro';
 interface Props {
   listing: Listing;
   tone?: Tone;
+  /** Smaller card for secondary lists: no region eyebrow, year or official link, icon-only Save. */
+  compact?: boolean;
 }
 
-const { listing: e, tone } = Astro.props;
+const { listing: e, tone, compact } = Astro.props;
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const start = e.start_date;
 const end = e.end_date ?? start;
@@ -27,7 +29,7 @@ const titleId = `ev-${e.id}`;
 ---
 
 <article
-  class:list={['ev', cancelled && 'ev--cancelled']}
+  class:list={['ev', compact && 'ev--compact', cancelled && 'ev--cancelled']}
   aria-labelledby={titleId}
   data-listing={e.id}
   data-region={e.region}
@@ -38,14 +40,19 @@ const titleId = `ev-${e.id}`;
     day={dated ? sd : undefined}
     endDay={dated && start !== end && sm === em ? ed : undefined}
     weekday={
-      dated ? (start === end ? weekday(start) : `${weekday(start)}–${weekday(end)}`) : undefined
+      dated && !compact
+        ? start === end
+          ? weekday(start)
+          : `${weekday(start)}–${weekday(end)}`
+        : undefined
     }
+    size={compact ? 'sm' : undefined}
     tone={tone}
     tentative={!dated}
     cancelled={cancelled}
   />
   <div class="ev__body">
-    <div class="ev__eyebrow">{REGION_NAMES[e.region]}</div>
+    {!compact && <div class="ev__eyebrow">{REGION_NAMES[e.region]}</div>}
     <h3 class="ev__title" id={titleId}>
       <a href={detailHref(e)}>{e.displayName}</a>
     </h3>
@@ -53,9 +60,11 @@ const titleId = `ev-${e.id}`;
       {dated ? (
         <span class="ev__range">
           <time datetime={start === end ? start : `${start}/${end}`}>
-            {formatDateRange(start, end)}
+            {formatDateRange(start, end, { year: !compact })}
           </time>
-          {dayCount(start, end) > 1 && <span class="ev__days">· {dayCount(start, end)} days</span>}
+          {!compact && dayCount(start, end) > 1 && (
+            <span class="ev__days">· {dayCount(start, end)} days</span>
+          )}
         </span>
       ) : (
         <span class="ev__range ev__range--tentative">
@@ -76,10 +85,12 @@ const titleId = `ev-${e.id}`;
     </div>
   </div>
   <div class="ev__actions">
-    {savable && <BookmarkButton id={e.id} describedby={titleId} />}
-    <a class="ev__official" href={e.url} target="_blank" rel="noopener noreferrer">
-      Official site <Icon name="external-link" size={12} label="(opens in new tab)" />
-    </a>
+    {savable && <BookmarkButton id={e.id} describedby={titleId} iconOnly={compact} />}
+    {!compact && (
+      <a class="ev__official" href={e.url} target="_blank" rel="noopener noreferrer">
+        Official site <Icon name="external-link" size={12} label="(opens in new tab)" />
+      </a>
+    )}
   </div>
 </article>
 
@@ -105,6 +116,19 @@ const titleId = `ev-${e.id}`;
   }
   .ev:has(.ev__title a:focus-visible) {
     box-shadow: var(--shadow-focus);
+  }
+  .ev--compact {
+    padding: 12px 14px;
+    gap: 12px;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+  }
+  .ev--compact .ev__title {
+    font: var(--type-h4);
+    font-size: 17px;
+  }
+  .ev--compact .ev__actions {
+    justify-content: center;
   }
   .ev--cancelled {
     background: var(--surface-2);
@@ -214,6 +238,13 @@ const titleId = `ev-${e.id}`;
       grid-column: 1 / -1;
       flex-direction: row;
       justify-content: flex-end;
+    }
+    /* The compact card's icon-only Save fits beside the text. */
+    .ev--compact {
+      grid-template-columns: auto 1fr auto;
+    }
+    .ev--compact .ev__actions {
+      grid-column: auto;
     }
   }
 </style>
