@@ -1,0 +1,6 @@
+id: lone-star-anime-fest-site
+series: lone-star-anime-fest
+url: https://example.org/lone-star-anime-fest
+type: official_site
+supports: [existence, dates, venue, city, status, tickets]
+last_checked: 2026-09-30

@@ -1,0 +1,20 @@
+# Dates announced, but the revision wasn't bumped.
+id: lone-star-anime-fest-2027
+series: lone-star-anime-fest
+edition: '2027'
+slug: lone-star-anime-fest-2027
+status: confirmed
+start_date: 2027-10-22
+end_date: 2027-10-24
+city: Austin
+region: central
+timezone: America/Chicago
+url: https://example.org/lone-star-anime-fest
+evidence:
+  - source: lone-star-anime-fest-site
+    facts: [existence, dates]
+    checked_at: 2026-10-01
+    excerpt: Lone Star Anime Fest returns October 22-24, 2027
+last_verified_at: 2026-10-01
+updated_at: 2026-10-01
+revision: 0

@@ -1,0 +1,10 @@
+# A "new" convention that is really the one we already list.
+id: lone-star-anime-festival
+slug: lone-star-anime-festival
+name: Lone Star Anime Festival
+website: https://www.example.org/lsaf
+city: Austin
+region: central
+status: active
+sources:
+  - lone-star-anime-festival-site

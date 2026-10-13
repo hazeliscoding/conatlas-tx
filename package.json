@@ -18,6 +18,10 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "data:validate": "node packages/ingestion/src/cli.ts validate",
+    "data:diff": "node packages/ingestion/src/cli.ts diff",
+    "data:propose": "node packages/ingestion/src/cli.ts propose",
+    "data:promote": "node packages/ingestion/src/cli.ts promote",
+    "data:report": "node packages/ingestion/src/cli.ts report",
     "test:e2e": "playwright test"
   },
   "devDependencies": {

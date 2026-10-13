@@ -1,0 +1,7 @@
+id: lone-star-anime-fest-listing
+series: lone-star-anime-fest
+url: https://example.com/listings/lone-star
+type: third_party
+supports: [dates]
+last_checked: 2026-09-30
+notes: Lead only. Never enough to publish a fact.
