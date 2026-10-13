@@ -6,6 +6,7 @@ const PAGES = {
   home: './',
   calendar: 'calendar/2027-01/',
   detail: 'cons/ushicon-2027/',
+  past: 'cons/anime-matsuri-2026/',
   about: 'about/',
   saved: 'saved/',
   contribute: 'contribute/?con=ushicon-2027',
