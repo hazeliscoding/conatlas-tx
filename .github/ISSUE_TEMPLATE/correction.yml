@@ -1,0 +1,47 @@
+name: Report incorrect dates or venue
+description: Dates, venue, city or name that don't match what the organizer says.
+title: '[Correction]: '
+labels: ['correction']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ConAtlas only publishes facts from **official sources**: the organizer's website, an organizer announcement, an organizer feed, or the organizer's own social account. Third-party listings and fan wikis are welcome as leads, but they can't back a listing. More in the [data policy](https://github.com/hazeliscoding/conatlas-tx/blob/main/docs/DATA_POLICY.md).
+
+        A maintainer checks every report against the organizer before anything changes on the site. This issue is public, so please don't include private information.
+  - type: input
+    id: convention
+    attributes:
+      label: Convention and edition
+      placeholder: e.g. San Japan 2027
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What's wrong
+      options:
+        - Dates
+        - Venue
+        - City
+        - Name
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: What ConAtlas says now
+  - type: textarea
+    id: correct
+    attributes:
+      label: What it should say
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official source links
+      description: Links to the organizer's own pages that show the correct details.
+    validations:
+      required: true

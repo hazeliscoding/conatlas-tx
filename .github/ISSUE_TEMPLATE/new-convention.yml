@@ -1,0 +1,50 @@
+name: Suggest a missing convention
+description: A Texas anime convention that ConAtlas doesn't list yet.
+title: '[New con]: '
+labels: ['new convention']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ConAtlas only publishes facts from **official sources**: the organizer's website, an organizer announcement, an organizer feed, or the organizer's own social account. Third-party listings and fan wikis are welcome as leads, but they can't back a listing. More in the [data policy](https://github.com/hazeliscoding/conatlas-tx/blob/main/docs/DATA_POLICY.md).
+
+        A maintainer checks every report against the organizer before anything changes on the site. This issue is public, so please don't include private information.
+  - type: input
+    id: name
+    attributes:
+      label: Convention name
+    validations:
+      required: true
+  - type: input
+    id: website
+    attributes:
+      label: Official website
+      placeholder: https://
+    validations:
+      required: true
+  - type: input
+    id: city
+    attributes:
+      label: City in Texas
+    validations:
+      required: true
+  - type: input
+    id: venue
+    attributes:
+      label: Venue
+  - type: input
+    id: dates
+    attributes:
+      label: Announced dates
+      placeholder: Leave blank if the organizer hasn't announced dates
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official sources
+      description: Links where the organizer states these details.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else

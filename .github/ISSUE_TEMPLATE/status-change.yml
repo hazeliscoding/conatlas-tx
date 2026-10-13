@@ -1,0 +1,40 @@
+name: Report a cancellation or postponement
+description: The organizer cancelled, postponed or moved an edition.
+title: '[Status]: '
+labels: ['status change']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ConAtlas only publishes facts from **official sources**: the organizer's website, an organizer announcement, an organizer feed, or the organizer's own social account. Third-party listings and fan wikis are welcome as leads, but they can't back a listing. More in the [data policy](https://github.com/hazeliscoding/conatlas-tx/blob/main/docs/DATA_POLICY.md).
+
+        A maintainer checks every report against the organizer before anything changes on the site. This issue is public, so please don't include private information.
+  - type: input
+    id: convention
+    attributes:
+      label: Convention and edition
+      placeholder: e.g. San Japan 2027
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: What happened
+      options:
+        - Cancelled
+        - Postponed
+        - Moved to new dates
+    validations:
+      required: true
+  - type: input
+    id: announcement
+    attributes:
+      label: Link to the organizer's announcement
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: For example, the new dates if the organizer has announced them.
