@@ -4,7 +4,7 @@
 
 ConAtlas TX is a free, open-source convention calendar for fans, cosplayers and first-timers. No accounts, no tracking, and no guessed dates. If a con hasn't announced its weekend, we say so.
 
-> **Status:** early development (milestone M1, core website, in review). See [ROADMAP.md](ROADMAP.md).
+> **Status:** early development (milestone M2, personal planning, in review). See [ROADMAP.md](ROADMAP.md).
 
 ## How it works
 
@@ -42,6 +42,10 @@ packages/calendar   iCalendar helpers
 data/               Convention data (YAML)
 docs/brand/         Design system summary
 ```
+
+## Contributing
+
+Missing a con or spotted a wrong date? See [CONTRIBUTING.md](CONTRIBUTING.md). Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
