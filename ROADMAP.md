@@ -50,6 +50,7 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-13** — The hero eyebrow names no season ("VOL.01 · TEXAS"), so it can't go stale between rebuilds.
 - **2026-10-13** — SEO basics: every page has its own title, description, canonical URL and Open Graph image; Saved and 404 are noindex; convention pages with organizer-confirmed dates carry schema.org Event data; `sitemap.xml` lists every indexable page. There is no `robots.txt`, since a project site can't serve one at the domain root, so the sitemap is submitted through Search Console in M5.
 - **2026-10-13** — GitHub Pages deploys run after CI passes for a push to `main` (never for a fork), every morning, and on demand.
+- **2026-10-13** — Hosting moves from GitHub Pages to Vercel, at the domain root (`https://conatlas-tx.vercel.app/`) instead of the `/conatlas-tx/` base path. The deploy workflow keeps its triggers and builds the site itself, then uploads the prebuilt output with a pinned Vercel CLI; Vercel never builds from Git. The token lives only in a deploy job that runs no repository code, so a compromised dependency in the build can't reach it, and only in the `production` environment, which only `main` may deploy to. Calendar UIDs don't include the host, so subscribed calendars keep their events. A domain root can serve `robots.txt`, which is left to M5.
 - **2026-10-13** — Controls that need JavaScript (filters, Save, the theme switch) are shown by a `js` class the head script sets before first paint, and a head-started observer applies saved and theme state as elements are parsed. Nothing shifts or flips after first paint, and visitors without JavaScript still see no dead controls.
 - **2026-10-13** — The body face and the heading face's 700 weight are preloaded. Layout shift measures 0.03 or less on every page on a throttled phone (Google's "good" is 0.1); the display weight (900) is left to swap, since preloading it competes with the CSS.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
@@ -111,7 +112,7 @@ Status 2026-10-13: a live refresh of five conventions staged 19 drafts, a second
 - [x] Accessibility review (keyboard, screen reader, reduced motion, zoom)
 - [x] SEO: metadata, canonical URLs, sitemap, Open Graph, event structured data for confirmed dates only
 - [x] Performance pass
-- [x] Deploy workflow for GitHub Pages
+- [x] Deploy workflow (GitHub Pages, then Vercel)
 - [x] `docs/ARCHITECTURE.md`, README screenshots, public beta checklist
 
 Done when: all CI gates pass, the design review has nothing left to fix, there are no critical accessibility failures, and the site deploys statically.
