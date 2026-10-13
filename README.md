@@ -22,15 +22,17 @@ pnpm install
 pnpm dev             # open http://localhost:4321/conatlas-tx/
 ```
 
-| Command              | What it does                                |
-| -------------------- | ------------------------------------------- |
-| `pnpm build`         | Build the static site into `apps/web/dist`  |
-| `pnpm test`          | Run unit tests                              |
-| `pnpm test:e2e`      | Browser smoke and axe checks (build first)  |
-| `pnpm typecheck`     | Type-check every package and the site       |
-| `pnpm lint`          | Lint with ESLint                            |
-| `pnpm format`        | Format with Prettier                        |
-| `pnpm data:validate` | Check every data file and cross-record rule |
+| Command              | What it does                                  |
+| -------------------- | --------------------------------------------- |
+| `pnpm build`         | Build the static site into `apps/web/dist`    |
+| `pnpm test`          | Run unit tests                                |
+| `pnpm test:e2e`      | Browser smoke and axe checks (build first)    |
+| `pnpm typecheck`     | Type-check every package and the site         |
+| `pnpm lint`          | Lint with ESLint                              |
+| `pnpm format`        | Format with Prettier                          |
+| `pnpm data:validate` | Check every data file and cross-record rule   |
+| `pnpm data:report`   | List conventions that are due for a re-check  |
+| `pnpm data:diff`     | Compare staged drafts with the published data |
 
 ## Repository layout
 
