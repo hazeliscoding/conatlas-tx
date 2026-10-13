@@ -104,6 +104,19 @@ warning sources/lone-star-anime-festival-site: may duplicate sources/lone-star-a
 `);
   });
 
+  it('prints control and bidi characters from draft text as escapes', () => {
+    const dir = copy();
+    const source = join('sources', 'lone-star-anime-fest-site.yaml');
+    writeFileSync(
+      join(dir, 'drafts', source),
+      `${readFileSync(join(dir, source), 'utf8')}notes: "\\e[2K\\rerror   fake: all clear\\u202e"\n`,
+    );
+    const { out } = run(['diff', '--today', '2026-10-01'], dir);
+    // eslint-disable-next-line no-control-regex -- the test looks for raw control characters
+    expect(out).not.toMatch(/[\u001b\r\u202e]/);
+    expect(out).toContain('notes: (none) → \\u001b[2K\\u000derror   fake: all clear\\u202e');
+  });
+
   it('says so when there are no drafts', () => {
     const dir = copy();
     rmSync(join(dir, 'drafts'), { recursive: true });

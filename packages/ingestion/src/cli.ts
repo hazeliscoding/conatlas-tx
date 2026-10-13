@@ -49,9 +49,16 @@ interface Context {
   today: string;
 }
 
+// Draft text comes from websites. Control and bidi characters are printed as escapes, so nothing
+// in it can move the cursor, start a new line or reorder what the reviewer reads.
+// eslint-disable-next-line no-control-regex -- matching control characters is the point
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/g;
+const visible = (text: string) =>
+  text.replace(UNSAFE, (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`);
+
 function printIssues(issues: Issue[]) {
   for (const issue of issues)
-    console.log(`${issue.level.padEnd(7)} ${issue.record}: ${issue.message}`);
+    console.log(`${issue.level.padEnd(7)} ${visible(issue.record)}: ${visible(issue.message)}`);
 }
 
 const count = (issues: Issue[]) => {
@@ -136,7 +143,7 @@ function formatDiff(diffs: RecordDiff[]): string {
       }
     }
   }
-  return lines.join('\n');
+  return lines.map(visible).join('\n');
 }
 
 function diff(ctx: Context): number {
