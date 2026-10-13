@@ -63,6 +63,15 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
   - **Left out:** image, offers and performer, since nothing licensed or sourced can fill them.
   - **Breadcrumbs and site name:** pages with a visible breadcrumb carry the same trail as `BreadcrumbList`, and the home page carries `WebSite` for the site name.
   - **Validation:** every page passes the Schema Markup Validator with no errors or warnings.
+- **2026-10-13** — Region and city pages:
+  - **Region pages:** there are five, at `/regions/<slug>/` (`north-texas`, `central-texas`, `gulf-coast`, `south-texas`, `west-texas`). A region with no upcoming convention keeps its page, but it is noindex and stays out of the sitemap.
+  - **City pages:** a city gets `/cities/<slug>/` once it has three or more upcoming conventions (today only Houston). Smaller cities are listed on their region page, so no city page is a thin one-card page.
+  - **Links:** the home page's region cards open the region page, and the filter bar still filters in place. On a convention page, the region label under the venue links to its region, and the city links to its city page when one exists. The footer lists the five regions, and the header doesn't change.
+  - **Counting:** "upcoming" means what the home page counts, for every count, the noindex rule, the sitemap and the city threshold. A series still waiting for its next dates isn't counted. A cancelled edition counts until its end date.
+  - **Old city addresses:** a city below three conventions redirects to its region, like a passed calendar month, so its URL never 404s.
+  - **Copy:** page copy is only sentences built from the data, plus lines that are true for every region. Region slugs come from the region names, and a unit test pins them.
+  - **Search titles:** the Gulf Coast page's search title says "Texas Gulf Coast".
+  - **Structured data:** the pages carry only the BreadcrumbList for their visible breadcrumb.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -133,7 +142,7 @@ Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page
 
 - [x] SEO audit of the live site: indexing, titles and descriptions, internal links, crawl errors (Search Console's crawl reports get a second look once Google has crawled the site)
 - [x] Structured data checked with Google's Rich Results Test: `Event` for dated editions (scheduled, postponed, cancelled), plus `BreadcrumbList` and `WebSite` (2026-10-13: all 16 convention pages have valid Events and Breadcrumbs, and Contribute has valid Breadcrumbs. The only warnings are for optional fields we have no sourced data for. `WebSite` passes the Schema Markup Validator, since the Rich Results Test doesn't cover site names.)
-- [ ] Region pages, and city pages where enough conventions exist to be useful, generated from the data
+- [x] Region pages, and city pages where enough conventions exist to be useful, generated from the data (2026-10-13: five region pages and a Houston city page. Two design-review rounds, and the second found nothing left to fix.)
 - [ ] AI answer engines: `llms.txt` and plain factual summaries they can cite
 - [ ] Core Web Vitals: lab checks on every page type, and field data from Search Console once there's enough traffic
 - [ ] Google Search Console and Bing Webmaster Tools verified, sitemap submitted (maintainer's accounts)
