@@ -46,6 +46,10 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-13** — Shared Claude Code skills live in `.claude/skills/` and are committed; the rest of `.claude/` stays ignored.
 - **2026-10-13** — The flower mark (favicon, hero, footer and empty-state motif) is redrawn in M4. The design's path has six uneven petals and sits half a unit low in its box, while the design system described a four-petal flower. From seven drafts drawn from geometry (even petals, optically centered) and a three-reviewer shortlist, the maintainer chose five round petals, so the design system now describes a five-petal flower. The new path goes back to the claude.ai/design project so the two stay in sync.
 - **2026-10-13** — M4 starts with the logo and an Impeccable design review, so the accessibility, performance and screenshot work that follows checks the final look.
+- **2026-10-13** — The Impeccable design review ran three rounds against the design system and the design file until no material fix remained. From the design, the home page gained region cards and the verification steps, convention pages gained "Nearby and upcoming", and secondary lists use a compact card. The design's card-density tabs and "Hide cancelled events" checkbox are left out: the cards already read well at one density, and no edition is cancelled.
+- **2026-10-13** — The hero eyebrow names no season ("VOL.01 · TEXAS"), so it can't go stale between rebuilds.
+- **2026-10-13** — SEO basics: every page has its own title, description, canonical URL and Open Graph image; Saved and 404 are noindex; convention pages with organizer-confirmed dates carry schema.org Event data; `sitemap.xml` lists every indexable page. There is no `robots.txt`, since a project site can't serve one at the domain root, so the sitemap is submitted through Search Console in M5.
+- **2026-10-13** — GitHub Pages deploys run after CI passes for a push to `main` (never for a fork), every morning, and on demand.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
