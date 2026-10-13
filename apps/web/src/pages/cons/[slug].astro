@@ -162,7 +162,7 @@ const past = siblings
     )}
 
     <div class="flex flex-wrap items-center gap-2.5">
-      {!ended && !cancelled && <BookmarkButton id={e.id} describedby="con-title" />}
+      {!ended && <BookmarkButton id={e.id} describedby="con-title" />}
       {google && <CalendarExport ics={href(`cons/${e.slug}.ics`)} google={google} />}
       <Button variant="secondary" href={e.url} external>
         Visit official site
