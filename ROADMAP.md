@@ -77,6 +77,11 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
   - **`llms.txt`:** built with every daily build. It says what the site is and how dates are checked, and lists every listed convention with its summary, plus the regions, Houston's city page, the feeds and the about pages.
   - **Summaries:** each convention page's About section opens with a plain summary built only from the record: what, where, when, at which venue, who runs it, and when it was last checked. `llms.txt` uses the same sentence, so the two can't disagree.
   - **Not added:** Google says AI features need no special files, so nothing is written only for AI. `llms-full.txt` and Markdown copies of pages are left out until an assistant we care about uses them.
+- **2026-10-13** — Core Web Vitals:
+  - **How it was measured:** PageSpeed Insights' keyless quota was used up, so lab checks ran with Lighthouse 13.5 (mobile, simulated throttling) and a Chrome trace (4× CPU, Slow 4G). There is no CrUX field data yet.
+  - **Render-blocking CSS:** it stays, because Chrome's trace estimates removing it saves 0 ms.
+  - **Display fonts:** they keep swapping in, as decided in M4.
+  - **Caching:** the trace found that fingerprinted `/_astro/` files were served with `max-age=0`, so every repeat visit re-checked each one. `vercel.json` now caches them for a year as immutable. Pages, feeds and other files keep Vercel's default revalidation.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -149,7 +154,8 @@ Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page
 - [x] Structured data checked with Google's Rich Results Test: `Event` for dated editions (scheduled, postponed, cancelled), plus `BreadcrumbList` and `WebSite` (2026-10-13: all 16 convention pages have valid Events and Breadcrumbs, and Contribute has valid Breadcrumbs. The only warnings are for optional fields we have no sourced data for. `WebSite` passes the Schema Markup Validator, since the Rich Results Test doesn't cover site names.)
 - [x] Region pages, and city pages where enough conventions exist to be useful, generated from the data (2026-10-13: five region pages and a Houston city page. Two design-review rounds, and the second found nothing left to fix.)
 - [x] AI answer engines: `llms.txt` and plain factual summaries they can cite (2026-10-13)
-- [ ] Core Web Vitals: lab checks on every page type, and field data from Search Console once there's enough traffic
+- [x] Core Web Vitals lab checks on every page type (2026-10-13: Lighthouse mobile scores 97 to 100, LCP 1.2–1.6 s, total blocking time 26 ms or less, CLS 0.002 or less on all 11 page types)
+- [ ] Core Web Vitals field data from Search Console once there's enough traffic
 - [ ] Google Search Console and Bing Webmaster Tools verified, sitemap submitted (maintainer's accounts)
 
 Done when: an SEO audit of the live site finds no critical issues, every confirmed edition passes the Rich Results Test, and Search Console reads the sitemap without errors.

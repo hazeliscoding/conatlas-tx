@@ -61,7 +61,7 @@ Nothing is sent anywhere: no analytics, cookies or third-party requests. Fonts a
 ## Delivery
 
 - **CI** (`.github/workflows/ci.yml`) runs on every push and pull request: install, typecheck, lint, format check, data validation, unit tests, build, then Playwright end-to-end tests with axe accessibility checks on the built site.
-- **Deploy** (`.github/workflows/deploy.yml`) builds the site with the Vercel CLI and uploads the prebuilt output to Vercel after CI succeeds for a push to `main`, every morning, and on demand. Vercel never builds from Git. The build job runs the repository's code and gets no secrets; a separate deploy job holds the token and only uploads the built files, so no dependency ever runs next to it. The secrets (`VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`) belong to the `production` environment, which only `main` may deploy to, so a workflow on another branch can't read them.
+- **Deploy** (`.github/workflows/deploy.yml`) builds the site with the Vercel CLI and uploads the prebuilt output to Vercel after CI succeeds for a push to `main`, every morning, and on demand. Vercel never builds from Git. The build job runs the repository's code and gets no secrets; a separate deploy job holds the token and only uploads the built files, so no dependency ever runs next to it. The secrets (`VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`) belong to the `production` environment, which only `main` may deploy to, so a workflow on another branch can't read them. `vercel.json` sets the trailing-slash redirects and caches the fingerprinted `/_astro/` files for a year; pages and feeds are revalidated on every request, so a deploy shows at once.
 
 ## Tests
 
