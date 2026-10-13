@@ -10,5 +10,8 @@ export default defineConfig({
   trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()],
+    // Small font subsets (Cyrillic, Greek) were inlined into the render-blocking CSS though no
+    // page uses them; as files they're never requested.
+    build: { assetsInlineLimit: 0 },
   },
 });
