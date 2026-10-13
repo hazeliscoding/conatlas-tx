@@ -48,13 +48,14 @@ const views = [
   .tab:hover {
     color: var(--text);
   }
-  .tab:focus-visible {
-    outline: none;
-    box-shadow: var(--shadow-focus);
-  }
   .tab[aria-current='page'] {
     background: var(--surface-raised);
     color: var(--text);
     box-shadow: var(--shadow-1);
+  }
+  /* After the current-tab rule, so its shadow doesn't replace the focus ring. */
+  .tab:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
   }
 </style>
