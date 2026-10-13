@@ -16,12 +16,20 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import Button from '../../components/Button.astro';
 import CalendarExport from '../../components/CalendarExport.astro';
 import DateBlock from '../../components/DateBlock.astro';
+import EventCard from '../../components/EventCard.astro';
 import Icon from '../../components/Icon.astro';
 import Ribbon from '../../components/Ribbon.astro';
 import StatusLine from '../../components/StatusLine.astro';
 import VenueBlock from '../../components/VenueBlock.astro';
 import Base from '../../layouts/Base.astro';
-import { detailHref, editionTitle, eventDetails, getDataset, href } from '../../lib/data.ts';
+import {
+  detailHref,
+  editionTitle,
+  eventDetails,
+  getDataset,
+  getUpcoming,
+  href,
+} from '../../lib/data.ts';
 
 interface Props {
   edition: Edition;
@@ -65,6 +73,12 @@ const cancelled = e.status === 'cancelled';
 const ended = e.status === 'completed' || (end !== undefined && end < today);
 const longDate = (d: string) => formatDateRange(d, d);
 const description = e.description ?? series.description;
+// Other series coming up in the same region or city, soonest first.
+const nearby = getUpcoming()
+  .filter(
+    (x) => !x.awaitingNext && x.series !== e.series && (x.region === e.region || x.city === e.city),
+  )
+  .slice(0, 3);
 const google = e.status === 'confirmed' && !ended && googleCalendarUrl(e, eventDetails(e, title));
 // The edition to point a past page at: the soonest sibling that hasn't ended.
 const current = siblings
@@ -264,6 +278,19 @@ const past = siblings
         </p>
       </aside>
     </div>
+
+    {nearby.length > 0 && (
+      <section class="grid gap-3">
+        <Ribbon tone="lavender" rule heading>
+          Nearby and upcoming
+        </Ribbon>
+        <div class="grid gap-1.5">
+          {nearby.map((listing) => (
+            <EventCard listing={listing} compact />
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 </Base>
 
