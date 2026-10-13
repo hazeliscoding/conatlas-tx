@@ -6,6 +6,13 @@ ConAtlas TX is a free, open-source convention calendar for fans, cosplayers and 
 
 > **Status:** early development (milestone M3, data maintenance tools, in review). See [ROADMAP.md](ROADMAP.md).
 
+![The home page: upcoming Texas anime conventions grouped by month, each with its dates, venue and verification](docs/screenshots/home.png)
+
+<p>
+  <img src="docs/screenshots/calendar.png" alt="The January 2027 calendar in dark mode, with Anime Dallas and IKKiCON spanning January 8 to 10" width="64%">
+  <img src="docs/screenshots/convention-phone.png" alt="Ushicon 2027 on a phone: dates, venue, a saved bookmark and the Add to calendar menu" width="30%">
+</p>
+
 ## How it works
 
 - Convention data lives in plain YAML files in [`data/`](data/README.md), versioned in Git.
