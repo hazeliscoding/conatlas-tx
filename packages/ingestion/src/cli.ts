@@ -16,6 +16,7 @@ import {
   todayIn,
   validateDataset,
   type Dataset,
+  type Evidence,
   type FieldChange,
   type Issue,
   type Kind,
@@ -86,24 +87,36 @@ function review(published: Dataset, drafts: Dataset, today: string) {
 
 const show = (value: unknown): string => {
   if (value === undefined) return '(none)';
-  if (Array.isArray(value)) {
-    if (value.every((v) => typeof v !== 'object')) return `[${value.join(', ')}]`;
-    // Evidence: how many entries and the latest check, rather than every quote.
-    const checked = value
-      .map((v: { checked_at?: string }) => v.checked_at ?? '')
-      .sort()
-      .at(-1);
-    const entries = `${value.length} ${value.length === 1 ? 'entry' : 'entries'}`;
-    return checked ? `${entries}, last checked ${checked}` : entries;
-  }
-  if (value && typeof value === 'object') {
-    return Object.values(value).map(show).join(', ');
-  }
+  if (Array.isArray(value)) return `[${value.map(show).join(', ')}]`;
+  if (value && typeof value === 'object') return Object.values(value).map(show).join(', ');
   return String(value);
 };
 
-const change = ({ field, before, after }: FieldChange, added: boolean) =>
-  added ? `${field}: ${show(after)}` : `${field}: ${show(before)} → ${show(after)}`;
+/** One evidence entry in full: its excerpt and note appear on the site, so they must be read. */
+const showEvidence = (e: Evidence) => [
+  `${e.source} [${e.facts.join(', ')}] checked ${e.checked_at}`,
+  ...(e.excerpt ? [`  "${e.excerpt}"`] : []),
+  ...(e.note ? [`  note: ${e.note}`] : []),
+];
+
+function change({ field, before, after }: FieldChange, added: boolean): string[] {
+  if (field === 'evidence') {
+    // Entries on both sides are left out; the rest are listed with - (before) and + (after).
+    const key = (e: Evidence) => JSON.stringify(e);
+    const old = new Set(((before ?? []) as Evidence[]).map(key));
+    const next = new Set(((after ?? []) as Evidence[]).map(key));
+    const lines = ['evidence:'];
+    const list = (entries: Evidence[], skip: Set<string>, mark: string) => {
+      for (const e of entries.filter((e) => !skip.has(key(e)))) {
+        lines.push(...showEvidence(e).map((line, i) => `  ${i ? ' ' : mark} ${line}`));
+      }
+    };
+    list((before ?? []) as Evidence[], next, '-');
+    list((after ?? []) as Evidence[], old, '+');
+    return lines;
+  }
+  return [added ? `${field}: ${show(after)}` : `${field}: ${show(before)} → ${show(after)}`];
+}
 
 function formatDiff(diffs: RecordDiff[]): string {
   const lines: string[] = [];
@@ -118,7 +131,9 @@ function formatDiff(diffs: RecordDiff[]): string {
     for (const [title, changes] of groups) {
       if (changes.length === 0) continue;
       lines.push(`  ${title}`);
-      for (const c of changes) lines.push(`    ${change(c, diff.status === 'added')}`);
+      for (const c of changes) {
+        for (const line of change(c, diff.status === 'added')) lines.push(`    ${line}`);
+      }
     }
   }
   return lines.join('\n');

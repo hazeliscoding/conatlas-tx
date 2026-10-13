@@ -54,7 +54,11 @@ describe('data:diff', () => {
     sources: [lone-star-anime-festival-site]
 editions/lone-star-anime-fest-2026 (changed)
   Verification
-    evidence: 1 entry, last checked 2026-09-30 → 1 entry, last checked 2026-10-01
+    evidence:
+      - lone-star-anime-fest-site [dates, venue, city, tickets] checked 2026-09-30
+          "October 23-25, 2026 at the Austin Convention Center"
+      + lone-star-anime-fest-site [dates, venue, city, tickets] checked 2026-10-01
+          "October 23-25, 2026 at the Austin Convention Center"
     last_verified_at: 2026-09-30 → 2026-10-01
   Bookkeeping
     updated_at: 2026-09-30 → 2026-10-01
@@ -65,7 +69,11 @@ editions/lone-star-anime-fest-2027 (changed)
     end_date: (none) → 2027-10-24
     announced_window: Fall 2027 → (none)
   Verification
-    evidence: 1 entry, last checked 2026-09-30 → 1 entry, last checked 2026-10-01
+    evidence:
+      - lone-star-anime-fest-site [existence] checked 2026-09-30
+          "See you again in fall 2027!"
+      + lone-star-anime-fest-site [existence, dates] checked 2026-10-01
+          "Lone Star Anime Fest returns October 22-24, 2027"
     last_verified_at: 2026-09-30 → 2026-10-01
   Bookkeeping
     updated_at: 2026-09-30 → 2026-10-01
