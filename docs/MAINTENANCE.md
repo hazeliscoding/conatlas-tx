@@ -31,9 +31,9 @@ git add -u data/drafts   # only removals of drafts that were committed earlier
 git commit
 ```
 
-Staging those paths, rather than all of `data/`, keeps drafts you haven't approved out of the commit. Commit messages follow Conventional Commits: `fix(data): …` for corrections, `feat(data): …` for new conventions or editions, `chore(data): re-verify …` for checks that changed no facts. Push, and the site redeploys once CI passes.
+Staging those paths, rather than all of `data/`, keeps drafts you haven't approved out of the commit. Commit messages follow Conventional Commits: `fix(data): …` for corrections, `feat(data): …` for new conventions or editions, `chore(data): re-verify …` for checks that changed no facts. Work on a branch, push it and open a pull request: `main` only accepts merges whose CI passes. Once it is merged, CI runs on `main` and the site redeploys.
 
-The site decides what is "upcoming" from the build date, so the deploy workflow rebuilds it every morning; otherwise an edition would stay listed until the next push.
+The site decides what is "upcoming" from the build date, so the deploy workflow rebuilds it every morning; otherwise an edition would stay listed until the next merge.
 
 ## Reports from the issue forms
 
