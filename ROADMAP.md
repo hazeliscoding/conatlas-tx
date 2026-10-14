@@ -1,6 +1,7 @@
 # Roadmap
 
 ConAtlas TX v0.1: the smallest genuinely excellent Texas anime convention calendar.
+This file holds the decisions already made, what shipped and what is out of scope. Open work is in GitHub issues.
 Each milestone ends at a gate: tests run, results reported, and the maintainer approves before the next one starts.
 
 ## Decisions
@@ -84,90 +85,28 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
   - **Caching:** the trace found that fingerprinted `/_astro/` files were served with `max-age=0`, so every repeat visit re-checked each one. `vercel.json` now caches them for a year as immutable. Pages, feeds and other files keep Vercel's default revalidation.
 - **2026-10-14** — M5 closes on Google: Search Console read the sitemap's 35 URLs. Submitting the sitemap to Bing and reading Core Web Vitals field data move to Later, since neither can be done yet: Bing's form errors while it processes the new site, and field data needs real traffic.
 - **2026-10-14** — The header nav gets a Regions link to the home page's region cards, which sat about 4.5 screens down on a desktop and 6.4 on a phone, after the whole timeline. Region and city pages mark Regions as the current page.
+- **2026-10-14** — Open work moves to [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues). Each milestone is a GitHub milestone, each item an issue, closed by the commit that finishes it. This file keeps the decisions, a line per shipped milestone and what is out of scope, and the Later list became issues without a milestone ([#7](https://github.com/hazeliscoding/conatlas-tx/issues/7) to [#12](https://github.com/hazeliscoding/conatlas-tx/issues/12)). There is no Projects board: with one maintainer, the issues and the milestone already show where things stand.
+- **2026-10-14** — M6 is a coverage pass, then v0.1.0. A Texas calendar announced without well-known conventions (A-Kon isn't listed) would undercut itself, so research comes first. Third-party listings stay leads only: each convention still needs an official source and the maintainer's approval by name.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
-## M0 — Repository foundation
+## Shipped
 
-- [x] pnpm workspace, TypeScript, ESLint, Prettier, Vitest
-- [x] `packages/core`: Zod schemas, date helpers, dataset loader, cross-record validation
-- [x] `packages/ingestion`: `pnpm data:validate`
-- [x] `packages/calendar`: all-day date range helper
-- [x] `apps/web`: Astro + Tailwind skeleton with the design tokens and self-hosted fonts
-- [x] CI workflow: install, typecheck, lint, format, data validation, tests, build
+Each milestone's checklist and status report are in git history.
 
-Done when: `pnpm install`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm data:validate` and `pnpm build` all pass locally and in CI, and the schemas accept the valid fixtures and reject the invalid ones.
+- **M0: Repository foundation.** pnpm workspace, schemas and cross-record validation, CI.
+- **M1: Core website.** Home timeline with filters, month calendar, convention pages, light and dark themes; facts render without JavaScript.
+- **M2: Personal planning.** Saved list, `.ics` downloads and feeds, the Contribute page and issue forms.
+- **M3: Claude-assisted ingestion.** `data:propose`, `data:diff`, `data:report` and `data:promote`, and the refresh and add skills; nothing is published without the maintainer's approval.
+- **M4: Production readiness.** The five-petal logo, design, accessibility and performance reviews, SEO basics, and the Vercel deploy. Approved 2026-10-13.
+- **M5: Search and discovery.** SEO audit, structured data, region and city pages, `llms.txt`, Core Web Vitals lab checks, and Search Console reading all 35 sitemap URLs. Approved 2026-10-14.
 
-Status 2026-10-11: everything passes locally on a clean frozen install (21 tests, `pnpm audit` clean), and the first CI run on `main` passed. M0 is done.
+## Next
 
-## M1 — Core website
+Open work is in [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues). The current milestone is [M6: coverage and v0.1.0](https://github.com/hazeliscoding/conatlas-tx/milestone/1): find and add the Texas anime conventions we don't list yet, refresh every record, walk the public beta checklist, then publish and announce v0.1.0.
 
-- [x] Seed dataset of real Texas conventions, each backed by an official source
-- [x] Home: hero, upcoming timeline grouped by month, region and city filters
-- [x] Calendar: month grid, mobile agenda, month navigation, region filter, "Dates not announced" group
-- [x] Convention detail page per edition, with status banners and verification panel
-- [x] Shareable filter query parameters
-- [x] Light and dark themes, responsive layouts
-- [x] About page, `docs/DATA_POLICY.md`
-- [x] Playwright smoke tests, axe checks, desktop and mobile screenshots compared with the design
+Done when: the coverage drafts are approved, the public beta checklist is ticked, and v0.1.0 is published.
 
-Done when: someone can find, filter and open every seeded convention with no JavaScript required for the facts, source links work, and no unverified event is shown.
-
-## M2 — Personal planning
-
-- [x] Browser-local bookmarks and the Saved page
-- [x] `.ics` download per edition and for the saved list
-- [x] Static `.ics` feeds: all upcoming, and one per region
-- [x] Contribute page and GitHub issue forms (new convention, correction, cancellation or postponement, broken link)
-- [x] `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`
-
-Done when: bookmarks survive a reload, generated calendars parse with an iCalendar parser, and every contribution path opens the right issue form.
-
-Status 2026-10-12: all three are covered by end-to-end tests (82 pass). Every feed and edition `.ics` parses with ical.js, and the icalendar.org validator accepts `feeds/all.ics` and an edition file. Waiting on the maintainer's review.
-
-## M3 — Claude-assisted ingestion
-
-- [x] `pnpm data:diff`, `pnpm data:propose`, `pnpm data:report`
-- [x] Draft staging and explicit promotion
-- [x] Semantic diff and duplicate detection
-- [x] `/conatlas-refresh` and `/conatlas-add` skills (un-ignore `.claude/skills/` in `.gitignore`: the maintainer's global gitignore excludes `.claude/`)
-- [x] `docs/INGESTION_ENGINE.md`, `docs/MAINTENANCE.md`
-
-Done when: a refresh stages drafts, the diff report is correct on fixtures, and nothing reaches `data/` without explicit maintainer approval.
-
-Status 2026-10-13: a live refresh of five conventions staged 19 drafts, a second agent re-checked every quote, and the maintainer approved 16 of them (Anime Matsuri 2027 held). The CLI tests compare the full `data:diff` output on a fixture and show that only `data:promote` writes published data, and only for drafts it checked. 68 unit and 82 end-to-end tests pass. Waiting on the maintainer's review.
-
-## M4 — Production readiness
-
-- [x] Logo: redraw the flower mark with even petals, centered in its box, and check it with the wordmark, favicon and every motif at each size and in both themes
-- [x] Impeccable design review of every page type (desktop and mobile, light and dark), fixing what it finds
-- [x] Accessibility review (keyboard, screen reader, reduced motion, zoom)
-- [x] SEO: metadata, canonical URLs, sitemap, Open Graph, event structured data for confirmed dates only
-- [x] Performance pass
-- [x] Deploy workflow (GitHub Pages, then Vercel)
-- [x] `docs/ARCHITECTURE.md`, README screenshots, public beta checklist
-
-Done when: all CI gates pass, the design review has nothing left to fix, there are no critical accessibility failures, and the site deploys statically.
-
-Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page type in both themes), after three design-review rounds a final pass found nothing left to fix, Lighthouse scores 100 for accessibility, and layout shift stays at 0.03 or less on a throttled phone. The site deploys to https://conatlas-tx.vercel.app/ after CI: every page type, calendar file and the sitemap return 200 with the right types, paths without a trailing slash redirect, and missing pages get the site's 404. Approved by the maintainer on 2026-10-13.
-
-## M5 — Search and discovery
-
-- [x] SEO audit of the live site: indexing, titles and descriptions, internal links, crawl errors (Search Console's crawl reports get a second look once Google has crawled the site)
-- [x] Structured data checked with Google's Rich Results Test: `Event` for dated editions (scheduled, postponed, cancelled), plus `BreadcrumbList` and `WebSite` (2026-10-13: all 16 convention pages have valid Events and Breadcrumbs, and Contribute has valid Breadcrumbs. The only warnings are for optional fields we have no sourced data for. `WebSite` passes the Schema Markup Validator, since the Rich Results Test doesn't cover site names.)
-- [x] Region pages, and city pages where enough conventions exist to be useful, generated from the data (2026-10-13: five region pages and a Houston city page. Two design-review rounds, and the second found nothing left to fix.)
-- [x] AI answer engines: `llms.txt` and plain factual summaries they can cite (2026-10-13)
-- [x] Core Web Vitals lab checks on every page type (2026-10-13: Lighthouse mobile scores 97 to 100, LCP 1.2–1.6 s, total blocking time 26 ms or less, CLS 0.002 or less on all 11 page types)
-- [x] Google Search Console verified and the sitemap submitted from the maintainer's account (2026-10-14: Search Console read all 35 URLs)
-
-Done when: an SEO audit of the live site finds no critical issues, every confirmed edition passes the Rich Results Test, and Search Console reads the sitemap without errors.
-
-## Later
-
-- East Texas and Panhandle as their own regions if the dataset needs them
-- `pnpm data:format`
-- Archive pages per convention series
-- Submit the sitemap in Bing Webmaster Tools (on 2026-10-14 its submit form returned a server error while Bing was still processing the new site; Bing also finds the sitemap through `robots.txt`)
-- Core Web Vitals field data from Search Console, once there's enough traffic for Chrome to report it
+Issues without a milestone are ideas for later.
 
 ## Not planned
 

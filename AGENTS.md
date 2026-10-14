@@ -2,7 +2,7 @@
 
 A free, open-source calendar of Texas anime conventions. Static Astro site, YAML data in Git, no backend.
 
-`README.md`, `ROADMAP.md` and this file are the source of truth. Work from the next unchecked item in `ROADMAP.md`, tick it off when done, and record new decisions there with a date. Stop at each milestone gate for the maintainer's approval.
+`README.md`, `ROADMAP.md` and this file are the source of truth, and GitHub issues hold the open work. Work from the open issues in the current milestone, which `ROADMAP.md` links under **Next** (`gh issue list --milestone "<name>"`). Close an issue with the commit that finishes it, record new decisions in `ROADMAP.md` with a date, and don't build past the current milestone without asking. Stop at each milestone gate for the maintainer's approval.
 
 ## Commands
 
