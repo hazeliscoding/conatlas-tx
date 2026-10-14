@@ -2,7 +2,7 @@
 
 A free, open-source calendar of Texas anime conventions. Static Astro site, YAML data in Git, no backend.
 
-`README.md`, `ROADMAP.md` and this file are the source of truth, and GitHub issues hold the open work. Work from the open issues in the current milestone, which `ROADMAP.md` links under **Next** (`gh issue list --milestone "<name>"`). Close an issue with the commit that finishes it, record new decisions in `ROADMAP.md` with a date, and don't build past the current milestone without asking. Stop at each milestone gate for the maintainer's approval.
+`README.md`, `ROADMAP.md` and this file are the source of truth, and GitHub issues hold the open work. Work from the open issues in the current milestone, which `ROADMAP.md` links under **Next** (`gh issue list --milestone "<name>"`). Close an issue with the pull request that finishes it (`Closes #N` in its description), record new decisions in `ROADMAP.md` with a date, and don't build past the current milestone without asking. Stop at each milestone gate for the maintainer's approval.
 
 ## Commands
 
@@ -49,4 +49,5 @@ Everything must run the same in PowerShell and bash: use `node` scripts, never b
 ## Git
 
 - Conventional Commits, small and atomic. No AI attribution or co-author trailers.
-- Do not push, create or change the GitHub repo, or deploy without the maintainer's explicit go-ahead.
+- `main` is protected: every change reaches it through a pull request whose CI (`check` and `e2e`) passes, with no direct pushes, even by admins. Work on a branch named for the change (`data/add-conventions`, `docs/listing-rules`), one pull request per issue or per change. Merge with **Rebase and merge** so each commit lands on `main` as written.
+- Do not push a branch, open or merge a pull request, create or change the GitHub repo, or deploy without the maintainer's explicit go-ahead. A "push" covers pushing the branch and opening its pull request; merging needs its own go-ahead.

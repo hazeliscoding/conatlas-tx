@@ -6,6 +6,12 @@ ConAtlas TX lists anime conventions in Texas. This page says what gets listed, w
 
 A ticketed or free public event in Texas whose main programming is anime, manga or closely related fandom: artist alleys, cosplay, panels, screenings. A general comic con is listed only when its organizer describes it as an anime convention. Store meetups and private club nights are not listed.
 
+Some cases are decided:
+
+- **Single-franchise events and markets** are listed only when the organizer calls them an anime convention or anime festival and they have convention programming. A game or trading-card fan con, a fan-art market and a vendor-only market are not listed.
+- **Age-limited events** are not listed for now: 18+ events, because the site can't yet label them, and teen-only library programs, which aren't open to the public.
+- **Dormant conventions** are not added. A new convention needs an edition held this calendar year or last, or an announced one. One that comes back is added then.
+
 ## Where facts come from
 
 - **Official sources only.** Every published fact (that an edition exists, its dates, venue, city, status or ticket link) comes from the organizer: their website, an official announcement, an official feed, or the organizer's own social account.
