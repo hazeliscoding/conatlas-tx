@@ -32,5 +32,6 @@ Run through this once before announcing the site, and again after any big change
 
 ## After launch
 
-- [ ] Verify the site in Google Search Console and Bing Webmaster Tools and submit `sitemap.xml` (milestone M5).
+- [x] Verify the site in Google Search Console and submit `sitemap.xml` (milestone M5; done 2026-10-14).
+- [ ] Submit `sitemap.xml` in Bing Webmaster Tools once Bing has finished processing the site (see Later in the roadmap).
 - [ ] Keep the weekly routine in [`MAINTENANCE.md`](MAINTENANCE.md).

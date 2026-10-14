@@ -82,6 +82,8 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
   - **Render-blocking CSS:** it stays, because Chrome's trace estimates removing it saves 0 ms.
   - **Display fonts:** they keep swapping in, as decided in M4.
   - **Caching:** the trace found that fingerprinted `/_astro/` files were served with `max-age=0`, so every repeat visit re-checked each one. `vercel.json` now caches them for a year as immutable. Pages, feeds and other files keep Vercel's default revalidation.
+- **2026-10-14** — M5 closes on Google: Search Console read the sitemap's 35 URLs. Submitting the sitemap to Bing and reading Core Web Vitals field data move to Later, since neither can be done yet: Bing's form errors while it processes the new site, and field data needs real traffic.
+- **2026-10-14** — The header nav gets a Regions link to the home page's region cards, which sat about 4.5 screens down on a desktop and 6.4 on a phone, after the whole timeline. Region and city pages mark Regions as the current page.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## M0 — Repository foundation
@@ -155,8 +157,7 @@ Status 2026-10-13: CI passes (68 unit and 64 end-to-end tests, axe on every page
 - [x] Region pages, and city pages where enough conventions exist to be useful, generated from the data (2026-10-13: five region pages and a Houston city page. Two design-review rounds, and the second found nothing left to fix.)
 - [x] AI answer engines: `llms.txt` and plain factual summaries they can cite (2026-10-13)
 - [x] Core Web Vitals lab checks on every page type (2026-10-13: Lighthouse mobile scores 97 to 100, LCP 1.2–1.6 s, total blocking time 26 ms or less, CLS 0.002 or less on all 11 page types)
-- [ ] Core Web Vitals field data from Search Console once there's enough traffic
-- [ ] Google Search Console and Bing Webmaster Tools verified, sitemap submitted (maintainer's accounts)
+- [x] Google Search Console verified and the sitemap submitted from the maintainer's account (2026-10-14: Search Console read all 35 URLs)
 
 Done when: an SEO audit of the live site finds no critical issues, every confirmed edition passes the Rich Results Test, and Search Console reads the sitemap without errors.
 
@@ -165,6 +166,8 @@ Done when: an SEO audit of the live site finds no critical issues, every confirm
 - East Texas and Panhandle as their own regions if the dataset needs them
 - `pnpm data:format`
 - Archive pages per convention series
+- Submit the sitemap in Bing Webmaster Tools (on 2026-10-14 its submit form returned a server error while Bing was still processing the new site; Bing also finds the sitemap through `robots.txt`)
+- Core Web Vitals field data from Search Console, once there's enough traffic for Chrome to report it
 
 ## Not planned
 
