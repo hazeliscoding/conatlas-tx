@@ -8,16 +8,20 @@ import ThemeSwitch from './ThemeSwitch.astro';
 
 const NAV: { label: string; path: string; icon: IconName }[] = [
   { label: 'Explore', path: href(), icon: 'list' },
+  { label: 'Regions', path: href('#regions'), icon: 'map-pin' },
   { label: 'Calendar', path: href('calendar/'), icon: 'calendar' },
   { label: 'Saved', path: href('saved/'), icon: 'bookmark' },
   { label: 'About', path: href('about/'), icon: 'info' },
 ];
 const path = Astro.url.pathname;
-// Calendar month pages count as Calendar; convention pages fall under Explore.
+// Calendar month pages count as Calendar; convention pages fall under Explore, region and city
+// pages under Regions.
 const current = (item: (typeof NAV)[number]) =>
   item.path === href()
     ? path === href() || path.startsWith(href('cons/'))
-    : path.startsWith(item.path);
+    : item.path === href('#regions')
+      ? path.startsWith(href('regions/')) || path.startsWith(href('cities/'))
+      : path.startsWith(item.path);
 // The Saved badge counts only editions the Saved page can show, not ones that have since ended.
 const savable = getUpcoming()
   .filter((e) => !e.awaitingNext)

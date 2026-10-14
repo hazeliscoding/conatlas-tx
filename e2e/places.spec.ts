@@ -92,6 +92,23 @@ test('the footer lists every region', async ({ page }) => {
   );
 });
 
+test('the header Regions link reaches the region cards and marks region and city pages', async ({
+  page,
+}) => {
+  await page.goto('calendar/');
+  // Under 768px the nav sits in the menu.
+  if (!(await page.locator('.hdr__nav').isVisible())) await page.locator('.hdr__menu').click();
+  const link = page.locator('nav[aria-label="Primary"] a:visible', { hasText: 'Regions' });
+  await expect(link).not.toHaveAttribute('aria-current');
+  await link.click();
+  await expect(page).toHaveURL(/\/#regions$/);
+  await expect(page.locator('#regions')).toBeInViewport();
+  for (const path of [regionPath(REGIONS[0]), ...pagedCities.map(cityPath)]) {
+    await page.goto(path);
+    await expect(page.locator('.hdr__nav [aria-current="page"]'), path).toHaveText('Regions');
+  }
+});
+
 test('region and city pages offer the right calendar feeds', async ({ page }) => {
   const dated = new Set(dataset.editions.filter((e) => e.start_date).map((e) => e.region));
   for (const region of REGIONS) {
