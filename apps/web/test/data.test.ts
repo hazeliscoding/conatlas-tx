@@ -129,6 +129,18 @@ describe('editionSummary', () => {
     );
   });
 
+  it('says when a series has ended or is on hiatus', () => {
+    const past = edition({ status: 'completed' });
+    expect(
+      editionSummary(past, { ...con, status: 'ended', organizer: 'Org LLC' }, '2027-04-01'),
+    ).toBe(
+      `Some Con 2027 was an anime convention in Houston, Texas, held Mar 5–7, 2027, at Hall A. Some Con has ended. It was run by Org LLC. ${checked}`,
+    );
+    expect(editionSummary(past, { ...con, status: 'hiatus' }, '2027-04-01')).toContain(
+      'at Hall A. Some Con is on hiatus. ConAtlas',
+    );
+  });
+
   it('describes past, cancelled, postponed and undated editions as they are', () => {
     expect(editionSummary(edition({ status: 'completed' }), con, '2027-04-01')).toBe(
       `Some Con 2027 was an anime convention in Houston, Texas, held Mar 5–7, 2027, at Hall A. ${checked}`,
