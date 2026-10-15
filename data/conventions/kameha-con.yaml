@@ -1,0 +1,9 @@
+id: kameha-con
+slug: kameha-con
+name: Kameha Con
+website: https://kamehacon.com/
+city: San Antonio
+region: south
+status: active
+sources:
+  - kameha-con-site

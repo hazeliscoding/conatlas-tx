@@ -1,0 +1,22 @@
+id: kameha-con-2026
+series: kameha-con
+edition: '2026'
+slug: kameha-con-2026
+status: completed
+start_date: 2026-08-21
+end_date: 2026-08-23
+venue:
+  name: Freeman Expo Hall
+city: San Antonio
+region: south
+timezone: America/Chicago
+url: https://kamehacon.com/
+evidence:
+  - source: kameha-con-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: JOIN US THIS YEAR AS WE EXPLORE SAN ANTONIO, TX. THE CONVENTION WILL BE HELD AT OUR HOST HOTEL THE AC HOTEL BY MARRIOTT AND FREEMAN EXPO HALL AUGUST 21ST-23RD, 2026!
+    note: The page header reads "August 21st - 23rd | freeman Expo Hall C | San Antonio, TX". Status is completed because the advertised dates have passed; the site announces no later edition.
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
