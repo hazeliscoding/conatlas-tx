@@ -1,0 +1,30 @@
+id: anime-at-the-modern-2026
+series: anime-at-the-modern
+edition: '2026'
+slug: anime-at-the-modern-2026
+status: completed
+start_date: 2026-09-18
+end_date: 2026-09-20
+venue:
+  name: Modern Art Museum of Fort Worth
+  address: 3200 Darnell Street, Fort Worth, Texas 76107
+city: Fort Worth
+region: north
+timezone: America/Chicago
+url: https://www.themodern.org/anime-modern-2026
+evidence:
+  - source: anime-at-the-modern-site
+    facts: [existence, dates]
+    checked_at: 2026-10-14
+    excerpt: The 2026 Anime at the Modern Film Festival is September 18–20 and celebrates the Japanese anime genre with films that are visually stunning, richly imaginative, and poetic in their storytelling.
+  - source: anime-at-the-modern-site
+    facts: [venue]
+    checked_at: 2026-10-14
+    excerpt: All film screenings will be held in the Modern's auditorium.
+  - source: anime-at-the-modern-site
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: © Modern Art Museum of Fort Worth Rights & Reproductions Accessibility Site Map 3200 Darnell Street Fort Worth, Texas 76107
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
