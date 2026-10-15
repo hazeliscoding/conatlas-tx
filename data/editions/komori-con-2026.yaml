@@ -1,0 +1,30 @@
+id: komori-con-2026
+series: komori-con
+edition: '2026'
+slug: komori-con-2026
+status: completed
+start_date: 2026-02-07
+end_date: 2026-02-07
+venue:
+  name: Etter-Harbin Alumni Center
+  address: 2110 San Jacinto Blvd, Austin, TX 78712
+city: Austin
+region: central
+timezone: America/Chicago
+url: https://www.komoricon.com/
+evidence:
+  - source: komori-con-faqs
+    facts: [existence]
+    checked_at: 2026-10-14
+    excerpt: Kōmori Con is an annual anime convention that was first started by a group of passionate students at the University of Texas at Austin in 2023.
+  - source: komori-con-faqs
+    facts: [dates]
+    checked_at: 2026-10-14
+    excerpt: Kōmori Con 2025 will occur on Saturday, February 7, 2026
+  - source: komori-con-faqs
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'Kōmori Con 2025 will be hosted at the Etter-Harbin Alumni Center, which is located on UT campus. Address: 2110 San Jacinto Blvd, Austin, TX 78712'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
