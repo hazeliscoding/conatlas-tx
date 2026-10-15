@@ -1,0 +1,21 @@
+id: anime-sunika-2027
+series: anime-sunika
+edition: '2027'
+slug: anime-sunika-2027
+status: dates_tba
+announced_window: '2027'
+venue:
+  name: Cadence Bank Center
+  address: 301 W Loop 121, Belton, TX 76513
+city: Belton
+region: central
+timezone: America/Chicago
+url: https://www.animesunika.com/
+evidence:
+  - source: anime-sunika-site
+    facts: [existence, venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'WHEN & WHERE Returning in 2027 CADENCE BANK CENTER (Formerly Bell County EXPO Center) 301 W Loop 121, Belton TX 76513'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

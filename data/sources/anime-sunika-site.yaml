@@ -1,0 +1,6 @@
+id: anime-sunika-site
+series: anime-sunika
+url: https://www.animesunika.com/
+type: official_site
+supports: [existence, venue, city]
+last_checked: 2026-10-14
