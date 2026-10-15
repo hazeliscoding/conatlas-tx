@@ -1,0 +1,32 @@
+id: tokyo-x-2026
+series: tokyo-x
+edition: '2026'
+slug: tokyo-x-2026
+status: completed
+start_date: 2026-09-26
+end_date: 2026-09-27
+venue:
+  name: Reliant Center
+  address: 1 Fannin St, Houston, TX 77054
+city: Houston
+region: gulf-coast
+timezone: America/Chicago
+url: https://www.tokyonightfest.com/
+evidence:
+  - source: tokyo-x-site
+    facts: [existence, dates, city]
+    checked_at: 2026-10-14
+    excerpt: 'For the first time ever in Texas, the voice behind one of the most iconic anime characters of all time is here for TOKYO X! 🇯🇵✨ 📅 September 26–27, 2026 📍 Houston, Texas'
+    note: From the organizer's Instagram post embedded in the home page feed.
+  - source: tokyo-x-about
+    facts: [venue, city, dates]
+    checked_at: 2026-10-14
+    excerpt: 'Location Reliant Center 1 Fannin St, Houston, TX 77054 Hours September 26 : (11 am - 9pm) September 27: (11am - 8pm)'
+    note: The page title is "About | Tokyo X 2026".
+  - source: tokyo-x-site
+    facts: [status]
+    checked_at: 2026-10-14
+    excerpt: Thank you to everyone who came out, celebrated with us, and helped make Nozawa-san’s 90th birthday and Tokyo X 2026 so special.
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

@@ -1,0 +1,7 @@
+id: tokyo-x-site
+series: tokyo-x
+url: https://www.tokyonightfest.com/
+type: official_site
+supports: [existence, dates, city, status]
+last_checked: 2026-10-14
+notes: The dated text is in the organizer's Instagram posts (@tokyox.usa) embedded in the home page feed.
