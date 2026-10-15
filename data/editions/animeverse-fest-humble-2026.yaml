@@ -1,0 +1,22 @@
+id: animeverse-fest-humble-2026
+series: animeverse-fest
+edition: Humble 2026
+slug: animeverse-fest-humble-2026
+name: Animeverse Fest Humble
+status: completed
+start_date: 2026-06-27
+end_date: 2026-06-28
+venue:
+  name: Humble Civic Center
+city: Humble
+region: gulf-coast
+timezone: America/Chicago
+url: https://animeversefest.com/humble/
+evidence:
+  - source: animeverse-fest-humble
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: JUNE 27TH-28TH,2026 | HUMBLE CIVIC CENTER
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
