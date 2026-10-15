@@ -1,0 +1,7 @@
+id: komori-con-faqs
+series: komori-con
+url: https://www.komoricon.com/faqs
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14
+access_notes: Plain fetch returns the page text.
