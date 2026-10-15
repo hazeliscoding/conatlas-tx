@@ -115,8 +115,14 @@ const statusSource = series.sources
   .map((id) => sources.get(id))
   .find((s) => s && OFFICIAL_SOURCE_TYPES.includes(s.type) && s.supports.includes('status'));
 // The edition to point a past page at: the soonest sibling that hasn't ended.
+// A series that has ended or is on hiatus has no current edition, even a cancelled one.
 const current = siblings
-  .filter((s) => s.status !== 'completed' && (!s.end_date || s.end_date >= today))
+  .filter(
+    (s) =>
+      series.status === 'active' &&
+      s.status !== 'completed' &&
+      (!s.end_date || s.end_date >= today),
+  )
   .sort((a, b) => (a.start_date ?? '9999').localeCompare(b.start_date ?? '9999'))[0];
 // Everything that has ended, so an edition still awaiting its "completed" status stays linked.
 const past = siblings
@@ -433,7 +439,8 @@ const past = siblings
   }
   /* The text takes the room beside the icon, so a long note wraps inside it. */
   .banner > span {
-    flex: 1 1 16rem;
+    flex: 1 1 0;
+    min-width: 12ch;
   }
   .banner__link {
     display: inline-flex;

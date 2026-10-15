@@ -172,8 +172,13 @@ export function getUpcoming(): Listing[] {
     displayName: e.name ?? names.get(e.series) ?? e.series,
     title: editionTitle(e, names.get(e.series) ?? e.series),
   });
+  // A series that has ended or is on hiatus leaves every list, even with a cancelled edition to come.
+  const inactive = new Set(series.filter((s) => s.status !== 'active').map((s) => s.id));
   const upcoming = editions
-    .filter((e) => e.status !== 'completed' && (!e.end_date || e.end_date >= today))
+    .filter(
+      (e) =>
+        !inactive.has(e.series) && e.status !== 'completed' && (!e.end_date || e.end_date >= today),
+    )
     .map(toListing)
     .sort(
       (a, b) =>
@@ -181,11 +186,7 @@ export function getUpcoming(): Listing[] {
         a.displayName.localeCompare(b.displayName),
     );
 
-  // A series that has ended or is on hiatus isn't waiting for its next dates.
-  const listed = new Set([
-    ...upcoming.map((e) => e.series),
-    ...series.filter((s) => s.status !== 'active').map((s) => s.id),
-  ]);
+  const listed = new Set([...upcoming.map((e) => e.series), ...inactive]);
   const latest = new Map<string, Edition>();
   for (const e of editions) {
     const prev = latest.get(e.series);
