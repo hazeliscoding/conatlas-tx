@@ -9,10 +9,11 @@ const cardLinks = (page: Page) =>
     .locator('[data-listing] h3 a')
     .evaluateAll((links) => links.map((a) => a.getAttribute('href')!));
 
-test('every published convention is on the home page and opens its own page', async ({ page }) => {
+test('every active convention is on the home page and opens its own page', async ({ page }) => {
   await page.goto('./');
   const titles = await page.locator('[data-listing] h3').allTextContents();
-  for (const series of dataset.series) {
+  // Series that have ended or are on hiatus leave the lists (see places.spec.ts).
+  for (const series of dataset.series.filter((s) => s.status === 'active')) {
     expect(
       titles.some((t) => t.includes(series.name)),
       series.name,

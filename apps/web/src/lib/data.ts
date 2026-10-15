@@ -99,7 +99,7 @@ export function placeDescription(place: string, listings: Listing[]): string {
  */
 export function editionSummary(
   e: Edition,
-  series: Pick<Series, 'name' | 'organizer'>,
+  series: Pick<Series, 'name' | 'organizer'> & Partial<Pick<Series, 'status'>>,
   today = todayIn('America/Chicago'),
 ): string {
   const title = editionTitle(e, series.name);
@@ -119,9 +119,17 @@ export function editionSummary(
           : ended
             ? `${title} was an anime convention in ${where}, held ${when}${at}.`
             : `${title} is an anime convention in ${where}, on ${when}${at}.`;
-  const by = series.organizer ? ` It's run by ${series.organizer}.` : '';
+  const state =
+    series.status === 'ended'
+      ? ` ${series.name} has ended.`
+      : series.status === 'hiatus'
+        ? ` ${series.name} is on hiatus.`
+        : '';
+  const by = series.organizer
+    ? ` It${series.status === 'ended' ? ' was' : "'s"} run by ${series.organizer}.`
+    : '';
   const checked = formatDateRange(e.last_verified_at, e.last_verified_at);
-  return `${lead}${by} ConAtlas TX checked these details against official sources on ${checked}.`;
+  return `${lead}${state}${by} ConAtlas TX checked these details against official sources on ${checked}.`;
 }
 
 /** An edition's full name, e.g. "San Japan 2027" or "KimoKawaii Conroe 2027". */
@@ -173,7 +181,11 @@ export function getUpcoming(): Listing[] {
         a.displayName.localeCompare(b.displayName),
     );
 
-  const listed = new Set(upcoming.map((e) => e.series));
+  // A series that has ended or is on hiatus isn't waiting for its next dates.
+  const listed = new Set([
+    ...upcoming.map((e) => e.series),
+    ...series.filter((s) => s.status !== 'active').map((s) => s.id),
+  ]);
   const latest = new Map<string, Edition>();
   for (const e of editions) {
     const prev = latest.get(e.series);

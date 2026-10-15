@@ -145,3 +145,24 @@ test.describe('without JavaScript', () => {
     }
   });
 });
+
+test('a series that has ended or is on hiatus says so and leaves the lists', async ({ page }) => {
+  const inactive = dataset.series.filter((s) => s.status !== 'active');
+  test.skip(inactive.length === 0, 'no series has ended or is on hiatus');
+  await page.goto('./');
+  const listed = await listingIds(page, '[data-listing]');
+  for (const s of inactive) {
+    const editions = dataset.editions
+      .filter((e) => e.series === s.id)
+      .sort((a, b) => (b.start_date ?? '').localeCompare(a.start_date ?? ''));
+    expect(
+      listed.filter((id) => editions.some((e) => e.id === id)),
+      s.id,
+    ).toEqual([]);
+    await page.goto(`cons/${editions[0]!.slug}/`);
+    const banner = page.locator('[data-series-status]');
+    await expect(banner).toHaveAttribute('data-series-status', s.status);
+    await expect(banner).toContainText(s.status_note!);
+    await expect(page.getByText("The organizer hasn't announced the next one yet.")).toHaveCount(0);
+  }
+});

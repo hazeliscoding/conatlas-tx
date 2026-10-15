@@ -4,6 +4,7 @@ import {
   REGION_NAMES,
   dayCount,
   formatDateRange,
+  OFFICIAL_SOURCE_TYPES,
   todayIn,
   weekday,
   type Edition,
@@ -109,6 +110,10 @@ const nearby = getUpcoming()
   )
   .slice(0, 3);
 const google = e.status === 'confirmed' && !ended && googleCalendarUrl(e, eventDetails(e, title));
+// The organizer's announcement behind a hiatus or ended status.
+const statusSource = series.sources
+  .map((id) => sources.get(id))
+  .find((s) => s && OFFICIAL_SOURCE_TYPES.includes(s.type) && s.supports.includes('status'));
 // The edition to point a past page at: the soonest sibling that hasn't ended.
 const current = siblings
   .filter((s) => s.status !== 'completed' && (!s.end_date || s.end_date >= today))
@@ -211,12 +216,33 @@ const past = siblings
         </span>
       </div>
     )}
+    {series.status !== 'active' && (
+      <div class="banner banner--neutral" role="status" data-series-status={series.status}>
+        <Icon name="info" size={18} />
+        <span>
+          <b>
+            {series.status === 'ended'
+              ? `${series.name} has ended.`
+              : `${series.name} is on hiatus.`}
+          </b>{' '}
+          {series.status_note}
+        </span>
+        {statusSource && (
+          <a class="banner__link" href={statusSource.url} target="_blank" rel="noopener noreferrer">
+            Read the announcement
+            <Icon name="external-link" size={12} label="(opens in new tab)" />
+          </a>
+        )}
+      </div>
+    )}
     {ended && !cancelled && (
       <div class="banner banner--neutral" role="status">
         <Icon name="calendar" size={18} />
         <span>
           This edition has ended. Kept for reference.
-          {!current && " The organizer hasn't announced the next one yet."}
+          {!current &&
+            series.status === 'active' &&
+            " The organizer hasn't announced the next one yet."}
         </span>
         {current && (
           <a class="banner__link" href={detailHref(current)}>
@@ -405,7 +431,14 @@ const past = siblings
     background: var(--status-neutral-bg);
     color: var(--status-neutral-fg);
   }
+  /* The text takes the room beside the icon, so a long note wraps inside it. */
+  .banner > span {
+    flex: 1 1 16rem;
+  }
   .banner__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     margin-left: auto;
     font-weight: 600;
   }
