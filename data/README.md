@@ -44,6 +44,6 @@ revision: 0 # bump when a published fact changes
 - Shown dates, venues and cancellation or postponement statuses each need official evidence for that fact.
 - `confirmed` and `completed` need dates; `dates_tba` must not have them; `completed` must be in the past.
 - `postponed` and `cancelled` need a `status_note` summarizing the organizer's announcement.
-- A series marked `hiatus` or `ended` needs a `status_note` summarizing the organizer's announcement, and an official source that supports `status`. It can't have an edition still to come.
+- A series marked `hiatus` or `ended` needs a `status_note` summarizing the organizer's announcement, and an official source that supports `status`. All its editions must be completed or cancelled.
 - `last_verified_at` can't be later than the latest evidence check.
 - URLs must be `https://`.
