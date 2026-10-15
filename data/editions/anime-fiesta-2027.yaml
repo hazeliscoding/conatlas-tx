@@ -1,0 +1,25 @@
+id: anime-fiesta-2027
+series: anime-fiesta
+edition: '2027'
+slug: anime-fiesta-2027
+status: confirmed
+start_date: 2027-10-01
+end_date: 2027-10-03
+venue:
+  name: McAllen Convention Center
+city: McAllen
+region: south
+timezone: America/Chicago
+url: https://animefiesta.net/
+evidence:
+  - source: anime-fiesta-site
+    facts: [existence, dates, venue]
+    checked_at: 2026-10-14
+    excerpt: 'The Biggest Celebration of ALL THINGS ANIME in South Texas! OCT. 1ST - 3RD, 2027 MCALLEN CONVENTION CENTER'
+  - source: anime-fiesta-site
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'MCALLEN CONVENTION CENTER 700 Convention Center Blvd. McAllen, TX 78501'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

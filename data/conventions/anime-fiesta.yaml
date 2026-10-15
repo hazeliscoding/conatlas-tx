@@ -1,0 +1,9 @@
+id: anime-fiesta
+slug: anime-fiesta
+name: Anime Fiesta
+website: https://animefiesta.net/
+city: McAllen
+region: south
+status: active
+sources:
+  - anime-fiesta-site

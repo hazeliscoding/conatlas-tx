@@ -1,0 +1,6 @@
+id: anime-fiesta-site
+series: anime-fiesta
+url: https://animefiesta.net/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14
