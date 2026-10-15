@@ -1,0 +1,32 @@
+id: weebcon-2027
+series: weebcon
+edition: '2027'
+slug: weebcon-2027
+status: confirmed
+start_date: 2027-03-26
+end_date: 2027-03-28
+venue:
+  name: Gaylord Texan Resort
+  address: 1501 Gaylord Trail, Grapevine, TX 76051
+city: Grapevine
+region: north
+timezone: America/Chicago
+url: https://weebcon.net/
+tickets_url: https://www.tixr.com/groups/weebcon/events/weebcon-2027-185999
+evidence:
+  - source: weebcon-site
+    facts: [existence, dates, venue, tickets]
+    checked_at: 2026-10-14
+    excerpt: March 26-28, 2027 The Gaylord Texan Resort Tickets Hotel Discount Applications
+    note: The tickets_url is the target of the site's "Tickets" button; the Tixr page itself returned a captcha to a plain fetch.
+  - source: weebcon-applications
+    facts: [existence]
+    checked_at: 2026-10-14
+    excerpt: WeebCon 2027 Starts on Friday, March 26th, 2027 Grapevine, Texas, United States Hosted by WeebCon
+  - source: weebcon-applications
+    facts: [dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'Dates Mar 26, 2027 · 2:00 PM - Mar 28, 2027 · 6:00 PM(GMT-05:00) Central Time (US & Canada) Add to calendar Location 1501 Gaylord Trl 1501 Gaylord Trail, Grapevine, Texas 76051, United States'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

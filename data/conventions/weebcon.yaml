@@ -1,0 +1,10 @@
+id: weebcon
+slug: weebcon
+name: WeebCon
+website: https://weebcon.net/
+city: Grapevine
+region: north
+status: active
+sources:
+  - weebcon-site
+  - weebcon-applications
