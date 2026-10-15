@@ -1,0 +1,22 @@
+id: anime-mundo-2026
+series: anime-mundo
+edition: '2026'
+slug: anime-mundo-2026
+status: confirmed
+start_date: 2026-10-17
+end_date: 2026-10-18
+venue:
+  name: El Paso Convention Center
+city: El Paso
+region: west
+timezone: America/Denver
+url: https://animemundo.com/
+tickets_url: https://www.eventeny.com/events/ticket/?id=24529
+evidence:
+  - source: anime-mundo-site
+    facts: [existence, dates, venue, city, tickets]
+    checked_at: 2026-10-14
+    excerpt: OCTOBER 17th-18th, 2026 | EL PASO CONVENTION CENTER | EL PASO, TX
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
