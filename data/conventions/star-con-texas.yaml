@@ -1,0 +1,11 @@
+id: star-con-texas
+slug: star-con-texas
+name: Star Con Texas
+website: https://www.starcontexas.com/
+organizer: The Starving Artist
+city: Portland
+region: south
+status: active
+sources:
+  - star-con-texas-site
+  - star-con-texas-about
