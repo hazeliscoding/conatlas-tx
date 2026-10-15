@@ -1,6 +1,6 @@
 # Roadmap
 
-ConAtlas TX v0.1: the smallest genuinely excellent Texas anime convention calendar.
+ConAtlas TX v0.1.0: the smallest genuinely excellent Texas anime convention calendar.
 This file holds the decisions already made, what shipped and what is out of scope. Open work is in GitHub issues.
 Each milestone ends at a gate: tests run, results reported, and the maintainer approves before the next one starts.
 
@@ -91,6 +91,13 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-14** — With the site live, `main` is protected: changes arrive only through pull requests whose CI (`check` and `e2e`) passes, the branch must be up to date, history stays linear, and the rule binds admins too. Pull requests merge with "Rebase and merge" so each Conventional Commit stays on `main`. No approving review is required, since a solo maintainer can't approve their own pull request; the maintainer's go-ahead to merge is the review.
 - **2026-10-14** — Two listing rules refined while drafting #2. A convention for a single anime or manga franchise counts (Akatsuki Con for Naruto, Kameha Con for Dragon Ball); game and trading-card events still don't, and markets still need to call themselves anime conventions. And text in an organizer's own graphic that every visitor sees, such as Odessa Geek Fest's 2027 banner, can back a fact, transcribed and marked as coming from an image.
 - **2026-10-14** — A convention can end. Kawacon announced on October 9, 2026 that it would "cease Kawacon operations for the foreseeable future," so its series is marked `ended` rather than `hiatus`, since no return is planned. A series that has ended or is on hiatus now carries a `status_note` backed by an official source. Its pages stay, since bookmarks and calendar subscriptions point at them, but they get a banner quoting the announcement, and the series leaves the timeline's "Next dates not announced" group, the region and city lists and `llms.txt`.
+- **2026-10-15** — Versions follow [Semantic Versioning](https://semver.org/), written with all three numbers and a `v` (`v0.1.0`, never `v0.1`):
+  - **Releases:** a release is cut at a milestone gate, once the maintainer approves it. Merges and the daily deploys aren't releases, so data changes never bump the version.
+  - **Public contract:** page and feed URLs, edition ids (which are also the calendar UIDs), and the record format in `data/`. Breaking any of them is a major release from 1.0.0 on; while the version is 0.x, it bumps the minor instead.
+  - **Otherwise:** a release with new features is a minor, and one with only fixes is a patch. The Conventional Commits since the last tag say which: `!` or `BREAKING CHANGE` for breaking, `feat` for features, `fix` for fixes.
+  - **Where it lives:** the `version` field in the root `package.json` and an annotated tag on `main`. The workspace packages are private and carry no version.
+  - **Release notes:** in the GitHub release for each tag. There is no CHANGELOG file.
+  - **Not versions:** an edition's `revision`, `VERSION:2.0` in calendar files and the home page's "VOL.01" mean something else and don't follow these rules.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## Shipped

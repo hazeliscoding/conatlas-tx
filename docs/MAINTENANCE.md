@@ -52,6 +52,23 @@ Reply with what changed and close the issue from the commit (`Closes #12` in the
 
 If an organizer's site is down or the page is gone, change no facts. In a draft, set `last_attempted_at` and `updated_at` to today, and note the problem in the source's `access_notes` (evidence notes are public, access notes aren't). `pnpm data:report` lists it as a failed check until a later check succeeds; that check moves `last_attempted_at` up to the same day as `last_verified_at`. If the organizer stays unreachable for weeks, raise it in an issue rather than guessing.
 
+## Releasing
+
+A release marks a milestone you approved. How to number it is the 2026-10-15 versioning decision in [`ROADMAP.md`](../ROADMAP.md).
+
+1. Pick the number from the commits since the last tag (`git log --oneline <last tag>..origin/main`): a breaking change makes it a major (a minor while the version is 0.x), a `feat` a minor, and only `fix` a patch. The first release is `v0.1.0`.
+2. On a branch, set `version` in the root `package.json` (`0.1.0`, without the `v`), commit it as `chore(release): v0.1.0`, and merge the pull request.
+3. Tag the merged commit on `main`. Rebase and merge gives it a new hash, so don't tag the branch's copy:
+
+   ```sh
+   git switch main
+   git pull
+   git tag -a v0.1.0 -m "v0.1.0"
+   git push origin v0.1.0
+   ```
+
+4. Publish a GitHub release from the tag, with notes grouped from the commits since the last tag.
+
 ## Conduct and security reports
 
 Conduct reports arrive at the address in [`CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md); security reports through the repository's private vulnerability reporting or the same address, as [`SECURITY.md`](../SECURITY.md) describes. Neither belongs in a public issue.
