@@ -1,0 +1,7 @@
+id: kameha-con-site
+series: kameha-con
+url: https://kamehacon.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14
+access_notes: WordPress site titled "KAMEHA CON | #1 DRAGON BALL FAN CONVENTION". Dates, venue and city are in the visible header and intro text; guests are shown only as images. Ticket links go to eventeny.com (event id 28356).
