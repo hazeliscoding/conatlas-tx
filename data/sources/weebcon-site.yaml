@@ -1,0 +1,7 @@
+id: weebcon-site
+series: weebcon
+url: https://weebcon.net/
+type: official_site
+supports: [existence, dates, venue, tickets]
+last_checked: 2026-10-14
+access_notes: Its "Tickets" button links to tixr.com/groups/weebcon/events/weebcon-2027-185999, which returned a captcha to a plain fetch.
