@@ -1,0 +1,27 @@
+id: anime-san-angelo-2027
+series: anime-san-angelo
+edition: '2027'
+slug: anime-san-angelo-2027
+status: confirmed
+start_date: 2027-01-30
+end_date: 2027-01-31
+venue:
+  name: McNease Convention Center
+  address: 501 Rio Concho Dr, San Angelo, TX 76903
+city: San Angelo
+region: west
+timezone: America/Chicago
+url: https://www.animesanangelo.com/quicklink/
+evidence:
+  - source: anime-san-angelo-quicklink
+    facts: [existence, dates, venue]
+    checked_at: 2026-10-14
+    excerpt: 'Anime San Angelo January 30-31 2027 | McNeese convention center'
+    note: The organizer spells the venue "McNeese" here; its ticket page says "McNease Convention Center".
+  - source: anime-san-angelo-tickets
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'Where McNease Convention Center 501 Rio Concho Dr San Angelo, TX 76903 US When Jan 30 - 31, 2027 Saturday 10am-7pm Sunday 11am-5pm'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

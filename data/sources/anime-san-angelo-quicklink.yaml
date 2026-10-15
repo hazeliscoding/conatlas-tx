@@ -1,0 +1,7 @@
+id: anime-san-angelo-quicklink
+series: anime-san-angelo
+url: https://www.animesanangelo.com/quicklink/
+type: official_site
+supports: [existence, dates, venue]
+last_checked: 2026-10-14
+access_notes: Organizer link page listed in the site's page sitemap (page-sitemap.xml), not in the site menu. The site root currently shows only "Anime San Angelo Will Be Right Back"; /home/, /activities/ and /quicklink/ still load.
