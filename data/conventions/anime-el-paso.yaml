@@ -1,0 +1,10 @@
+id: anime-el-paso
+slug: anime-el-paso
+name: Anime El Paso
+website: https://animeelpaso.com/
+city: El Paso
+region: west
+status: active
+sources:
+  - anime-el-paso-site
+  - anime-el-paso-faq

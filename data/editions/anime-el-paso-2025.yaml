@@ -1,0 +1,26 @@
+id: anime-el-paso-2025
+series: anime-el-paso
+edition: '2025'
+slug: anime-el-paso-2025
+status: completed
+start_date: 2025-06-14
+end_date: 2025-06-15
+venue:
+  name: El Paso Convention Center
+  address: 1 Civic Center Plaza, El Paso, TX 79901
+city: El Paso
+region: west
+timezone: America/Denver
+url: https://animeelpaso.com/
+evidence:
+  - source: anime-el-paso-faq
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: The 2025 Anime El Paso dates are June 14-15 at the El Paso Convention Center in downtown El Paso, Texas.
+  - source: anime-el-paso-site
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: EVENT LOCATION El Paso Convention Center 1 Civic Center Plaza El Paso, TX 79901
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
