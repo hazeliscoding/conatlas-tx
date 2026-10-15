@@ -1,0 +1,24 @@
+id: yumicon-2027
+series: yumicon
+edition: '2027'
+slug: yumicon-2027
+status: confirmed
+start_date: 2027-05-28
+end_date: 2027-05-30
+venue:
+  name: San Antonio Shrine Auditorium
+  address: 901 North Loop 1604 West, San Antonio, TX 78232
+city: San Antonio
+region: south
+timezone: America/Chicago
+url: https://www.yumicon.com/
+tickets_url: https://tickets.eventology.io/e/yumicon-2027/tickets
+evidence:
+  - source: yumicon-2027-tickets
+    facts: [existence, dates, venue, city, tickets]
+    checked_at: 2026-10-14
+    excerpt: YUMICON 2027 May 28, 2027 to May 30, 2027 San Antonio Shrine Auditorium 901 North Loop 1604 West San Antonio, TX 78232
+    note: The same page lists hours "Friday, May 28th - 2:00pm - 9:00pm | Saturday, May 29th - 10:00am - 8:00pm | Sunday, May 30th - 10:30am - 4:30pm" and describes the event as "ANIME CONVENTION".
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

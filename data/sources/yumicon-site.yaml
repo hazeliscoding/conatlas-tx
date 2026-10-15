@@ -1,0 +1,7 @@
+id: yumicon-site
+series: yumicon
+url: https://www.yumicon.com/
+type: official_site
+supports: [tickets]
+last_checked: 2026-10-14
+access_notes: Script-rendered Square Online site that also promotes the organizer's other events (MochiFest, PokeFestSA, OtakuNights and others). YUMiCON dates and venue are not in its text; its "BADGES!" and "EVENT TICKETS" buttons go to tickets.eventology.io/e/yumicon-2027.

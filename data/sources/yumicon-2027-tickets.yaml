@@ -1,0 +1,7 @@
+id: yumicon-2027-tickets
+series: yumicon
+url: https://tickets.eventology.io/e/yumicon-2027/tickets
+type: official_announcement
+supports: [existence, dates, venue, city, tickets]
+last_checked: 2026-10-14
+access_notes: Organizer ticket page, linked as "BADGES!" and "EVENT TICKETS" from yumicon.com; its event title links back to yumicon.com. Venue and address show in the page header; the Event Details section reads "ANIME CONVENTION".
