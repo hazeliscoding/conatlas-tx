@@ -1,0 +1,6 @@
+id: anime-sekai-location
+series: anime-sekai
+url: https://animesekaitx.com/location.html
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14

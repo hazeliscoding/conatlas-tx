@@ -1,0 +1,26 @@
+id: anime-sekai-2025
+series: anime-sekai
+edition: '2025'
+slug: anime-sekai-2025
+status: completed
+start_date: 2025-10-04
+end_date: 2025-10-05
+venue:
+  name: Abilene Convention Center
+  address: 1100 N 6th St, Abilene, TX 79601
+city: Abilene
+region: west
+timezone: America/Chicago
+url: https://animesekaitx.com/location.html
+evidence:
+  - source: anime-sekai-location
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'Anime Sekai 2025 | At the Abilene Convention Center. 1100 N 6th St, Abilene, TX 79601 FLOOR PLAN & HOURS Dealers Room Early Access for VIP at 9:00 AM Satruday, Oct 4: 10:00 AM - 6:00 PM Sunday, Oct 5: 10:00 AM - 4:00 PM'
+  - source: anime-sekai-site
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'All this takes place at the Abilene Convention Center in Abilene, Texas.'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

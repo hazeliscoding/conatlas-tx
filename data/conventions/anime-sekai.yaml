@@ -1,0 +1,11 @@
+id: anime-sekai
+slug: anime-sekai
+name: Anime Sekai
+website: https://animesekaitx.com/
+organizer: Anime Sekai LLC
+city: Abilene
+region: west
+status: active
+sources:
+  - anime-sekai-site
+  - anime-sekai-location
