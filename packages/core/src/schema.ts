@@ -74,6 +74,8 @@ export const SeriesSchema = z.strictObject({
   city: text.optional(),
   region: z.enum(REGIONS).optional(),
   status: z.enum(SERIES_STATUSES),
+  /** For a series on hiatus or ended: a summary of the organizer's announcement. */
+  status_note: text.optional(),
   sources: z.array(id).min(1),
 });
 

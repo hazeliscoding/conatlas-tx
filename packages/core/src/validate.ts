@@ -36,6 +36,7 @@ export function validateDataset(data: Dataset, today: IsoDate): Issue[] {
   }
 
   const seriesIds = new Set(data.series.map((s) => s.id));
+  const seriesStatus = new Map(data.series.map((s) => [s.id, s.status]));
   const sources = new Map(data.sources.map((s) => [s.id, s]));
 
   for (const source of data.sources) {
@@ -46,6 +47,24 @@ export function validateDataset(data: Dataset, today: IsoDate): Issue[] {
   }
 
   for (const series of data.series) {
+    if (series.status !== 'active') {
+      const record = `conventions/${series.id}`;
+      if (!series.status_note) {
+        error(
+          record,
+          `a series marked ${series.status} needs a status_note summarizing the announcement`,
+        );
+      }
+      const backed = series.sources.some((sourceId) => {
+        const source = sources.get(sourceId);
+        return (
+          source &&
+          OFFICIAL_SOURCE_TYPES.includes(source.type) &&
+          source.supports.includes('status')
+        );
+      });
+      if (!backed) error(record, `${series.status} status is not backed by an official source`);
+    }
     for (const sourceId of series.sources) {
       const source = sources.get(sourceId);
       if (!source) error(`conventions/${series.id}`, `unknown source "${sourceId}"`);
@@ -62,6 +81,17 @@ export function validateDataset(data: Dataset, today: IsoDate): Issue[] {
   for (const edition of data.editions) {
     const record = `editions/${edition.id}`;
     if (!seriesIds.has(edition.series)) error(record, `unknown series "${edition.series}"`);
+    const status = seriesStatus.get(edition.series);
+    if (
+      status &&
+      status !== 'active' &&
+      ['confirmed', 'dates_tba', 'postponed'].includes(edition.status)
+    ) {
+      error(
+        record,
+        `its series is marked ${status}, so this edition must be completed or cancelled`,
+      );
+    }
     const key = `${edition.series}/${edition.edition}`;
     const first = editionKeys.get(key);
     if (first) error(record, `same series and edition as "${first}"`);

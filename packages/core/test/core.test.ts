@@ -152,6 +152,27 @@ describe('validateDataset', () => {
     ]);
   });
 
+  it('needs an announcement for a series that has ended, and nothing still to come', () => {
+    const seriesErrors = (patch: Partial<Dataset['series'][number]>) =>
+      validateDataset({ ...base, series: base.series.map((s) => ({ ...s, ...patch })) }, TODAY)
+        .filter((i) => i.level === 'error')
+        .map((i) => `${i.record}: ${i.message}`);
+    expect(seriesErrors({ status: 'ended' })).toEqual([
+      'conventions/lone-star-anime-fest: a series marked ended needs a status_note summarizing the announcement',
+      `${ed2026}: its series is marked ended, so this edition must be completed or cancelled`,
+      'editions/lone-star-anime-fest-2027: its series is marked ended, so this edition must be completed or cancelled',
+    ]);
+    expect(
+      seriesErrors({
+        status: 'hiatus',
+        status_note: 'Taking a year off.',
+        sources: ['lone-star-anime-fest-listing'],
+      }),
+    ).toContain(
+      'conventions/lone-star-anime-fest: hiatus status is not backed by an official source',
+    );
+  });
+
   it('warns, not fails, when a confirmed edition has ended', () => {
     const issues = validateDataset(base, '2026-11-01');
     expect(issues).toEqual([
