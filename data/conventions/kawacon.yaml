@@ -1,0 +1,9 @@
+id: kawacon
+slug: kawacon
+name: Kawacon
+website: https://www.kawaconsa.com/
+organizer: Kawacon, LLC
+status: active
+sources:
+  - kawacon-site
+  - kawacon-faq
