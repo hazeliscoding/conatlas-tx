@@ -1,0 +1,32 @@
+id: anime-showdown-lewisville-2026
+series: anime-showdown
+edition: Lewisville 2026
+slug: anime-showdown-lewisville-2026
+name: 'Anime Showdown: Dallas'
+status: confirmed
+start_date: 2026-11-27
+end_date: 2026-11-29
+venue:
+  name: NTX Arena
+  address: 2401 S Stemmons Fwy, Suite 4000, Lewisville, TX 75067
+city: Lewisville
+region: north
+timezone: America/Chicago
+url: https://animeshowdown.com/lewisville-2026/
+tickets_url: https://www.myticketing.pro/ticket/animeshowdown-dallas
+evidence:
+  - source: anime-showdown-lewisville-2026
+    facts: [existence, city]
+    checked_at: 2026-10-14
+    excerpt: Nov. 27-29, 2026 🎯 Lewisville, TX
+  - source: anime-showdown-dallas-event
+    facts: [dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'Where NTX Arena 2401 S Stemmons Fwy, Suite 4000 Lewisville, TX 75067 US When Nov 27 - 29, 2026 Friday: 5 - 8pm Saturday: 10am - 7pm Sunday: 11am - 5pm'
+  - source: anime-showdown-dallas-tickets
+    facts: [dates, venue, tickets]
+    checked_at: 2026-10-14
+    excerpt: NTX Arena Anime Showdown - Dallas Nov 27 - 29, 2026
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

@@ -1,0 +1,7 @@
+id: anime-showdown-dallas-tickets
+series: anime-showdown
+url: https://www.myticketing.pro/ticket/animeshowdown-dallas
+type: official_site
+supports: [dates, venue, tickets]
+last_checked: 2026-10-14
+access_notes: Organizer ticket page on My Ticketing Pro, linked as "Tickets" from animeshowdown.com/lewisville-2026/. The header (venue, name, dates) is plain HTML; the ticket types load by script and were not checked.
