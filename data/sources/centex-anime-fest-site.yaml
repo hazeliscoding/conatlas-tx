@@ -1,0 +1,7 @@
+id: centex-anime-fest-site
+series: centex-anime-fest
+url: https://comanchecon.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14
+access_notes: Organizer homepage (footer "Presented by Comanche Con"). Facebook and Instagram accounts linked from it were not checked.
