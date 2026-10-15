@@ -1,0 +1,28 @@
+id: centex-anime-fest-2026
+series: centex-anime-fest
+edition: '2026'
+slug: centex-anime-fest-2026
+status: confirmed
+start_date: 2026-10-16
+end_date: 2026-10-17
+venue:
+  name: Comanche City Park
+  address: 1200 Comanche Trail Road, Comanche, Texas 76442
+city: Comanche
+region: central
+timezone: America/Chicago
+url: https://comanchecon.com/
+tickets_url: https://comanchecon.com/tickets
+evidence:
+  - source: centex-anime-fest-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'OCTOBER 16–17, 2026 · COMANCHE, TX. Two days of cosplay, con culture, and community! Friday night indoors at Homestead Hall, then Saturday takes over 30 acres of Comanche City Park.'
+    note: The FAQ says the festival itself is Saturday, October 17, 10am-6pm, with a Friday, October 16 Vendor Sneak Peek at Homestead Hall 4-7pm; the homepage advertises both days.
+  - source: centex-anime-fest-tickets
+    facts: [venue, city, tickets]
+    checked_at: 2026-10-14
+    excerpt: 'Sat, Oct 17, 2026 10:00 AM - 6:00 PM Comanche City Park ... Venue Details 1200 Comanche Trail Road Comanche,Texas76442'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

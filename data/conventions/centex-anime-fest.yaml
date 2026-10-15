@@ -1,0 +1,11 @@
+id: centex-anime-fest
+slug: centex-anime-fest
+name: CenTex Anime Fest
+website: https://comanchecon.com/
+organizer: Comanche Con
+city: Comanche
+region: central
+status: active
+sources:
+  - centex-anime-fest-site
+  - centex-anime-fest-tickets
