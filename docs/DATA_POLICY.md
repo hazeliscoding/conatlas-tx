@@ -8,7 +8,8 @@ A ticketed or free public event in Texas whose main programming is anime, manga 
 
 Some cases are decided:
 
-- **Single-franchise events and markets** are listed only when the organizer calls them an anime convention or anime festival and they have convention programming. A game or trading-card fan con, a fan-art market and a vendor-only market are not listed.
+- **Single-franchise events** are listed when the franchise is an anime or manga and the event has convention programming, such as a Naruto or Dragon Ball convention. A game or trading-card fan con is not listed.
+- **Markets** are listed only when the organizer calls them an anime convention or anime festival and they have convention programming. A fan-art market or a vendor-only market is not.
 - **Age-limited events** are not listed for now: 18+ events, because the site can't yet label them, and teen-only library programs, which aren't open to the public.
 - **Dormant conventions** are not added. A new convention needs an edition held this calendar year or last, or an announced one. One that comes back is added then.
 
@@ -16,7 +17,7 @@ Some cases are decided:
 
 - **Official sources only.** Every published fact (that an edition exists, its dates, venue, city, status or ticket link) comes from the organizer: their website, an official announcement, an official feed, or the organizer's own social account.
 - **Third-party listings are leads.** Aggregators, news articles and ticket resellers can point us at a convention, but never back a published fact.
-- **Quoted evidence.** Each edition records which official page backs which facts, the day it was checked, and a short excerpt copied from that page. The site shows all of it in the convention's verification panel.
+- **Quoted evidence.** Each edition records which official page backs which facts, the day it was checked, and a short excerpt copied from that page. When the organizer states a fact only in a graphic every visitor sees, such as a homepage banner, the excerpt transcribes the graphic's text and the evidence says it comes from an image. The site shows all of it in the convention's verification panel.
 - **Nothing inferred.** Dates are never guessed from a past year's pattern, and a venue is never assumed.
 
 ## Editions and dates
