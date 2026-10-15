@@ -1,0 +1,18 @@
+id: star-con-texas-2027
+series: star-con-texas
+edition: '2027'
+slug: star-con-texas-2027
+status: dates_tba
+announced_window: '2027'
+city: Portland
+region: south
+timezone: America/Chicago
+url: https://www.starcontexas.com/
+evidence:
+  - source: star-con-texas-site
+    facts: [existence, city]
+    checked_at: 2026-10-14
+    excerpt: 'STAR CON TEXAS 2027 Dates will be announced soon DATE: 2027 LOCATION: 2000 Billy G Webb, Portland, TX 78374 TIME: TBD'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0

@@ -1,0 +1,7 @@
+id: star-con-texas-about
+series: star-con-texas
+url: https://www.starcontexas.com/aboutus
+type: official_site
+supports: [existence]
+last_checked: 2026-10-14
+access_notes: Square Online site rendered by script; plain fetches show only the title, the text is in the page's embedded data.
