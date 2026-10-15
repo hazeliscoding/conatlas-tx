@@ -1,0 +1,6 @@
+id: odessa-geek-fest-site
+series: odessa-geek-fest
+url: https://www.odessageekfest.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14

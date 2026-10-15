@@ -1,0 +1,29 @@
+id: odessa-geek-fest-2026
+series: odessa-geek-fest
+edition: '2026'
+slug: odessa-geek-fest-2026
+status: completed
+start_date: 2026-07-11
+end_date: 2026-07-12
+venue:
+  name: Ector County Coliseum
+city: Odessa
+region: west
+timezone: America/Chicago
+url: https://www.odessageekfest.com/
+evidence:
+  - source: odessa-geek-fest-site
+    facts: [existence, dates, venue]
+    checked_at: 2026-10-14
+    excerpt: 'Odessa Geek Fest July 11th - 12th 2026 Ector County Coliseum'
+  - source: odessa-geek-fest-site
+    facts: [city]
+    checked_at: 2026-10-14
+    excerpt: "Odessa, TX's premier Anime, Comic, and Pop Culture convention."
+  - source: odessa-geek-fest-about
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'Besides the show, we are located off Andrews Highway, down the street from the mall, on the western side of Odessa, Texas. Ector County Coliseum is just a short drive from most hotels in the area'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
