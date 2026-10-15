@@ -1,0 +1,7 @@
+id: moricon-2025-event
+series: moricon
+url: https://www.thewoodlandstownship-tx.gov/Events-directory/2025/September/091325-MoriCon
+type: official_announcement
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14
+access_notes: The Woodlands Township event directory page; plain curl gets 403, a normal fetch works.

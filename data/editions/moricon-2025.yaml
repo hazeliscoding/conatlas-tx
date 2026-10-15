@@ -1,0 +1,30 @@
+id: moricon-2025
+series: moricon
+edition: '2025'
+slug: moricon-2025
+status: completed
+start_date: 2025-09-13
+end_date: 2025-09-13
+venue:
+  name: The Recreation Center at Rob Fleming Park
+  address: 6464 Creekside Forest Drive, The Woodlands, TX 77389
+city: The Woodlands
+region: gulf-coast
+timezone: America/Chicago
+url: https://www.thewoodlandstownship-tx.gov/Events-directory/2025/September/091325-MoriCon
+evidence:
+  - source: moricon-2025-event
+    facts: [existence]
+    checked_at: 2026-10-14
+    excerpt: 'Join the fun at MoriCon, the first-ever anime convention hosted by The Woodlands Township’s Parks and Recreation Department.'
+  - source: moricon-2025-event
+    facts: [dates]
+    checked_at: 2026-10-14
+    excerpt: 'Saturday, September 13, 2025 | 09:30 AM - 07:00 PM'
+  - source: moricon-2025-event
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'The Recreation Center at Rob Fleming Park, 6464 Creekside Forest Drive, The Woodlands, TX, 77389'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
