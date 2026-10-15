@@ -1,0 +1,6 @@
+id: kawacon-site
+series: kawacon
+url: https://www.kawaconsa.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14

@@ -1,0 +1,26 @@
+id: kawacon-2026
+series: kawacon
+edition: '2026'
+slug: kawacon-2026
+status: completed
+start_date: 2026-07-03
+end_date: 2026-07-05
+venue:
+  name: Henry B. Gonzalez Convention Center
+  address: 900 E. Market Street, San Antonio, TX 78205
+city: San Antonio
+region: south
+timezone: America/Chicago
+url: https://www.kawaconsa.com/
+evidence:
+  - source: kawacon-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: July 3rd, 2026 - July 5th, 2026 Henry B. Gonzalez Convention Center - San Antonio, TX
+  - source: kawacon-faq
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: Kawacon is held in San Antonio, Texas at the Henry B. Gonzalez Convention Center. The address is 900 E. Market Street, San Antonio, TX 78205.
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
