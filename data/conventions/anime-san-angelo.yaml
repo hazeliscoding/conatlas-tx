@@ -1,0 +1,11 @@
+id: anime-san-angelo
+slug: anime-san-angelo
+name: Anime San Angelo
+website: https://www.animesanangelo.com/
+organizer: Galactic Events
+city: San Angelo
+region: west
+status: active
+sources:
+  - anime-san-angelo-quicklink
+  - anime-san-angelo-tickets

@@ -1,0 +1,7 @@
+id: anime-san-angelo-tickets
+series: anime-san-angelo
+url: https://www.myticketing.pro/event/asa
+type: official_announcement
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14
+access_notes: Organizer ticket page, linked from animesanangelo.com/quicklink/ (Cosplay Contest, Volunteer, Panelist and Press sign-up links) and the /home/ menu (Cosplay Contest, Panelist App, Press Pass, Volunteer App); the site's Buy Tickets buttons currently link nowhere. On 2026-10-14 its Get Tickets button was commented out and no ticket types were listed. Its About Us text is written by the organizer, Galactic Events.
