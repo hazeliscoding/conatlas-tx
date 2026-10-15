@@ -11,7 +11,7 @@ const PAGES = {
   saved: 'saved/',
   contribute: 'contribute/?con=ushicon-2027',
   region: 'regions/gulf-coast/',
-  regionEmpty: 'regions/west-texas/',
+  regionWest: 'regions/west-texas/',
   city: 'cities/houston/',
 };
 // Two saved conventions, so the Saved page and the Save buttons show their saved state.

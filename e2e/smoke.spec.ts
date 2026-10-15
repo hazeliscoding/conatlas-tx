@@ -53,7 +53,8 @@ test('filters narrow the timeline and round-trip through the URL', async ({ page
     expect(region).toBe('gulf-coast');
   }
 
-  await page.goto('./?region=west');
+  // A region plus a city from another region matches nothing, whatever the data holds.
+  await page.goto('./?region=west&city=Houston');
   await expect(page.locator('[data-filter-empty]')).toBeVisible();
   await page.getByRole('button', { name: 'Clear filters' }).click();
   await expect(page).toHaveURL(/:\d+\/$/);
