@@ -1,0 +1,26 @@
+id: akatsuki-con-2026
+series: akatsuki-con
+edition: 2026
+slug: akatsuki-con-2026
+status: completed
+start_date: 2026-04-11
+end_date: 2026-04-12
+venue:
+  name: Pasadena Convention Center
+city: Pasadena
+region: gulf-coast
+timezone: America/Chicago
+url: https://akatsukicon.com/
+evidence:
+  - source: akatsuki-con-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: April 11-12, 2026 Pasadena, TX April 11-12, 2026 Pasadena Convention Center
+  - source: akatsuki-con-instagram
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-14
+    excerpt: Join the first All Naruto Convention in Texas April 11th-12th, 2026 at the Pasadena, Tx Convention Center!
+    note: Instagram bio of the organizer account.
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
