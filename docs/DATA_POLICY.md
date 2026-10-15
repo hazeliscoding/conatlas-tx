@@ -25,6 +25,7 @@ Some cases are decided:
 - A recurring convention gets a new edition only after its organizer announces it.
 - An announced edition without dates is shown as "Dates not announced" and never placed on the calendar grid. If the organizer gave a rough window ("Summer 2027"), we repeat only their words.
 - When a series has no announced next edition, the site keeps its most recent edition, marked as past, and says the next dates aren't announced.
+- When the organizer announces a convention has ended or is on hiatus, its pages stay, with a banner quoting the announcement and linking to it, and it leaves the timeline, the region and city lists and `llms.txt`. If it comes back, it's marked active again.
 - Postponed and cancelled editions keep their page with a summary of the organizer's announcement.
 - Dates are calendar dates (`YYYY-MM-DD`), the days the organizer advertises. Texas venues use Central time, except far West Texas (El Paso), which uses Mountain time.
 
