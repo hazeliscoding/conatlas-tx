@@ -1,0 +1,7 @@
+id: anime-wonder-site
+series: anime-wonder
+url: https://animewonderfest.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-14
+access_notes: The site answers HTTP 503 with a "coming soon" maintenance page; its visible "2026 Schedule" block lists the dates. Plain fetch tools that stop on a 503 miss it.
