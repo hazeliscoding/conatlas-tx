@@ -1,0 +1,25 @@
+id: colossalcon-texas-2027
+series: colossalcon-texas
+edition: '2027'
+slug: colossalcon-texas-2027
+status: confirmed
+start_date: 2027-08-20
+end_date: 2027-08-22
+venue:
+  name: Kalahari Resorts & Conventions
+city: Round Rock
+region: central
+timezone: America/Chicago
+url: https://colossalcontexas.com/
+evidence:
+  - source: colossalcon-texas-site
+    facts: [existence, dates]
+    checked_at: 2026-10-14
+    excerpt: 'Colossalcon Texas- August 20th - 22nd 2027 - Round Rock, TX'
+  - source: colossalcon-texas-location
+    facts: [venue, city]
+    checked_at: 2026-10-14
+    excerpt: 'Colossalcon Texas is held at: Kalahari Resorts & Conventions 3001 Kalahari Blvd. Round Rock, TX 78665'
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
