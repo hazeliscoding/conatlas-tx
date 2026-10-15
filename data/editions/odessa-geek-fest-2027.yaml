@@ -1,0 +1,24 @@
+id: odessa-geek-fest-2027
+series: odessa-geek-fest
+edition: '2027'
+slug: odessa-geek-fest-2027
+status: confirmed
+start_date: 2027-07-10
+end_date: 2027-07-11
+city: Odessa
+region: west
+timezone: America/Chicago
+url: https://www.odessageekfest.com/
+evidence:
+  - source: odessa-geek-fest-site
+    facts: [existence, dates]
+    checked_at: 2026-10-14
+    excerpt: 'Odessa Geek Fest July 10th - 11th 2027 Brought to you by SukeBAN Entertainment'
+    note: Transcribed from the homepage banner image ("Website Banner 2027.png"), which every visitor sees; the page's text header still shows the 2026 dates. No 2027 venue is stated.
+  - source: odessa-geek-fest-site
+    facts: [city]
+    checked_at: 2026-10-14
+    excerpt: "Odessa, TX's premier Anime, Comic, and Pop Culture convention."
+last_verified_at: 2026-10-14
+updated_at: 2026-10-14
+revision: 0
