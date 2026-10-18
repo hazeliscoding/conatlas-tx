@@ -60,6 +60,7 @@ function eventText(edition: Edition, details: EventDetails) {
     location: venue ? `${venue.name}, ${place}` : place,
     description: [
       edition.status_note,
+      edition.min_age && `Ages ${edition.min_age} and up`,
       `Official site: ${edition.url}`,
       `Dates, venue and sources: ${details.pageUrl}`,
     ]
