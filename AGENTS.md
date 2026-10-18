@@ -50,4 +50,5 @@ Everything must run the same in PowerShell and bash: use `node` scripts, never b
 
 - Conventional Commits, small and atomic. No AI attribution or co-author trailers.
 - `main` is protected: every change reaches it through a pull request whose CI (`check` and `e2e`) passes, with no direct pushes, even by admins. Work on a branch named for the change (`data/add-conventions`, `docs/listing-rules`), one pull request per issue or per change. Merge with **Rebase and merge** so each commit lands on `main` as written.
+- Tagging and publishing a release happen only at a milestone gate the maintainer approved. Versioning rules are in `ROADMAP.md` (2026-10-18), steps in `docs/MAINTENANCE.md`.
 - Do not push a branch, open or merge a pull request, create or change the GitHub repo, or deploy without the maintainer's explicit go-ahead. A "push" covers pushing the branch and opening its pull request; merging needs its own go-ahead.

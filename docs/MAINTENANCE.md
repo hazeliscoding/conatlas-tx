@@ -52,6 +52,24 @@ Reply with what changed and close the issue from the commit (`Closes #12` in the
 
 If an organizer's site is down or the page is gone, change no facts. In a draft, set `last_attempted_at` and `updated_at` to today, and note the problem in the source's `access_notes` (evidence notes are public, access notes aren't). `pnpm data:report` lists it as a failed check until a later check succeeds; that check moves `last_attempted_at` up to the same day as `last_verified_at`. If the organizer stays unreachable for weeks, raise it in an issue rather than guessing.
 
+## Releasing
+
+A release marks a milestone you approved; the numbering rules are the 2026-10-18 versioning decision in [`ROADMAP.md`](../ROADMAP.md).
+
+1. Pick the number. List the commits since the last tag with `git log --oneline <last tag>..origin/main`. A milestone release bumps the minor, and a fixes-only release between milestones bumps the patch. Look for anything that changes a page or feed URL, an edition id or the `data/` format: that's a breaking change, and the notes must open with it.
+2. Write the notes: what's new for visitors first, then what changed for people who subscribe to feeds or reuse the data, then the milestones covered. Link the site.
+3. Tag the merged commit on `main` (Rebase and merge gives a branch's commits new hashes, so never tag the branch) and publish the release:
+
+   ```sh
+   git switch main
+   git pull
+   git tag -a v0.2.0 -m "v0.2.0"
+   git push origin v0.2.0
+   gh release create v0.2.0 --title "v0.2.0 · <title>" --notes-file <notes.md>
+   ```
+
+4. Update the version in the status line of `README.md` in the next pull request.
+
 ## Conduct and security reports
 
 Conduct reports arrive at the address in [`CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md); security reports through the repository's private vulnerability reporting or the same address, as [`SECURITY.md`](../SECURITY.md) describes. Neither belongs in a public issue.
