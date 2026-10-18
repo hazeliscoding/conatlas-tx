@@ -1,5 +1,5 @@
 ---
-// Region and city chips that filter `[data-listing]` elements in place; a `[data-filter-group]`
+// Region, city and age chips that filter `[data-listing]` elements in place; a `[data-filter-group]`
 // hides once all its listings are hidden. Shown only when JavaScript runs (global.css), so a visitor without
 // JavaScript sees the full page and no dead controls.
 import { REGIONS, REGION_NAMES } from '@conatlas/core';
@@ -48,6 +48,20 @@ const { cities = [], total } = Astro.props;
       </div>
     </div>
   )}
+  <div class="filters__row" role="group" aria-labelledby="filter-age">
+    <span class="filters__label" id="filter-age">
+      Age
+    </span>
+    <div class="filters__scroll">
+      <label class="tag">
+        <input type="checkbox" name="hide" value="adult" data-label="Hide 18+" />
+        <span class="tag__check">
+          <Icon name="check" size={14} />
+        </span>
+        <span>Hide 18+</span>
+      </label>
+    </div>
+  </div>
   <div class="filters__applied">
     <span class="filters__icon" data-applied-only hidden>
       <Icon name="sliders-horizontal" size={16} />
@@ -90,12 +104,14 @@ const { cities = [], total } = Astro.props;
     const update = () => {
       const regions = checked('region').map((i) => i.value);
       const cities = checked('city').map((i) => i.value);
+      const hideAdult = checked('hide').length > 0;
       // A multi-day event can appear more than once (calendar agenda), so count ids.
       const shown = new Set<string>();
       for (const card of cards) {
         const match =
           (!regions.length || regions.includes(card.dataset.region!)) &&
-          (!cities.length || cities.includes(card.dataset.city!));
+          (!cities.length || cities.includes(card.dataset.city!)) &&
+          !(hideAdult && card.dataset.minAge);
         card.hidden = !match;
         // Cards inside [data-uncounted] (the calendar's undated list) filter but aren't counted.
         if (match && !card.closest('[data-uncounted]')) shown.add(card.dataset.listing!);
@@ -120,7 +136,7 @@ const { cities = [], total } = Astro.props;
         link.search = search;
       });
 
-      const inputs = [...checked('region'), ...checked('city')];
+      const inputs = [...checked('region'), ...checked('city'), ...checked('hide')];
       appliedOnly.forEach((el) => (el.hidden = inputs.length === 0));
       applied.replaceChildren(
         ...inputs.map((input) => {

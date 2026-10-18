@@ -31,7 +31,7 @@ const variant = (e: Listing) =>
       : `c${colors.get(e.id)}`;
 // Name and city first, in the order they're shown, so the visible text starts the link's name.
 const label = (e: Listing) =>
-  `${e.displayName}, ${e.city}, ${formatDateRange(e.start_date!, e.end_date!)}${e.status === 'cancelled' ? ', cancelled' : e.status === 'postponed' ? ', postponed' : ''}`;
+  `${e.displayName}, ${e.city}, ${formatDateRange(e.start_date!, e.end_date!)}${e.status === 'cancelled' ? ', cancelled' : e.status === 'postponed' ? ', postponed' : ''}${e.min_age ? `, ages ${e.min_age}+` : ''}`;
 
 const agenda = weeks
   .flatMap((w) => w.days)
@@ -93,6 +93,7 @@ const agenda = weeks
             data-listing={seg.item.id}
             data-region={seg.item.region}
             data-city={seg.item.city}
+            data-min-age={seg.item.min_age}
           >
             {seg.item.status === 'cancelled' && (
               <Icon name="circle-x" size={12} strokeWidth={2.2} />
@@ -145,6 +146,7 @@ const agenda = weeks
             data-listing={e.id}
             data-region={e.region}
             data-city={e.city}
+            data-min-age={e.min_age}
           >
             {e.status === 'cancelled' && <Icon name="circle-x" size={14} strokeWidth={2.2} />}
             {e.status === 'postponed' && <Icon name="triangle-alert" size={14} strokeWidth={2.2} />}
