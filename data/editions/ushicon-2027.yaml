@@ -12,6 +12,7 @@ city: Austin
 region: central
 timezone: America/Chicago
 url: https://www.ushicon.com/
+min_age: 18
 evidence:
   - source: ushicon-site
     facts: [existence, dates]
@@ -22,6 +23,11 @@ evidence:
     facts: [venue, city]
     checked_at: 2026-10-17
     excerpt: Ushicon Location Wyndham Garden Austin 3401 S I-35 Frontage Rd, Austin, TX 78741
+  - source: ushicon-site
+    facts: [age]
+    checked_at: 2026-10-18
+    excerpt: Ushicon is a convention for fans 18 and up. This is to provide an event where mature anime fans can enjoy their hobby away from the kiddos for a weekend.
+    note: Page text in the About Us section of the homepage.
 last_verified_at: 2026-10-17
-updated_at: 2026-10-17
-revision: 0
+updated_at: 2026-10-18
+revision: 1
