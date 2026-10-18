@@ -1,0 +1,32 @@
+id: tsumicon-texas-2026
+series: tsumicon-texas
+edition: '2026'
+slug: tsumicon-texas-2026
+status: confirmed
+start_date: 2026-10-16
+end_date: 2026-10-18
+venue:
+  name: Houston Marriott Westchase
+  address: 2900 Briarpark Dr, Houston, TX 77042
+city: Houston
+region: gulf-coast
+timezone: America/Chicago
+url: https://tsumicon.com/
+min_age: 18
+evidence:
+  - source: tsumicon-texas-site
+    facts: [existence, dates]
+    checked_at: 2026-10-18
+    excerpt: OCTOBER 16–18, 2026 • Houston Marriott Westchase
+    note: Page header, above "TsumiCon Texas 2026 - North America's Premier 18+ Anime Convention".
+  - source: tsumicon-texas-hotel
+    facts: [venue, city]
+    checked_at: 2026-10-18
+    excerpt: Houston Marriott Westchase 2900 Briarpark Dr, Houston, TX 77042
+  - source: tsumicon-texas-policies
+    facts: [age]
+    checked_at: 2026-10-18
+    excerpt: TsumiCon is an 18+ event. No one under 18 is admitted — there are no exceptions, including when accompanied by a parent or legal guardian.
+last_verified_at: 2026-10-18
+updated_at: 2026-10-18
+revision: 0

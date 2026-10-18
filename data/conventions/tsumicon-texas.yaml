@@ -1,0 +1,11 @@
+id: tsumicon-texas
+slug: tsumicon-texas
+name: TsumiCon Texas
+website: https://tsumicon.com/
+city: Houston
+region: gulf-coast
+status: active
+sources:
+  - tsumicon-texas-site
+  - tsumicon-texas-hotel
+  - tsumicon-texas-policies

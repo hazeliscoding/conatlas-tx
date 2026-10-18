@@ -1,0 +1,7 @@
+id: tsumicon-texas-hotel
+series: tsumicon-texas
+url: https://tsumicon.com/#hotel
+type: official_site
+supports: [venue, city]
+last_checked: 2026-10-18
+access_notes: Hotel & Venue Guide section of the site. Renders in the browser.
