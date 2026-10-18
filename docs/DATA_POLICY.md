@@ -4,12 +4,12 @@ ConAtlas TX lists anime conventions in Texas. This page says what gets listed, w
 
 ## What gets listed
 
-A ticketed or free public event in Texas whose main programming is anime, manga or closely related fandom: artist alleys, cosplay, panels, screenings. A general comic con is listed only when its organizer describes it as an anime convention. Store meetups and private club nights are not listed.
+A ticketed or free public event in Texas whose main programming is anime, manga or closely related fandom: artist alleys, cosplay, panels, screenings. A general comic con is listed only when its organizer describes it as an anime convention; billing anime as one of a few headline themes, as in an "Anime, K-Pop and Gaming Convention", counts. Store meetups and private club nights are not listed.
 
 Some cases are decided:
 
 - **Single-franchise events** are listed when the franchise is an anime or manga and the event has convention programming, such as a Naruto or Dragon Ball convention. A game or trading-card fan con is not listed.
-- **Markets** are listed only when the organizer calls them an anime convention or anime festival and they have convention programming. A fan-art market or a vendor-only market is not.
+- **Markets** are listed only when the organizer calls them an anime convention or anime festival and they have convention programming, as with an "Anime + Food Festival" that has cosplay contests and stage entertainment. A fan-art market or a vendor-only market is not.
 - **Age-limited events** such as 18+ conventions are listed with their age limit, which the site shows as a label ("Ages 18+"). The limit must come from the organizer. An event where only some panels or an after party are 18+ isn't age-limited. Teen-only library programs aren't listed, because they aren't open to the public.
 - **Dormant conventions** are not added. A new convention needs an edition held this calendar year or last, or an announced one. One that comes back is added then.
 
@@ -18,7 +18,7 @@ Some cases are decided:
 - **Official sources only.** Every published fact (that an edition exists, its dates, venue, city, status, ticket link or age limit) comes from the organizer: their website, an official announcement, an official feed, or the organizer's own social account.
 - **Third-party listings are leads.** Aggregators, news articles and ticket resellers can point us at a convention, but never back a published fact.
 - **Quoted evidence.** Each edition records which official page backs which facts, the day it was checked, and a short excerpt copied from that page. When the organizer states a fact only in a graphic every visitor sees, such as a homepage banner, the excerpt transcribes the graphic's text and the evidence says it comes from an image. The site shows all of it in the convention's verification panel.
-- **Nothing inferred.** Dates are never guessed from a past year's pattern, and a venue is never assumed.
+- **Nothing inferred.** Dates are never guessed from a past year's pattern, and a venue is never assumed. When an organizer's recent post gives a date without the year, the year is the one the post was made in, and only if a weekday the post gives matches it; the evidence note says so.
 
 ## Editions and dates
 
