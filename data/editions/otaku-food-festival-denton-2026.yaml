@@ -1,0 +1,24 @@
+id: otaku-food-festival-denton-2026
+series: otaku-food-festival
+edition: Denton 2026
+slug: otaku-food-festival-denton-2026
+name: Otaku Food Festival Denton
+status: confirmed
+start_date: 2026-10-24
+end_date: 2026-10-25
+venue:
+  name: Golden Triangle Mall
+  address: 2201 S Interstate 35, Denton, TX 76205
+city: Denton
+region: north
+timezone: America/Chicago
+url: https://www.instagram.com/otakufoodfestival/reel/DeasV0IMH-9/
+evidence:
+  - source: otaku-food-festival-denton-2026-reel
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-18
+    excerpt: 'Hey Denton (Dallas), TX! The biggest and most famous Anime + Food Festival is coming back to YOU in October! … Golden Triangle Mall 2201 S Interstate 35 Denton, TX 76205 Saturday, Oct 24 : 11am-7:30pm Sunday, Oct 25 11am-5:30pm'
+    note: 'Caption of the organizer''s reel of October 12, 2026. The caption gives no year; it was posted on October 12, 2026 and says "coming back to YOU in October!", and October 24, 2026 is a Saturday as it says. The caption also says: "This is a FREE entry, two-day family food and anime event with 100+ food, drink, anime, and retail vendors, cosplay contests, photo ops, all-day entertainment".'
+last_verified_at: 2026-10-18
+updated_at: 2026-10-18
+revision: 0
