@@ -1,0 +1,28 @@
+id: ecchi-fiesta-2027
+series: ecchi-fiesta
+edition: '2027'
+slug: ecchi-fiesta-2027
+status: confirmed
+start_date: 2027-08-06
+end_date: 2027-08-08
+venue:
+  name: San Antonio Shrine Auditorium
+city: San Antonio
+region: south
+timezone: America/Chicago
+url: https://www.ecchifiesta.com/
+min_age: 18
+evidence:
+  - source: ecchi-fiesta-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-18
+    excerpt: SAN ANTONIO SHRINE AUDITORIUM ECCHI FIESTA AUG 6TH - 8TH 2027
+    note: 'Text of the homepage banner image (AFTER DARK (8)_1786324158.png). The sponsorship application form linked from the site''s Event Applications page (https://forms.gle/b5gZpbZjZ4fEYM316) says in text: "San Antonio Shrine Auditorium / Ecchi Fiesta August 6th -8th,2027".'
+  - source: ecchi-fiesta-site
+    facts: [age]
+    checked_at: 2026-10-18
+    excerpt: 18+
+    note: 'Badge on the same homepage banner image. The media application form linked from the site (https://forms.gle/REAYetdBNG4v1uuC7) says "18+ EVENT, NO ACCEPTIONS".'
+last_verified_at: 2026-10-18
+updated_at: 2026-10-18
+revision: 0
