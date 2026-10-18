@@ -201,6 +201,12 @@ describe('validateDataset', () => {
     );
   });
 
+  it('needs official evidence for an age limit', () => {
+    expect(errorsFor({ min_age: 18 })).toContain(
+      `${ed2026}: min_age is not backed by an official source`,
+    );
+  });
+
   it('does not let verification run ahead of the evidence', () => {
     expect(errorsFor({ last_verified_at: '2026-10-10' })).toContain(
       `${ed2026}: last_verified_at is later than every evidence check; verification needs evidence`,

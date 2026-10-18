@@ -29,7 +29,7 @@ timezone: America/Chicago # America/Denver only for far West Texas
 url: https://example.org
 evidence:
   - source: example-con-site # an id in sources/
-    facts: [dates, venue, city] # existence, dates, venue, city, status, tickets
+    facts: [dates, venue, city] # existence, dates, venue, city, status, tickets, age
     checked_at: 2026-10-11
     excerpt: November 13-15, 2026 at the Example Convention Center
 last_verified_at: 2026-10-11 # last successful check, never just "last time someone looked"
@@ -43,6 +43,7 @@ revision: 0 # bump when a published fact changes
 - Every edition has evidence from an official source. Third-party listings never count.
 - Shown dates, venues and cancellation or postponement statuses each need official evidence for that fact.
 - `confirmed` and `completed` need dates; `dates_tba` must not have them; `completed` must be in the past.
+- `min_age`, the organizer's minimum age to attend (18 for an 18+ convention), needs official evidence for `age`.
 - `postponed` and `cancelled` need a `status_note` summarizing the organizer's announcement.
 - A series marked `hiatus` or `ended` needs a `status_note` summarizing the organizer's announcement, and an official source that supports `status`. All its editions must be completed or cancelled.
 - `last_verified_at` can't be later than the latest evidence check.
