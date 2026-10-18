@@ -67,6 +67,11 @@ describe('editionEvent', () => {
     );
   });
 
+  it('states the age limit when the organizer sets one', () => {
+    const event = onlyEvent(edition({ min_age: 18 }));
+    expect(String(value(event, 'description'))).toMatch(/^Ages 18 and up\nOfficial site: /);
+  });
+
   it('round-trips commas, semicolons, backslashes and newlines', () => {
     const summary = 'Con, the; Sequel \\ part 2\nNight';
     const venueName = 'Hall A; B, C \\ D';
