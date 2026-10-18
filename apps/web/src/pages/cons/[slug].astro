@@ -262,16 +262,27 @@ const past = siblings
       </div>
     )}
 
-    <div class="actions flex flex-wrap items-center gap-2.5">
-      {!ended && <BookmarkButton id={e.id} describedby="con-title" />}
-      {google && <CalendarExport ics={href(`cons/${e.slug}.ics`)} google={google} />}
-      <Button variant="secondary" href={e.url} external>
-        Visit official site
-      </Button>
-      {e.tickets_url && !ended && (
-        <Button variant="ghost" href={e.tickets_url} external>
-          Tickets
+    <div class="grid gap-2">
+      <div class="actions flex flex-wrap items-center gap-2.5">
+        {!ended && <BookmarkButton id={e.id} describedby="con-title" />}
+        {google && <CalendarExport ics={href(`cons/${e.slug}.ics`)} google={google} />}
+        <Button variant="secondary" href={e.url} external>
+          Visit official site
         </Button>
+        {e.tickets_url && !ended && (
+          <Button variant="ghost" href={e.tickets_url} external>
+            Tickets
+          </Button>
+        )}
+      </div>
+      {e.min_age && (
+        <p
+          class="m-0 flex items-start gap-1.5 [font:var(--type-body-sm)] text-text-2"
+          data-age-notice
+        >
+          <Icon name="info" size={16} />
+          This convention is for adults. Its official site may show mature content.
+        </p>
       )}
     </div>
 

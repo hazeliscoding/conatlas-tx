@@ -100,5 +100,26 @@ test('conventions with an age limit say so on their card and page', async ({ pag
       .evaluateAll((scripts) => scripts.map((s) => JSON.parse(s.textContent!)));
     const event = types.find((t) => t['@type'] === 'Event');
     if (event) expect(event.typicalAgeRange, e.id).toBe(`${e.min_age}-`);
+    await expect(page.locator('[data-age-notice]'), e.id).toContainText('may show mature content');
   }
+});
+
+test('Hide 18+ filters out conventions with an age limit and round-trips through the URL', async ({
+  page,
+}) => {
+  const limited = new Set(dataset.editions.filter((e) => e.min_age).map((e) => e.id));
+  await page.goto('./');
+  const all = await page
+    .locator('[data-listing]')
+    .evaluateAll((cards) => cards.map((c) => c.getAttribute('data-listing')!));
+  test.skip(!all.some((id) => limited.has(id)), 'no listed convention has an age limit');
+  await page.getByText('Hide 18+', { exact: true }).first().click();
+  await expect(page).toHaveURL(/\?hide=adult$/);
+  const visible = await page
+    .locator('[data-listing]:visible')
+    .evaluateAll((cards) => cards.map((c) => c.getAttribute('data-listing')!));
+  expect(visible).toEqual(all.filter((id) => !limited.has(id)));
+  await page.reload();
+  await expect(page.locator('input[name="hide"]')).toBeChecked();
+  expect(await page.locator('[data-listing]:visible').count()).toBe(visible.length);
 });
