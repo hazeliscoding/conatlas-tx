@@ -1,0 +1,25 @@
+id: anime-by-the-bay-2026
+series: anime-by-the-bay
+edition: 2026
+slug: anime-by-the-bay-2026
+status: completed
+start_date: 2026-10-17
+end_date: 2026-10-17
+city: Palacios
+region: gulf-coast
+timezone: America/Chicago
+url: https://www.instagram.com/animebythebay/
+evidence:
+  - source: anime-by-the-bay-2026-poster
+    facts: [existence, dates, city]
+    checked_at: 2026-10-18
+    excerpt: 'Anime by the Bay October 17, 2026 1001 5th Street Palacios, TX 12pm - 6pm Vendors | Music | Food Cosplay Contest | and more!'
+    note: Text of the poster image in the organizer's Instagram post of August 13, 2026. The poster gives a street address but no venue name, so no venue is recorded.
+  - source: anime-by-the-bay-instagram
+    facts: [existence]
+    checked_at: 2026-10-18
+    excerpt: "Whoop whoop! It's almost time! Just one more day until we get to experience Palacios' first ever anime event!"
+    note: 'Caption of the organizer''s post of October 16, 2026 (https://www.instagram.com/animebythebay/p/Dej83GRNzIq/). A post of October 17, 2026 (https://www.instagram.com/animebythebay/p/Demrkr8lMM5/) says "Doors are open!!!".'
+last_verified_at: 2026-10-18
+updated_at: 2026-10-18
+revision: 0
