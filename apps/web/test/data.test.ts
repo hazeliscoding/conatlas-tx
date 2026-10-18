@@ -129,6 +129,15 @@ describe('editionSummary', () => {
     );
   });
 
+  it('gives the age limit when the organizer sets one', () => {
+    expect(editionSummary(edition({ min_age: 18 }), con, '2026-10-13')).toContain(
+      "at Hall A. It's for ages 18 and up. ConAtlas",
+    );
+    expect(
+      editionSummary(edition({ min_age: 21, status: 'completed' }), con, '2027-04-01'),
+    ).toContain('at Hall A. It was for ages 21 and up. ConAtlas');
+  });
+
   it('says when a series has ended or is on hiatus', () => {
     const past = edition({ status: 'completed' });
     expect(

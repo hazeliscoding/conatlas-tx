@@ -73,3 +73,32 @@ test('unknown pages show the not-found page', async ({ page }) => {
   await page.goto('404.html');
   await expect(page.getByText("We couldn't find that page")).toBeVisible();
 });
+
+test('conventions with an age limit say so on their card and page', async ({ page }) => {
+  const limited = dataset.editions.filter((e) => e.min_age);
+  test.skip(limited.length === 0, 'no edition has an age limit');
+  const label = (e: (typeof limited)[number]) => `Ages ${e.min_age}+`;
+  await page.goto('./');
+  const listed = new Set(
+    await page
+      .locator('[data-listing]')
+      .evaluateAll((cards) => cards.map((c) => c.getAttribute('data-listing'))),
+  );
+  for (const e of limited) {
+    if (listed.has(e.id)) {
+      await expect(page.locator(`[data-listing="${e.id}"] [data-min-age]`), e.id).toHaveText(
+        label(e),
+      );
+    }
+  }
+  for (const e of limited) {
+    await page.goto(`cons/${e.slug}/`);
+    // The hero's label comes before any nearby convention cards.
+    await expect(page.locator('main [data-min-age]').first(), e.id).toHaveText(label(e));
+    const types = await page
+      .locator('script[type="application/ld+json"]')
+      .evaluateAll((scripts) => scripts.map((s) => JSON.parse(s.textContent!)));
+    const event = types.find((t) => t['@type'] === 'Event');
+    if (event) expect(event.typicalAgeRange, e.id).toBe(`${e.min_age}-`);
+  }
+});

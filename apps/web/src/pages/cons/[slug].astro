@@ -21,6 +21,7 @@ import EventCard from '../../components/EventCard.astro';
 import Icon from '../../components/Icon.astro';
 import Ribbon from '../../components/Ribbon.astro';
 import StatusLine from '../../components/StatusLine.astro';
+import AgeLabel from '../../components/AgeLabel.astro';
 import VenueBlock from '../../components/VenueBlock.astro';
 import Base from '../../layouts/Base.astro';
 import {
@@ -66,6 +67,7 @@ const FACT_LABELS = {
   city: 'City',
   status: 'Status',
   tickets: 'Tickets',
+  age: 'Age limit',
 };
 const today = todayIn('America/Chicago');
 const name = e.name ?? series.name;
@@ -100,6 +102,7 @@ const event =
           organizer: { '@type': 'Organization', name: series.organizer },
         }),
         url: new URL(detailHref(e), Astro.site).href,
+        ...(e.min_age && { typicalAgeRange: `${e.min_age}-` }),
         ...(description && { description }),
       }
     : undefined;
@@ -173,6 +176,7 @@ const past = siblings
       <div class="grid min-w-0 gap-2.5">
         <div class="flex flex-wrap items-center gap-2">
           <StatusLine edition={e} badge />
+          {e.min_age && <AgeLabel minAge={e.min_age} />}
           <span class="eyebrow">{REGION_NAMES[e.region]}</span>
         </div>
         <h1

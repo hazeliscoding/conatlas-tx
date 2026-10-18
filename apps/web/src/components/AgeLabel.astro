@@ -1,0 +1,27 @@
+---
+// The organizer's age limit for an edition, e.g. "Ages 18+". Text on a neutral pill, never color alone.
+interface Props {
+  minAge: number;
+}
+
+const { minAge } = Astro.props;
+---
+
+<span class="age" data-min-age={minAge}>
+  Ages {minAge}+
+</span>
+
+<style>
+  .age {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: var(--radius-full);
+    font: var(--type-caption);
+    font-weight: 600;
+    color: var(--status-neutral-fg);
+    background: var(--status-neutral-bg);
+    white-space: nowrap;
+  }
+</style>
