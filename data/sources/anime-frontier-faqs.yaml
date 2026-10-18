@@ -3,5 +3,5 @@ series: anime-frontier
 url: https://animefrontier.com/about/faqs/
 type: official_site
 supports: [existence, dates]
-last_checked: 2026-10-13
+last_checked: 2026-10-17
 access_notes: Plain fetch returns the page text, and it is visible in a browser. The same text is in https://animefrontier.com/wp-json/wp/v2/pages?slug=faqs.

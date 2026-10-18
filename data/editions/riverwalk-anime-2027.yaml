@@ -15,12 +15,12 @@ url: https://www.riverwalkanime.com/
 evidence:
   - source: riverwalk-anime-site
     facts: [existence, dates]
-    checked_at: 2026-10-12
+    checked_at: 2026-10-17
     excerpt: JUNE 19TH-20TH, 2027
   - source: riverwalk-anime-site
     facts: [venue, city]
-    checked_at: 2026-10-12
+    checked_at: 2026-10-17
     excerpt: Henry B Gonzalez Convention Center 900 E. Market St. San Antonio, TX 78205
-last_verified_at: 2026-10-12
-updated_at: 2026-10-12
+last_verified_at: 2026-10-17
+updated_at: 2026-10-17
 revision: 0

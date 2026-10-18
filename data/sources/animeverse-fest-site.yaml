@@ -1,0 +1,7 @@
+id: animeverse-fest-site
+series: animeverse-fest
+url: https://animeversefest.com/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-17
+access_notes: WordPress home page readable with a plain fetch. Under "SELECT A SHOW" it shows one image tile per upcoming show, with no page text. On 2026-10-17 the tiles were Baton Rouge (links to /louisiana), Houston and Pittsburgh (links to /pittsburgh-3); the Houston tile reads "FEBRUARY 12TH - 14TH, 2027" and "NRG CENTER HALL A". Humble is no longer listed, and the site's public page list has no other Texas show.

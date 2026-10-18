@@ -16,17 +16,17 @@ tickets_url: https://deltahcon.com/eventsM/delta-h-con-2027-weekend-passes/
 evidence:
   - source: delta-h-con-site
     facts: [existence, dates, venue, city]
-    checked_at: 2026-10-12
+    checked_at: 2026-10-17
     excerpt: Delta H Con 2027, taking place July 16-18, 2027. Houston Marriott Westchase2900 Briarpark Dr., Hou
   - source: delta-h-con-2027-passes
     facts: [dates, tickets]
-    checked_at: 2026-10-12
+    checked_at: 2026-10-17
     excerpt: Delta H Con 2027 Weekend Passes Date(s) - Friday 7/16/2027 9:00 AM - Sunday 7/18/2027 6:00 PM
   - source: delta-h-con-2027-exhibitors
     facts: [existence, dates, venue, city]
-    checked_at: 2026-10-13
+    checked_at: 2026-10-17
     excerpt: Exhibitor sales open September 1st at Noon (CST) for Delta H Con 2027, taking place July 16-18, 2027. Houston Marriott Westchase 2900 Briarpark Dr., Houston, TX 77042.
     note: The full post behind the homepage teaser, which cuts the address off at "Houston,…". It gives the venue's ZIP code.
-last_verified_at: 2026-10-12
-updated_at: 2026-10-13
+last_verified_at: 2026-10-17
+updated_at: 2026-10-17
 revision: 0

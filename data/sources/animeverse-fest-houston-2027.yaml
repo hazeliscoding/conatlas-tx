@@ -3,4 +3,5 @@ series: animeverse-fest
 url: https://animeversefest.com/houston2027/
 type: official_site
 supports: [existence, dates, venue, city]
-last_checked: 2026-10-12
+last_checked: 2026-10-17
+access_notes: WordPress page readable with a plain fetch. The page was edited on 2026-10-14 and its header changed from "FEBRUARY 12TH-14TH, 2027 | NRG CENTER" to "FEBRUARY 12TH-14TH, 2027 | RELIANT PARK". Its meta description says "returns to the NRG this February" and the "ADA Guide" link goes to nrgpark.com. Ticket and vendor links go to eventeny.com (event id 28131).

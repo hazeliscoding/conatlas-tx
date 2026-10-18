@@ -16,16 +16,16 @@ tickets_url: https://animefrontier.com/tickets/
 evidence:
   - source: anime-frontier-faqs
     facts: [existence, dates]
-    checked_at: 2026-10-13
+    checked_at: 2026-10-17
     excerpt: ANIME FRONTIER TAKES PLACE DECEMBER 4 – 6, 2026!
   - source: anime-frontier-travel
     facts: [venue, city]
-    checked_at: 2026-10-13
+    checked_at: 2026-10-17
     excerpt: ANIME FRONTIER TAKES PLACE AT THE FORT WORTH CONVENTION CENTER, LOCATED AT 1201 HOUSTON ST, FORT WORTH, TX 76102
   - source: anime-frontier-tickets
     facts: [tickets]
-    checked_at: 2026-10-13
+    checked_at: 2026-10-17
     excerpt: Everything starts with your ticket. Premium AF, 3-Days, and single day tickets are on sale now!
-last_verified_at: 2026-10-13
-updated_at: 2026-10-13
+last_verified_at: 2026-10-17
+updated_at: 2026-10-17
 revision: 1
