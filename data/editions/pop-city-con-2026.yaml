@@ -1,0 +1,33 @@
+id: pop-city-con-2026
+series: pop-city-con
+edition: '2026'
+slug: pop-city-con-2026
+status: completed
+start_date: 2026-08-07
+end_date: 2026-08-09
+venue:
+  name: Radisson Hotel El Paso Airport
+  address: 1770 Airway Blvd, El Paso, TX 79925
+city: El Paso
+region: west
+timezone: America/Denver
+url: https://www.popcitycon.net/
+evidence:
+  - source: pop-city-con-site
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-10-18
+    excerpt: The Radisson Hotel | August 7th - 9th, 2026 | El Paso, Tx
+    note: 'Text of the homepage banner image (main+banner+final.png), which also reads "Pop City Convention / Where K-pop, anime, and books collide!".'
+  - source: pop-city-con-site
+    facts: [venue]
+    checked_at: 2026-10-18
+    excerpt: Event Location The Radisson Hotel El Paso Airport 1770 Airway Blvd, El Paso, Tx, 79925
+    note: Text of the "Event Location" card image (1.png) under "Location Information" on the homepage.
+  - source: pop-city-con-instagram
+    facts: [existence]
+    checked_at: 2026-10-18
+    excerpt: Thank you for a great Pop City Con 2026!
+    note: "Caption of the organizer's post of August 9, 2026 (https://www.instagram.com/popcitycon/p/Db2KMS4yTpz/)."
+last_verified_at: 2026-10-18
+updated_at: 2026-10-18
+revision: 0

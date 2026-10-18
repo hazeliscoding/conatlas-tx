@@ -1,0 +1,12 @@
+id: pop-city-con
+slug: pop-city-con
+name: Pop City Con
+description: 'Pop City Con is a women-owned anime, K-pop and gaming convention in El Paso, where, in its own words, "K-pop, anime, and books collide".'
+website: https://www.popcitycon.net/
+organizer: Pop City Events LLC
+city: El Paso
+region: west
+status: active
+sources:
+  - pop-city-con-site
+  - pop-city-con-instagram
