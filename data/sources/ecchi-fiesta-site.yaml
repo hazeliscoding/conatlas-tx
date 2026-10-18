@@ -1,0 +1,7 @@
+id: ecchi-fiesta-site
+series: ecchi-fiesta
+url: https://www.ecchifiesta.com/
+type: official_site
+supports: [existence, dates, venue, city, age]
+last_checked: 2026-10-18
+access_notes: Square Online site that renders in the browser. The event facts appear only in the homepage banner image; the page has no event text.

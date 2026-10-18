@@ -1,0 +1,9 @@
+id: ecchi-fiesta
+slug: ecchi-fiesta
+name: Ecchi Fiesta
+website: https://www.ecchifiesta.com/
+city: San Antonio
+region: south
+status: active
+sources:
+  - ecchi-fiesta-site
