@@ -177,7 +177,19 @@ const squash = (text: string) =>
     .normalize('NFKD')
     .toLowerCase()
     .replace(/[^a-z0-9]/g, '');
-const host = (url: string) => new URL(url).hostname.replace(/^www\./, '');
+const SOCIAL_HOSTS = new Set([
+  'instagram.com',
+  'facebook.com',
+  'x.com',
+  'twitter.com',
+  'tiktok.com',
+]);
+/** A convention's site: its host, or its account on a social site that many conventions share. */
+const site = (url: string) => {
+  const { hostname, pathname } = new URL(url);
+  const host = hostname.replace(/^www\./, '');
+  return SOCIAL_HOSTS.has(host) ? `${host}/${pathname.split('/')[1]!.toLowerCase()}` : host;
+};
 
 /** Dice coefficient of two names' letter pairs, ignoring case, spacing and punctuation. */
 function nameSimilarity(a: string, b: string): number {
@@ -221,8 +233,8 @@ export function findDuplicates(published: Dataset, drafts: Dataset): Duplicate[]
   for (const draft of drafts.series.filter((s) => isNew('conventions', s.id))) {
     for (const other of all.series.filter((s) => s.id !== draft.id)) {
       const reasons = [];
-      if (host(draft.website) === host(other.website))
-        reasons.push(`same website (${host(draft.website)})`);
+      if (site(draft.website) === site(other.website))
+        reasons.push(`same website (${site(draft.website)})`);
       if (nameSimilarity(draft.name, other.name) >= 0.8) reasons.push(`name like "${other.name}"`);
       if (reasons.length)
         report(`conventions/${draft.id}`, `conventions/${other.id}`, reasons.join(', '));

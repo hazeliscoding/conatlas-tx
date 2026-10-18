@@ -165,6 +165,28 @@ describe('findDuplicates', () => {
     ]);
   });
 
+  it('tells social accounts apart on the same social site', () => {
+    const insta = (id: string, account: string) => ({
+      ...series,
+      id,
+      slug: id,
+      name: id,
+      website: `https://www.instagram.com/${account}/`,
+    });
+    const published = { ...base, series: [insta('first-con', 'firstcon')] };
+    const drafts = {
+      ...none,
+      series: [insta('second-con', 'secondcon'), insta('third-con', 'FirstCon')],
+    };
+    expect(findDuplicates(published, drafts)).toEqual([
+      {
+        record: 'conventions/third-con',
+        other: 'conventions/first-con',
+        reason: 'same website (instagram.com/firstcon)',
+      },
+    ]);
+  });
+
   it('flags new editions that overlap one in the same series or the same city', () => {
     const sameSeries = {
       ...edition,
