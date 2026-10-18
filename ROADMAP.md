@@ -104,14 +104,11 @@ Each milestone's checklist and status report are in git history.
 - **M3: Claude-assisted ingestion.** `data:propose`, `data:diff`, `data:report` and `data:promote`, and the refresh and add skills; nothing is published without the maintainer's approval.
 - **M4: Production readiness.** The five-petal logo, design, accessibility and performance reviews, SEO basics, and the Vercel deploy. Approved 2026-10-13.
 - **M5: Search and discovery.** SEO audit, structured data, region and city pages, `llms.txt`, Core Web Vitals lab checks, and Search Console reading all 35 sitemap URLs. Approved 2026-10-14.
+- **M6: Coverage and v0.1.0.** A coverage pass from 15 listed conventions to 35, listing rules in `docs/DATA_POLICY.md`, ended conventions (Kawacon), a refresh of every record, the public beta checklist, and the [v0.1.0](https://github.com/hazeliscoding/conatlas-tx/releases/tag/v0.1.0) release, announced on Discord. Approved 2026-10-18.
 
 ## Next
 
-Open work is in [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues). The current milestone is [M6: coverage and v0.1.0](https://github.com/hazeliscoding/conatlas-tx/milestone/1): find and add the Texas anime conventions we don't list yet, refresh every record, walk the public beta checklist, then publish and announce v0.1.0.
-
-Done when: the coverage drafts are approved, the public beta checklist is ticked, and v0.1.0 is published.
-
-Issues without a milestone are ideas for later.
+Open work is in [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues). No milestone is planned yet; the next one is chosen from the open issues. Issues without a milestone are ideas for later.
 
 ## Not planned
 
