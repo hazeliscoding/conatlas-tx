@@ -16,18 +16,18 @@ Run through this once before announcing the site, and again after any big change
 
 ## On real devices
 
-- [ ] On a phone and a desktop, in light and dark mode, open home, the calendar, a convention page, Saved and Contribute. Nothing overlaps, scrolls sideways or looks unfinished.
-- [ ] With JavaScript turned off, the home page and a convention page still show every date, venue and source.
-- [ ] Save a convention, reload, and find it on the Saved page. Export it and open the `.ics` file.
-- [ ] Subscribe to the all-Texas feed in Apple Calendar and Outlook with **Subscribe**, and in Google Calendar under **Other calendars → From URL**. The events show on the right days.
-- [ ] Add one convention to Google Calendar from its **Add to calendar** menu.
-- [ ] Paste the site's link in Discord or a chat app: the preview shows the title, description and image.
+- [x] On a phone and a desktop, in light and dark mode, open home, the calendar, a convention page, Saved and Contribute. Nothing overlaps, scrolls sideways or looks unfinished.
+- [x] With JavaScript turned off, the home page and a convention page still show every date, venue and source.
+- [x] Save a convention, reload, and find it on the Saved page. Export it and open the `.ics` file.
+- [x] Subscribe to the all-Texas feed in Apple Calendar and Outlook with **Subscribe**, and in Google Calendar under **Other calendars → From URL**. The events show on the right days.
+- [x] Add one convention to Google Calendar from its **Add to calendar** menu.
+- [x] Paste the site's link in Discord or a chat app: the preview shows the title, description and image.
 
 ## Contributions and contacts
 
 - [x] Each card on the Contribute page opens the right GitHub issue form, and new issues get their label. (2026-10-17: each card links to its form, and every form names a label that exists. Not yet tried with a real issue.)
 - [x] "Suggest a correction" on a convention page prefills that convention in the forms. (covered by the end-to-end test "reporting from a convention page prefills the forms")
-- [ ] A test email to the contact address arrives.
+- [x] A test email to the contact address arrives.
 - [x] Private vulnerability reporting is on (Security → Report a vulnerability).
 
 ## After launch
