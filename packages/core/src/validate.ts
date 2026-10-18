@@ -181,6 +181,7 @@ function checkEvidence(
   if ((e.status === 'postponed' || e.status === 'cancelled') && !official.has('status')) {
     error(`${e.status} status is not backed by an official source`);
   }
+  if (e.min_age && !official.has('age')) error('min_age is not backed by an official source');
   if (e.tickets_url && !official.has('tickets'))
     warn('tickets_url is not backed by an official source');
 

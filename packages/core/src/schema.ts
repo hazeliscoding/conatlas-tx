@@ -40,7 +40,7 @@ export const OFFICIAL_SOURCE_TYPES: readonly SourceType[] = SOURCE_TYPES.filter(
   (type) => type !== 'third_party',
 );
 
-export const FACTS = ['existence', 'dates', 'venue', 'city', 'status', 'tickets'] as const;
+export const FACTS = ['existence', 'dates', 'venue', 'city', 'status', 'tickets', 'age'] as const;
 
 const id = z
   .string()
@@ -106,6 +106,8 @@ export const EditionSchema = z.strictObject({
   timezone: z.enum(TIMEZONES),
   url,
   tickets_url: url.optional(),
+  /** The organizer's minimum age to attend, as they state it (18 for an 18+ event). */
+  min_age: z.int().positive().optional(),
   description: text.max(500).optional(),
   evidence: z.array(EvidenceSchema).min(1),
   /** Last date a maintainer successfully confirmed the facts against the evidence. */
