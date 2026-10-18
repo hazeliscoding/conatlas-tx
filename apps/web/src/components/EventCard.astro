@@ -3,6 +3,7 @@
 // The title links to the detail page and stretches over the whole card.
 import { REGION_NAMES, dayCount, formatDateRange, weekday } from '@conatlas/core';
 import { detailHref, type Listing } from '../lib/data.ts';
+import AgeLabel from './AgeLabel.astro';
 import BookmarkButton from './BookmarkButton.astro';
 import DateBlock, { type Tone } from './DateBlock.astro';
 import Icon from './Icon.astro';
@@ -84,6 +85,7 @@ const titleId = `ev-${e.id}`;
     </div>
     <div class="ev__foot">
       <StatusLine edition={e} awaitingNext={e.awaitingNext} />
+      {e.min_age && <AgeLabel minAge={e.min_age} />}
     </div>
   </div>
   <div class="ev__actions">

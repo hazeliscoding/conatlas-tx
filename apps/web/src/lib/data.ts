@@ -125,11 +125,12 @@ export function editionSummary(
       : series.status === 'hiatus'
         ? ` ${series.name} is on hiatus.`
         : '';
+  const age = e.min_age ? ` It${ended ? ' was' : "'s"} for ages ${e.min_age} and up.` : '';
   const by = series.organizer
     ? ` It${series.status === 'ended' ? ' was' : "'s"} run by ${series.organizer}.`
     : '';
   const checked = formatDateRange(e.last_verified_at, e.last_verified_at);
-  return `${lead}${state}${by} ConAtlas TX checked these details against official sources on ${checked}.`;
+  return `${lead}${age}${state}${by} ConAtlas TX checked these details against official sources on ${checked}.`;
 }
 
 /** An edition's full name, e.g. "San Japan 2027" or "KimoKawaii Conroe 2027". */
