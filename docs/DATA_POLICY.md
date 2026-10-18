@@ -10,7 +10,7 @@ Some cases are decided:
 
 - **Single-franchise events** are listed when the franchise is an anime or manga and the event has convention programming, such as a Naruto or Dragon Ball convention. A game or trading-card fan con is not listed.
 - **Markets** are listed only when the organizer calls them an anime convention or anime festival and they have convention programming. A fan-art market or a vendor-only market is not.
-- **Age-limited events** are not listed for now: 18+ events, because the site can't yet label them, and teen-only library programs, which aren't open to the public.
+- **Age-limited events** are not listed for now: 18+ events, because the site can't yet label them ([#13](https://github.com/hazeliscoding/conatlas-tx/issues/13)), and teen-only library programs, which aren't open to the public. Ushicon, an 18-and-up convention listed before this rule, stays listed until the label exists.
 - **Dormant conventions** are not added. A new convention needs an edition held this calendar year or last, or an announced one. One that comes back is added then.
 
 ## Where facts come from
