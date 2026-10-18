@@ -3,5 +3,5 @@ series: otaku-odyssey
 url: https://www.instagram.com/otakuodysseycon/p/DbyXJr5ES8t/
 type: organizer_social
 supports: [existence, dates, venue, city]
-last_checked: 2026-10-12
-access_notes: Organizer Instagram (@otakuodysseycon, linked from the site's contact page), posted August 8, 2026. The caption is readable without logging in.
+last_checked: 2026-10-17
+access_notes: Organizer Instagram (@otakuodysseycon, linked from the site's contact page), posted August 8, 2026. The caption is readable without logging in. A plain fetch gets the caption only from the page's meta description, and only with a link-preview crawler user agent.

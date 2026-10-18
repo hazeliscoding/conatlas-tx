@@ -3,5 +3,5 @@ series: ushicon
 url: https://www.ushicon.com/
 type: official_site
 supports: [existence, dates, venue, city]
-last_checked: 2026-10-12
+last_checked: 2026-10-17
 access_notes: Dates appear in the homepage banner image, not page text.

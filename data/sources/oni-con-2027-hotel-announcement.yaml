@@ -3,5 +3,5 @@ series: oni-con
 url: https://www.facebook.com/onicon.official/posts/pfbid0ZqPHkbTtX4Q4rSCA3qcnTVCDad1ZXhfZWM9tSuPAWhvQdeza6qwRQTJeMwz3Y628l
 type: organizer_social
 supports: [existence, venue, city]
-last_checked: 2026-10-13
-access_notes: Organizer Facebook page (onicon.official, linked from the oni-con.net footer). The post shows "September 17 at 2:13 PM" with no year; its comments were marked 3w old on 2026-10-13. Readable without logging in.
+last_checked: 2026-10-17
+access_notes: Organizer Facebook page (onicon.official, linked from the oni-con.net footer). The post shows "September 17 at 2:13 PM" with no year; its comments were marked 3w old on 2026-10-13. Readable without logging in. A plain fetch with a desktop Chrome user agent returns HTTP 400; with a curl or crawler user agent it returns the post, whose embedded creation_time (1789672392) is 2026-09-17 19:13 UTC, so the post is from 2026.

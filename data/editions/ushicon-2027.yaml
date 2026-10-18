@@ -15,13 +15,13 @@ url: https://www.ushicon.com/
 evidence:
   - source: ushicon-site
     facts: [existence, dates]
-    checked_at: 2026-10-12
+    checked_at: 2026-10-17
     excerpt: Feb 12-14, 2027
     note: Text of the homepage banner image (Images/2027/UshiWebBanner2027.png). The hotel block link on the same page uses checkInDate=2/12/2027&checkOutDate=2/14/2027.
   - source: ushicon-site
     facts: [venue, city]
-    checked_at: 2026-10-12
+    checked_at: 2026-10-17
     excerpt: Ushicon Location Wyndham Garden Austin 3401 S I-35 Frontage Rd, Austin, TX 78741
-last_verified_at: 2026-10-12
-updated_at: 2026-10-12
+last_verified_at: 2026-10-17
+updated_at: 2026-10-17
 revision: 0

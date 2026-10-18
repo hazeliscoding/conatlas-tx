@@ -14,9 +14,15 @@ timezone: America/Chicago
 url: https://animeversefest.com/houston2027/
 evidence:
   - source: animeverse-fest-houston-2027
+    facts: [existence, dates, city]
+    checked_at: 2026-10-17
+    excerpt: FEBRUARY 12TH-14TH, 2027 | RELIANT PARK
+    note: Reliant Park is the former name of NRG Park, which contains NRG Center.
+  - source: animeverse-fest-site
     facts: [existence, dates, venue, city]
-    checked_at: 2026-10-12
-    excerpt: FEBRUARY 12TH-14TH, 2027 | NRG CENTER
-last_verified_at: 2026-10-12
-updated_at: 2026-10-12
+    checked_at: 2026-10-17
+    excerpt: ANIMEVERSE HOUSTON | FEBRUARY 12TH - 14TH, 2027 | NRG CENTER HALL A
+    note: Text of the Houston tile image on the homepage.
+last_verified_at: 2026-10-17
+updated_at: 2026-10-17
 revision: 0
