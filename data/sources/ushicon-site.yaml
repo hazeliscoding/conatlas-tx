@@ -2,6 +2,6 @@ id: ushicon-site
 series: ushicon
 url: https://www.ushicon.com/
 type: official_site
-supports: [existence, dates, venue, city]
-last_checked: 2026-10-17
+supports: [existence, dates, venue, city, age]
+last_checked: 2026-10-18
 access_notes: Dates appear in the homepage banner image, not page text.
