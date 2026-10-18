@@ -92,6 +92,7 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
 - **2026-10-14** — Two listing rules refined while drafting #2. A convention for a single anime or manga franchise counts (Akatsuki Con for Naruto, Kameha Con for Dragon Ball); game and trading-card events still don't, and markets still need to call themselves anime conventions. And text in an organizer's own graphic that every visitor sees, such as Odessa Geek Fest's 2027 banner, can back a fact, transcribed and marked as coming from an image.
 - **2026-10-14** — A convention can end. Kawacon announced on October 9, 2026 that it would "cease Kawacon operations for the foreseeable future," so its series is marked `ended` rather than `hiatus`, since no return is planned. A series that has ended or is on hiatus now carries a `status_note` backed by an official source. Its pages stay, since bookmarks and calendar subscriptions point at them, but they get a banner quoting the announcement, and the series leaves the timeline's "Next dates not announced" group, the region and city lists and `llms.txt`.
 - **2026-10-17** — Ushicon describes itself as "a convention for fans 18 and up". It was listed before the 2026-10-14 rule that leaves 18+ events out until the site can label them (#13), so it stays listed as an exception, rather than breaking its links and calendar subscriptions. The 18+ label stays in Later.
+- **2026-10-18** — M7 finishes what v0.1.0 left open rather than adding features: the 18+ label first, since it resolves the Ushicon exception and lets TsumiCon, Ecchi Fiesta and Ecchi Expo be listed, then the coverage leads that never got a search, the search-engine follow-ups and the versioning rules, ending in v0.2.0.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## Shipped
@@ -108,7 +109,11 @@ Each milestone's checklist and status report are in git history.
 
 ## Next
 
-Open work is in [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues). No milestone is planned yet; the next one is chosen from the open issues. Issues without a milestone are ideas for later.
+Open work is in [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues). The current milestone is [M7: completeness and v0.2.0](https://github.com/hazeliscoding/conatlas-tx/milestone/2): an 18+ label so adults-only conventions can be listed (#13), a second search pass on the coverage leads (#21), Search Console's crawl reports (#9), the Bing sitemap (#7), the versioning rules (#23), and the v0.2.0 release (#24).
+
+Done when: 18+ conventions can be listed with a label, the second search pass is done, the crawl reports and Bing are handled, the versioning rules are decided, and v0.2.0 is published.
+
+Issues without a milestone are ideas for later.
 
 ## Not planned
 
