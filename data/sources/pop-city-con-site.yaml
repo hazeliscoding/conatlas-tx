@@ -1,0 +1,7 @@
+id: pop-city-con-site
+series: pop-city-con
+url: https://www.popcitycon.net/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-10-18
+access_notes: 'The dates and venue appear only in images on the homepage: the main banner (main+banner+final.png) and the "Event Location" card (1.png) under "Location Information". The page text is only the menu and the footer "Copyright Pop City Events LLC 2026". The About page (https://www.popcitycon.net/about) says "Pop City was founded by Tami and Bianca". The Tickets menu links to a Tixr event named "pop-city-convention-2026". No edition after August 2026 is announced on 2026-10-18.'
