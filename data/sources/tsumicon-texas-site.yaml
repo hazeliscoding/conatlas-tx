@@ -1,0 +1,7 @@
+id: tsumicon-texas-site
+series: tsumicon-texas
+url: https://tsumicon.com/
+type: official_site
+supports: [existence, dates, venue]
+last_checked: 2026-10-18
+access_notes: Renders in the browser; a plain fetch returns only the page title.
