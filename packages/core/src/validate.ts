@@ -196,5 +196,8 @@ function checkEvidence(
   if (e.last_attempted_at && e.last_attempted_at < e.last_verified_at) {
     error('last_attempted_at is earlier than last_verified_at; a successful check moves it up too');
   }
+  if (e.last_attempted_at && e.last_attempted_at > today) {
+    error('last_attempted_at is in the future');
+  }
   if (e.updated_at > today) error('updated_at is in the future');
 }
