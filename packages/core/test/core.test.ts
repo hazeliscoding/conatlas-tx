@@ -213,6 +213,12 @@ describe('validateDataset', () => {
     );
   });
 
+  it('rejects a last_attempted_at date in the future', () => {
+    expect(errorsFor({ last_attempted_at: '2026-10-12' })).toContain(
+      `${ed2026}: last_attempted_at is in the future`,
+    );
+  });
+
   it('catches broken cross-references and duplicates', () => {
     expect(errorsFor({ series: 'ghost-con' })).toContain(`${ed2026}: unknown series "ghost-con"`);
     expect(errorsFor({ edition: '2027' })).toContain(
