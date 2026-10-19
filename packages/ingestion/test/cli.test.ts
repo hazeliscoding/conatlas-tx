@@ -133,6 +133,23 @@ describe('data:report', () => {
     expect(out).toContain('drafts/editions/broken:');
   });
 
+  it('reports .yml files instead of skipping them', () => {
+    const dir = copy();
+    writeFileSync(join(dir, 'drafts', 'editions', 'broken.yml'), 'id: broken\n');
+    const { code, out } = run(['report', '--today', '2026-10-01'], dir);
+    expect(code).toBe(1);
+    expect(out).toContain('drafts/editions/broken: rename to broken.yaml');
+
+    const diff = run(['diff', '--today', '2026-10-01'], dir);
+    expect(diff.code).toBe(1);
+    expect(diff.out).toContain('drafts/editions/broken: rename to broken.yaml');
+
+    writeFileSync(join(dir, 'editions', 'misnamed.yml'), 'id: misnamed\n');
+    const validate = run(['validate', '--today', '2026-10-01'], dir);
+    expect(validate.code).toBe(1);
+    expect(validate.out).toContain('editions/misnamed: rename to misnamed.yaml');
+  });
+
   it('lists what is due, most urgent first, and the drafts waiting', () => {
     const { code, out } = run(['report', '--today', '2026-11-02']);
     expect(code).toBe(0);
