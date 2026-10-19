@@ -9,7 +9,21 @@ Convention data lives here as YAML, one record per file, named `<id>.yaml`. It i
 | `sources/`     | Official pages that back the facts                           | yes       |
 | `drafts/`      | Proposed records waiting for maintainer review (same layout) | never     |
 
-Run `pnpm data:validate` after any change. The schemas are in [`packages/core/src/schema.ts`](../packages/core/src/schema.ts).
+Run `pnpm data:validate` after any change. Drafts are checked with `pnpm data:diff`, because `pnpm data:validate` reads only published data. The schemas are in [`packages/core/src/schema.ts`](../packages/core/src/schema.ts).
+
+## Convention example
+
+```yaml
+id: example-con # stable forever; editions reference it
+slug: example-con # URL path
+name: Example Convention
+website: https://example.org
+city: Houston
+region: gulf-coast # north | central | gulf-coast | south | west
+status: active # active | hiatus | ended
+sources:
+  - example-con-site # an id in sources/
+```
 
 ## Edition example
 
@@ -35,6 +49,17 @@ evidence:
 last_verified_at: 2026-10-11 # last successful check, never just "last time someone looked"
 updated_at: 2026-10-11 # last edit to this file
 revision: 0 # bump when a published fact changes
+```
+
+## Source example
+
+```yaml
+id: example-con-site # stable forever; editions cite it in evidence
+series: example-con
+url: https://example.org
+type: official_site # official_site | official_announcement | official_feed | organizer_social | third_party
+supports: [existence, dates, venue, city] # existence, dates, venue, city, status, tickets, age
+last_checked: 2026-10-11 # YYYY-MM-DD, last successful check
 ```
 
 ## Rules the validator enforces
