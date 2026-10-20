@@ -15,9 +15,17 @@ function readRecords<T>(
   const issues: Issue[] = [];
   if (!existsSync(dir)) return { records, issues };
 
-  for (const file of readdirSync(dir)
-    .filter((f) => f.endsWith('.yaml'))
-    .sort()) {
+  for (const file of readdirSync(dir).sort()) {
+    if (file.endsWith('.yml')) {
+      const fileId = file.slice(0, -'.yml'.length);
+      issues.push({
+        level: 'error',
+        record: `${label}/${fileId}`,
+        message: `rename to ${fileId}.yaml`,
+      });
+      continue;
+    }
+    if (!file.endsWith('.yaml')) continue;
     const fileId = file.slice(0, -'.yaml'.length);
     const record = `${label}/${fileId}`;
     let raw: unknown;
