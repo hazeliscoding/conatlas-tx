@@ -34,7 +34,7 @@ export const CONTACT_EMAIL = 'conatlas-tx.landing118@passfwd.com';
 /** A site path under the deploy base, e.g. `href('calendar/')`. */
 export const href = (path = '') => `${import.meta.env.BASE_URL}${path}`;
 
-/** An edition's detail page. */
+/** An edition's detail page, or a convention's page listing its editions. */
 export const detailHref = (edition: Pick<Edition, 'slug'>) => href(`cons/${edition.slug}/`);
 
 // "<number> <street>, <city>, TX <ZIP>" and nothing else: a suite, a landmark or a missing ZIP

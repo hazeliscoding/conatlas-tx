@@ -30,6 +30,27 @@ test('every active convention is on the home page and opens its own page', async
   }
 });
 
+test('every convention has a page linking each of its editions, and each edition links back', async ({
+  page,
+}) => {
+  for (const series of dataset.series) {
+    const pages = dataset.editions
+      .filter((e) => e.series === series.id)
+      .map((e) => `/cons/${e.slug}/`);
+    expect((await page.goto(`cons/${series.slug}/`))?.status(), series.slug).toBe(200);
+    await expect(page.locator('h1')).toHaveText(series.name);
+    const linked = await page
+      .locator('main a[href^="/cons/"]')
+      .evaluateAll((links) => links.map((a) => a.getAttribute('href')!));
+    expect(new Set(linked), series.slug).toEqual(new Set(pages));
+    await page.goto(pages[0]!);
+    await expect(page.locator('nav[aria-label="Breadcrumb"] a').nth(1)).toHaveAttribute(
+      'href',
+      `/cons/${series.slug}/`,
+    );
+  }
+});
+
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 

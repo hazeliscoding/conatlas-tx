@@ -1,0 +1,123 @@
+---
+// One page per convention: every edition we list, upcoming first, then the past ones. It shares
+// /cons/ with the edition pages; validation keeps convention and edition slugs apart.
+import {
+  REGION_NAMES,
+  formatDateRange,
+  type Edition,
+  type Series,
+  type Source,
+} from '@conatlas/core';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Button from '../../components/Button.astro';
+import EventCard from '../../components/EventCard.astro';
+import Ribbon from '../../components/Ribbon.astro';
+import SeriesBanner from '../../components/SeriesBanner.astro';
+import Base from '../../layouts/Base.astro';
+import { andList, detailHref, getDataset, getUpcoming, href } from '../../lib/data.ts';
+
+interface Props {
+  series: Series;
+  editions: Edition[];
+  sources: Map<string, Source>;
+}
+
+export function getStaticPaths() {
+  const { series, editions, sources } = getDataset();
+  const sourceMap = new Map(sources.map((s) => [s.id, s]));
+  return series.map((s) => ({
+    params: { series: s.slug },
+    props: { series: s, editions: editions.filter((e) => e.series === s.id), sources: sourceMap },
+  }));
+}
+
+const { series: s, editions, sources } = Astro.props;
+const upcoming = getUpcoming().filter((e) => e.series === s.id && !e.awaitingNext);
+const past = editions
+  .filter((e) => !upcoming.some((u) => u.id === e.id))
+  .sort((a, b) => (b.start_date ?? '').localeCompare(a.start_date ?? ''));
+// A touring convention lists every city and region it has been to.
+const cities = andList([...new Set(editions.map((e) => e.city))]);
+const regions = andList([...new Set(editions.map((e) => REGION_NAMES[e.region]))]);
+const next = upcoming.find((e) => e.start_date && e.status === 'confirmed');
+const lead = `${s.name} ${s.status === 'ended' ? 'was' : 'is'} an anime convention in ${cities}, Texas${
+  s.organizer ? `, run by ${s.organizer}` : ''
+}.`;
+---
+
+<Base
+  title={`${s.name}: every edition`}
+  description={`${lead} Every edition we list, with dates checked against the organizer's site.`}
+>
+  <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
+    <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: s.name }]} />
+
+    <header class="grid gap-2.5">
+      <span class="eyebrow">{regions}</span>
+      <h1 class="m-0 [font:var(--type-h1)] text-balance">{s.name}</h1>
+      <p class="m-0 max-w-[68ch] text-pretty text-text-2" data-summary>
+        {lead}{' '}
+        {next ? (
+          <>
+            Next up: <a href={detailHref(next)}>{next.title}</a>,{' '}
+            {formatDateRange(next.start_date!, next.end_date ?? next.start_date!)}.
+          </>
+        ) : (
+          !upcoming.length &&
+          s.status === 'active' &&
+          "The organizer hasn't announced the next one yet."
+        )}
+      </p>
+      {s.description && <p class="m-0 max-w-[68ch] text-pretty text-text-2">{s.description}</p>}
+    </header>
+
+    <SeriesBanner series={s} sources={sources} />
+
+    <div>
+      <Button variant="secondary" href={s.website} external>
+        Visit official site
+      </Button>
+    </div>
+
+    {upcoming.length > 0 && (
+      <section class="grid gap-3">
+        <Ribbon rule heading>
+          Upcoming
+        </Ribbon>
+        <div class="grid gap-3">
+          {upcoming.map((e) => (
+            <EventCard listing={e} eyebrow={false} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {past.length > 0 && (
+      <section class="grid gap-3">
+        <Ribbon tone="lavender" rule heading>
+          Past editions
+        </Ribbon>
+        <ul class="m-0 grid gap-1.5 pl-5 [font:var(--type-body-sm)] text-text-2" data-past>
+          {past.map((p) => (
+            <li>
+              <a href={detailHref(p)}>
+                {p.edition}
+                {p.start_date && ` · ${formatDateRange(p.start_date, p.end_date ?? p.start_date)}`}
+                {p.status === 'cancelled' && ' · cancelled'}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+</Base>
+
+<style>
+  .eyebrow {
+    font: var(--type-meta);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+  }
+</style>

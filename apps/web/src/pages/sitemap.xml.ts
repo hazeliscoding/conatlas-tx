@@ -20,6 +20,7 @@ export const GET: APIRoute = ({ site }) => {
       (region) => ({ path: regionHref(region) }),
     ),
     ...[...cityPages(listings).values()].map((path) => ({ path })),
+    ...getDataset().series.map((s) => ({ path: detailHref(s) })),
     ...getDataset().editions.map((e) => ({ path: detailHref(e), lastmod: e.updated_at })),
     { path: href('about/') },
     { path: href('contribute/') },
