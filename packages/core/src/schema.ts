@@ -1,11 +1,12 @@
 import { z } from 'zod';
 import { isIsoDate } from './dates.ts';
 
-export const REGIONS = ['north', 'central', 'gulf-coast', 'south', 'west'] as const;
+export const REGIONS = ['north', 'east', 'central', 'gulf-coast', 'south', 'west'] as const;
 export type Region = (typeof REGIONS)[number];
 
 export const REGION_NAMES: Record<Region, string> = {
   north: 'North Texas',
+  east: 'East Texas',
   central: 'Central Texas',
   'gulf-coast': 'Gulf Coast',
   south: 'South Texas',
