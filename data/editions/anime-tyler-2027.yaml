@@ -9,7 +9,7 @@ venue:
   name: Holiday Inn Tyler - Conference Center
   address: 5701 S Broadway Ave, Tyler, TX 75703
 city: Tyler
-region: north
+region: east
 timezone: America/Chicago
 url: https://animetyler.com/
 tickets_url: https://tickets.eventology.io/e/anime-tyler-2027
@@ -23,5 +23,5 @@ evidence:
     checked_at: 2026-10-17
     excerpt: Holiday Inn Tyler - Conference Center - 5701 S Broadway Ave, Tyler, TX
 last_verified_at: 2026-10-17
-updated_at: 2026-10-17
-revision: 0
+updated_at: 2026-10-20
+revision: 1
