@@ -33,6 +33,8 @@ interface Props {
 const { region, city, listings } = Astro.props;
 const regionName = REGION_NAMES[region];
 const name = city ?? regionName;
+// "an East Texas con", "an Austin con"; no listed place starts with a "you" sound.
+const article = /^[AEIOU]/.test(name) ? 'an' : 'a';
 const today = todayIn('America/Chicago');
 const upcoming = listings.filter((e) => !e.awaitingNext);
 const awaiting = listings.filter((e) => e.awaitingNext).map((e) => e.displayName);
@@ -139,7 +141,8 @@ const suffix = (e: Listing) =>
       <>
         <Timeline listings={listings} eyebrow={false} />
         <p class="m-0 [font:var(--type-body-sm)]">
-          Know a {name} con we're missing? <a href={href('contribute/')}>Suggest a convention</a>
+          Know {article} {name} con we're missing?{' '}
+          <a href={href('contribute/')}>Suggest a convention</a>
         </p>
       </>
     ) : (
