@@ -64,6 +64,7 @@ describe('place pages', () => {
   it('keep their published region URLs', () => {
     expect(REGIONS.map(regionHref)).toEqual([
       '/regions/north-texas/',
+      '/regions/east-texas/',
       '/regions/central-texas/',
       '/regions/gulf-coast/',
       '/regions/south-texas/',

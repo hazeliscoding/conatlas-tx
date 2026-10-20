@@ -110,7 +110,7 @@ describe('EditionSchema', () => {
   it('rejects unknown fields, bad ids, regions, statuses and time zones', () => {
     expect(problems({ ...valid, venu: 'typo' })).toEqual(['']);
     expect(problems({ ...valid, id: 'Lone Star 2026' })).toContain('id');
-    expect(problems({ ...valid, region: 'east' })).toContain('region');
+    expect(problems({ ...valid, region: 'panhandle' })).toContain('region');
     expect(problems({ ...valid, status: 'rumored' })).toContain('status');
     expect(problems({ ...valid, timezone: 'America/New_York' })).toContain('timezone');
     expect(problems({ ...valid, start_date: '2026-02-30' })).toContain('start_date');

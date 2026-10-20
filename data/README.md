@@ -19,7 +19,7 @@ slug: example-con # URL path
 name: Example Convention
 website: https://example.org
 city: Houston
-region: gulf-coast # north | central | gulf-coast | south | west
+region: gulf-coast # north | east | central | gulf-coast | south | west
 status: active # active | hiatus | ended
 sources:
   - example-con-site # an id in sources/
@@ -38,7 +38,7 @@ end_date: 2026-11-15
 venue:
   name: Example Convention Center
 city: Houston
-region: gulf-coast # north | central | gulf-coast | south | west
+region: gulf-coast # north | east | central | gulf-coast | south | west
 timezone: America/Chicago # America/Denver only for far West Texas
 url: https://example.org
 evidence:
