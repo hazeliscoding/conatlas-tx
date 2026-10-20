@@ -3,8 +3,6 @@ slug: ushicon
 name: Ushicon
 description: Ushicon is a convention for fans 18 and up.
 website: https://www.ushicon.com/
-city: Austin
-region: central
 status: active
 sources:
   - ushicon-site

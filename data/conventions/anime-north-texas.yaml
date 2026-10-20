@@ -2,8 +2,6 @@ id: anime-north-texas
 slug: anime-north-texas
 name: Anime North Texas
 website: https://www.animenorthtexas.com/
-city: Irving
-region: north
 status: active
 sources:
   - anime-north-texas-site

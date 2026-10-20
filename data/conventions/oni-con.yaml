@@ -2,8 +2,6 @@ id: oni-con
 slug: oni-con
 name: Oni-Con
 website: https://oni-con.net/
-city: Houston
-region: gulf-coast
 status: active
 sources:
   - oni-con-site

@@ -18,8 +18,6 @@ id: example-con # stable forever; editions reference it
 slug: example-con # URL path
 name: Example Convention
 website: https://example.org
-city: Houston
-region: gulf-coast # north | east | central | gulf-coast | south | west
 status: active # active | hiatus | ended
 sources:
   - example-con-site # an id in sources/

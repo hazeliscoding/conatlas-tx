@@ -2,8 +2,6 @@ id: anime-mundo
 slug: anime-mundo
 name: Anime Mundo
 website: https://animemundo.com/
-city: El Paso
-region: west
 status: active
 sources:
   - anime-mundo-site

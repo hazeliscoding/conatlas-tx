@@ -2,8 +2,6 @@ id: anime-dallas
 slug: anime-dallas
 name: Anime Dallas
 website: https://animedallas.com/
-city: Frisco
-region: north
 status: active
 sources:
   - anime-dallas-site
