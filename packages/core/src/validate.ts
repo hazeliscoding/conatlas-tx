@@ -29,10 +29,10 @@ export function validateDataset(data: Dataset, today: IsoDate): Issue[] {
     for (const id of duplicates(records.map((r) => r.id)))
       error(`${dir}/${id}`, `duplicate id "${id}"`);
   }
-  for (const [dir, records] of [kinds[0], kinds[1]]) {
-    for (const slug of duplicates(records.map((r) => r.slug))) {
-      error(`${dir}/${slug}`, `slug "${slug}" is used by more than one record`);
-    }
+  // Convention and edition pages share /cons/<slug>/, so a slug is unique across both.
+  for (const slug of duplicates([...data.series, ...data.editions].map((r) => r.slug))) {
+    const dir = data.editions.some((e) => e.slug === slug) ? 'editions' : 'conventions';
+    error(`${dir}/${slug}`, `slug "${slug}" is used by more than one record`);
   }
 
   const seriesIds = new Set(data.series.map((s) => s.id));
