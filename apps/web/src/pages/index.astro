@@ -195,7 +195,8 @@ const STEPS = [
     list-style: none;
   }
   .regions {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    /* Six regions: three across on wide screens, so no card sits alone on a row. */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   }
   .steps {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
