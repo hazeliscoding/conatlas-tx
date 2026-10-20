@@ -4,7 +4,6 @@ import {
   REGION_NAMES,
   dayCount,
   formatDateRange,
-  OFFICIAL_SOURCE_TYPES,
   todayIn,
   weekday,
   type Edition,
@@ -22,6 +21,8 @@ import Icon from '../../components/Icon.astro';
 import Ribbon from '../../components/Ribbon.astro';
 import StatusLine from '../../components/StatusLine.astro';
 import AgeLabel from '../../components/AgeLabel.astro';
+import Banner from '../../components/Banner.astro';
+import SeriesBanner from '../../components/SeriesBanner.astro';
 import VenueBlock from '../../components/VenueBlock.astro';
 import Base from '../../layouts/Base.astro';
 import {
@@ -113,10 +114,6 @@ const nearby = getUpcoming()
   )
   .slice(0, 3);
 const google = e.status === 'confirmed' && !ended && googleCalendarUrl(e, eventDetails(e, title));
-// The organizer's announcement behind a hiatus or ended status.
-const statusSource = series.sources
-  .map((id) => sources.get(id))
-  .find((s) => s && OFFICIAL_SOURCE_TYPES.includes(s.type) && s.supports.includes('status'));
 // The edition to point a past page at: the soonest sibling that hasn't ended.
 // A series that has ended or is on hiatus has no current edition, even a cancelled one.
 const current = siblings
@@ -210,56 +207,28 @@ const past = siblings
     </header>
 
     {e.status === 'postponed' && (
-      <div class="banner banner--warning" role="status">
-        <Icon name="triangle-alert" size={18} />
-        <span>
-          <b>Postponed.</b> {e.status_note}
-          {start && ' The dates shown are the original ones and should not be relied on.'}
-        </span>
-      </div>
+      <Banner tone="warning" icon="triangle-alert">
+        <b>Postponed.</b> {e.status_note}
+        {start && ' The dates shown are the original ones and should not be relied on.'}
+      </Banner>
     )}
     {cancelled && (
-      <div class="banner banner--cancelled" role="status">
-        <Icon name="circle-x" size={18} />
-        <span>
-          <b>Cancelled.</b> {e.status_note}
-        </span>
-      </div>
+      <Banner tone="cancelled" icon="circle-x">
+        <b>Cancelled.</b> {e.status_note}
+      </Banner>
     )}
-    {series.status !== 'active' && (
-      <div class="banner banner--neutral" role="status" data-series-status={series.status}>
-        <Icon name="info" size={18} />
-        <span>
-          <b>
-            {series.status === 'ended'
-              ? `${series.name} has ended.`
-              : `${series.name} is on hiatus.`}
-          </b>{' '}
-          {series.status_note}
-        </span>
-        {statusSource && (
-          <a class="banner__link" href={statusSource.url} target="_blank" rel="noopener noreferrer">
-            Read the announcement
-            <Icon name="external-link" size={12} label="(opens in new tab)" />
-          </a>
-        )}
-      </div>
-    )}
+    <SeriesBanner series={series} sources={sources} />
     {ended && !cancelled && (
-      <div class="banner banner--neutral" role="status">
-        <Icon name="calendar" size={18} />
-        <span>
-          This edition has ended. Kept for reference.
-          {!current &&
-            series.status === 'active' &&
-            " The organizer hasn't announced the next one yet."}
-        </span>
-        {current && (
-          <a class="banner__link" href={detailHref(current)}>
-            See the current edition →
-          </a>
-        )}
-      </div>
+      <Banner
+        tone="neutral"
+        icon="calendar"
+        link={current && { href: detailHref(current), label: 'See the current edition →' }}
+      >
+        This edition has ended. Kept for reference.
+        {!current &&
+          series.status === 'active' &&
+          " The organizer hasn't announced the next one yet."}
+      </Banner>
     )}
 
     <div class="grid gap-2">
@@ -429,40 +398,6 @@ const past = siblings
     color: var(--text-2);
     font-style: italic;
     font-weight: 500;
-  }
-  .banner {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: flex-start;
-    padding: 14px 16px;
-    border-radius: var(--radius-md);
-    font: var(--type-body-sm);
-  }
-  .banner--warning {
-    background: var(--status-warning-bg);
-    color: var(--status-warning-fg);
-  }
-  .banner--cancelled {
-    background: var(--status-cancelled-bg);
-    color: var(--status-cancelled-fg);
-  }
-  .banner--neutral {
-    align-items: center;
-    background: var(--status-neutral-bg);
-    color: var(--status-neutral-fg);
-  }
-  /* The text takes the room beside the icon, so a long note wraps inside it. */
-  .banner > span {
-    flex: 1 1 0;
-    min-width: 12ch;
-  }
-  .banner__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-left: auto;
-    font-weight: 600;
   }
   /* On phones the actions share each row evenly instead of leaving one alone. */
   @media (max-width: 640px) {

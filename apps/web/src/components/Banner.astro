@@ -1,0 +1,68 @@
+---
+// A status message across the page: icon, text, and an optional link at the end of the row.
+import type { HTMLAttributes } from 'astro/types';
+import Icon, { type IconName } from './Icon.astro';
+
+type Props = HTMLAttributes<'div'> & {
+  tone: 'warning' | 'cancelled' | 'neutral';
+  icon: IconName;
+  link?: { href: string; label: string; external?: boolean } | undefined;
+};
+
+const { tone, icon, link, ...rest } = Astro.props;
+---
+
+<div class:list={['banner', `banner--${tone}`]} role="status" {...rest}>
+  <Icon name={icon} size={18} />
+  <span>
+    <slot />
+  </span>
+  {link && (
+    <a
+      class="banner__link"
+      href={link.href}
+      target={link.external ? '_blank' : undefined}
+      rel={link.external ? 'noopener noreferrer' : undefined}
+    >
+      {link.label}
+      {link.external && <Icon name="external-link" size={12} label="(opens in new tab)" />}
+    </a>
+  )}
+</div>
+
+<style>
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    font: var(--type-body-sm);
+  }
+  .banner--warning {
+    background: var(--status-warning-bg);
+    color: var(--status-warning-fg);
+  }
+  .banner--cancelled {
+    background: var(--status-cancelled-bg);
+    color: var(--status-cancelled-fg);
+  }
+  .banner--neutral {
+    align-items: center;
+    background: var(--status-neutral-bg);
+    color: var(--status-neutral-fg);
+  }
+  /* The text takes the room beside the icon, so a long note wraps inside it. */
+  .banner > span {
+    flex: 1 1 0;
+    min-width: 12ch;
+  }
+  .banner__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    font-weight: 600;
+  }
+</style>
