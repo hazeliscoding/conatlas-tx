@@ -1,0 +1,32 @@
+---
+// Says when a convention has ended or is on hiatus, linking the organizer's announcement.
+// Renders nothing for an active series.
+import { OFFICIAL_SOURCE_TYPES, type Series, type Source } from '@conatlas/core';
+import Banner from './Banner.astro';
+
+interface Props {
+  series: Series;
+  sources: Map<string, Source>;
+}
+
+const { series, sources } = Astro.props;
+const announcement = series.sources
+  .map((id) => sources.get(id))
+  .find((s) => s && OFFICIAL_SOURCE_TYPES.includes(s.type) && s.supports.includes('status'));
+---
+
+{series.status !== 'active' && (
+  <Banner
+    tone="neutral"
+    icon="info"
+    data-series-status={series.status}
+    link={
+      announcement && { href: announcement.url, label: 'Read the announcement', external: true }
+    }
+  >
+    <b>
+      {series.status === 'ended' ? `${series.name} has ended.` : `${series.name} is on hiatus.`}
+    </b>{' '}
+    {series.status_note}
+  </Banner>
+)}
