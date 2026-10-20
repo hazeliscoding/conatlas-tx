@@ -2,8 +2,6 @@ id: anime-sunika
 slug: anime-sunika
 name: Anime Sunika
 website: https://www.animesunika.com/
-city: Belton
-region: central
 status: active
 sources:
   - anime-sunika-site

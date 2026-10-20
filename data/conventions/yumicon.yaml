@@ -2,8 +2,6 @@ id: yumicon
 slug: yumicon
 name: YUMiCON
 website: https://www.yumicon.com/
-city: San Antonio
-region: south
 status: active
 sources:
   - yumicon-site

@@ -2,8 +2,6 @@ id: riverwalk-anime
 slug: riverwalk-anime
 name: Riverwalk Anime
 website: https://www.riverwalkanime.com/
-city: San Antonio
-region: south
 status: active
 sources:
   - riverwalk-anime-site

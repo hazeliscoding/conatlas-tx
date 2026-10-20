@@ -55,8 +55,6 @@ describe('data:diff', () => {
     slug: lone-star-anime-festival
     name: Lone Star Anime Festival
     website: https://www.example.org/lsaf
-    city: Austin
-    region: central
     status: active
   Verification
     sources: [lone-star-anime-festival-site]

@@ -2,8 +2,6 @@ id: tokyo-x
 slug: tokyo-x
 name: Tokyo X
 website: https://www.tokyonightfest.com/
-city: Houston
-region: gulf-coast
 status: active
 sources:
   - tokyo-x-site

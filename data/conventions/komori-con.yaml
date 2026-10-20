@@ -2,8 +2,6 @@ id: komori-con
 slug: komori-con
 name: Kōmori Con
 website: https://www.komoricon.com/
-city: Austin
-region: central
 status: active
 sources:
   - komori-con-faqs
