@@ -118,14 +118,13 @@ Each milestone's checklist and status report are in git history.
 - **M4: Production readiness.** The five-petal logo, design, accessibility and performance reviews, SEO basics, and the Vercel deploy. Approved 2026-10-13.
 - **M5: Search and discovery.** SEO audit, structured data, region and city pages, `llms.txt`, Core Web Vitals lab checks, and Search Console reading all 35 sitemap URLs. Approved 2026-10-14.
 - **M6: Coverage and v0.1.0.** A coverage pass from 15 listed conventions to 35, listing rules in `docs/DATA_POLICY.md`, ended conventions (Kawacon), a refresh of every record, the public beta checklist, and the [v0.1.0](https://github.com/hazeliscoding/conatlas-tx/releases/tag/v0.1.0) release, announced on Discord. Approved 2026-10-18.
+- **M7: Completeness and v0.2.0.** The 18+ label and a "Hide 18+" filter, a second search pass that added five conventions (40 listed), the versioning rules, and the [v0.2.0](https://github.com/hazeliscoding/conatlas-tx/releases/tag/v0.2.0) release, announced on Discord. Approved 2026-10-20.
 
 ## Next
 
-Open work is in [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues), and the [project board](https://github.com/users/hazeliscoding/projects/8) shows where each one stands. The current milestone is [M7: completeness and v0.2.0](https://github.com/hazeliscoding/conatlas-tx/milestone/2): an 18+ label so adults-only conventions can be listed (#13), a second search pass on the coverage leads (#21), the versioning rules (#23), and the v0.2.0 release (#24).
+Open work is in [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues), and the [project board](https://github.com/users/hazeliscoding/projects/8) shows where each one stands. The current milestone is [M8: settle the public contract and v1.0.0](https://github.com/hazeliscoding/conatlas-tx/milestone/3), the last milestone before 1.0: the regions question (#10), archive pages per series (#12), a last review of the contract (#38), maintenance that runs without being remembered (#11, #39), the next dates of conventions waiting on them (#33), and the v1.0.0 release (#40).
 
-Done when: 18+ conventions can be listed with a label, the second search pass is done, the versioning rules are decided, and v0.2.0 is published.
-
-After M7 comes [M8: settle the public contract and v1.0.0](https://github.com/hazeliscoding/conatlas-tx/milestone/3), the last milestone before 1.0.
+Done when: the regions question is decided, archive pages are live, the public contract (page and feed URLs, edition ids, the data format) has had its last review, data maintenance pings on its own, and v1.0.0 is published.
 
 Issues without a milestone are ideas for later.
 
