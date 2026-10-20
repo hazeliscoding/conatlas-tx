@@ -2,7 +2,7 @@ id: anime-mundo-2026
 series: anime-mundo
 edition: '2026'
 slug: anime-mundo-2026
-status: confirmed
+status: completed
 start_date: 2026-10-17
 end_date: 2026-10-18
 venue:
@@ -18,5 +18,5 @@ evidence:
     checked_at: 2026-10-14
     excerpt: OCTOBER 17th-18th, 2026 | EL PASO CONVENTION CENTER | EL PASO, TX
 last_verified_at: 2026-10-14
-updated_at: 2026-10-14
-revision: 0
+updated_at: 2026-10-19
+revision: 1
