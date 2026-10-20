@@ -227,6 +227,10 @@ describe('validateDataset', () => {
     expect(errorsFor({ slug: 'lone-star-anime-fest-2027' })).toContain(
       'editions/lone-star-anime-fest-2027: slug "lone-star-anime-fest-2027" is used by more than one record',
     );
+    // A convention's archive page and an edition's page would share /cons/<slug>/.
+    expect(errorsFor({ slug: 'lone-star-anime-fest' })).toContain(
+      'editions/lone-star-anime-fest: slug "lone-star-anime-fest" is used by more than one record',
+    );
     const dupe: Dataset = { ...base, sources: [...base.sources, base.sources[0]!] };
     expect(validateDataset(dupe, TODAY).map((i) => i.message)).toContain(
       `duplicate id "${base.sources[0]!.id}"`,
