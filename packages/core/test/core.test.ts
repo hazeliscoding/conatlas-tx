@@ -227,6 +227,9 @@ describe('validateDataset', () => {
     expect(errorsFor({ slug: 'lone-star-anime-fest-2027' })).toContain(
       'editions/lone-star-anime-fest-2027: slug "lone-star-anime-fest-2027" is used by more than one record',
     );
+    expect(errorsFor({ slug: 'lone-star-2026' })).toContain(
+      `${ed2026}: slug "lone-star-2026" must match the id`,
+    );
     // A convention's archive page and an edition's page would share /cons/<slug>/.
     expect(errorsFor({ slug: 'lone-star-anime-fest' })).toContain(
       'editions/lone-star-anime-fest: slug "lone-star-anime-fest" is used by more than one record',

@@ -29,6 +29,11 @@ export function validateDataset(data: Dataset, today: IsoDate): Issue[] {
     for (const id of duplicates(records.map((r) => r.id)))
       error(`${dir}/${id}`, `duplicate id "${id}"`);
   }
+  // A page's URL keeps the id's promise never to change.
+  for (const [dir, records] of [kinds[0], kinds[1]]) {
+    for (const r of records)
+      if (r.slug !== r.id) error(`${dir}/${r.id}`, `slug "${r.slug}" must match the id`);
+  }
   // Convention and edition pages share /cons/<slug>/, so a slug is unique across both.
   for (const slug of duplicates([...data.series, ...data.editions].map((r) => r.slug))) {
     const dir = data.editions.some((e) => e.slug === slug) ? 'editions' : 'conventions';

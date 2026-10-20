@@ -64,7 +64,7 @@ last_checked: 2026-10-11 # YYYY-MM-DD, last successful check
 
 ## Rules the validator enforces
 
-- IDs are lowercase-kebab-case and match the file name. IDs and slugs are unique, and a convention's slug never matches an edition's, since both pages live under `/cons/`.
+- IDs are lowercase-kebab-case and match the file name, and a slug always matches its id. IDs and slugs are unique, and a convention's slug never matches an edition's, since both pages live under `/cons/`.
 - Every edition has evidence from an official source. Third-party listings never count.
 - Shown dates, venues and cancellation or postponement statuses each need official evidence for that fact.
 - `confirmed` and `completed` need dates; `dates_tba` must not have them; `completed` must be in the past.
