@@ -23,6 +23,7 @@ test('the sitemap lists every indexable page, each with matching canonical and s
   const xml = await (await request.get('sitemap.xml')).text();
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]!);
   for (const edition of dataset.editions) expect(locs).toContain(`${SITE}cons/${edition.slug}/`);
+  for (const series of dataset.series) expect(locs).toContain(`${SITE}cons/${series.slug}/`);
   for (const path of ['', 'calendar/', 'about/', 'contribute/'])
     expect(locs).toContain(SITE + path);
   expect(locs.some((loc) => loc.includes('/saved/'))).toBe(false);
@@ -104,6 +105,7 @@ test('every dated edition carries event data with its status, built only from it
 test('breadcrumb data matches the visible breadcrumb', async ({ page }) => {
   const paths = [
     ...dataset.editions.map((e) => `cons/${e.slug}/`),
+    ...dataset.series.map((s) => `cons/${s.slug}/`),
     'contribute/',
     ...REGIONS.map((r) => regionPath(r).slice(1)),
     ...pagedCities.map((c) => cityPath(c).slice(1)),

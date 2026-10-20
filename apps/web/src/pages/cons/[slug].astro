@@ -152,7 +152,13 @@ const past = siblings
     />
   )}
   <div class="grid max-w-[1024px] grid-cols-[minmax(0,1fr)] gap-7">
-    <Breadcrumb items={[{ label: 'Explore', href: href() }, { label: name }]} />
+    <Breadcrumb
+      items={[
+        { label: 'Explore', href: href() },
+        { label: series.name, href: detailHref(series) },
+        { label: e.edition },
+      ]}
+    />
 
     <header class="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-5">
       <DateBlock

@@ -8,6 +8,7 @@ const PAGES = [
   'calendar/2027-01/',
   'cons/ushicon-2027/',
   'cons/anime-matsuri-2026/',
+  'cons/odessa-geek-fest/',
   'about/',
   'saved/',
   'contribute/?con=ushicon-2027',
