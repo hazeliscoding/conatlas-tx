@@ -101,6 +101,8 @@ Each milestone ends at a gate: tests run, results reported, and the maintainer a
   - **Breaking changes:** the public contract is page URLs, feed URLs, edition ids (which are also the calendar UIDs) and the record format in `data/`. Before 1.0.0, a release that breaks any of them is still a minor, and its notes open with a "Breaking changes" section saying who is affected and what to do. From 1.0.0 on, it's a major.
   - **Where it lives:** an annotated tag on `main` and a GitHub release named `vX.Y.Z · <title>` that holds the notes, as v0.1.0 did. There's no `version` field in `package.json` and no CHANGELOG file.
   - **Not versions:** an edition's `revision`, `VERSION:2.0` in calendar files and the home page's "VOL.01" mean something else.
+- **2026-10-19** — The road to 1.0 is one milestone after M7: [M8: settle the public contract and v1.0.0](https://github.com/hazeliscoding/conatlas-tx/milestone/3). From 1.0 on, changing page URLs, feed URLs, edition ids or the data format is a major version, so M8 does what is cheapest before then: the regions question (#10), archive pages per series (#12), a last review of the contract (#38), maintenance that runs without being remembered (#11, #39) and the next dates of conventions waiting on them (#33), ending in v1.0.0 (#40). New features wait until after 1.0.
+- **2026-10-19** — The interactive map (#41) waits until after 1.0, and keeps the About page's promise of no requests to other sites. It will be a street map rather than an illustrated map of Texas, served from this site as a self-hosted Protomaps file with street detail only around venues, which measured about 75 MB and fits a Hobby-plan deploy. That costs a heavier map page and venue coordinates as new data, where a map service would have been simpler but broken the promise. The measurements are in #41.
 - **2026-10-11** — `ROADMAP.md` lives at the repo root (the handoff suggested `docs/ROADMAP.md`) to match the maintainer's repo-first workflow.
 
 ## Shipped
@@ -120,6 +122,8 @@ Each milestone's checklist and status report are in git history.
 Open work is in [GitHub issues](https://github.com/hazeliscoding/conatlas-tx/issues). The current milestone is [M7: completeness and v0.2.0](https://github.com/hazeliscoding/conatlas-tx/milestone/2): an 18+ label so adults-only conventions can be listed (#13), a second search pass on the coverage leads (#21), Search Console's crawl reports (#9), the Bing sitemap (#7), the versioning rules (#23), and the v0.2.0 release (#24).
 
 Done when: 18+ conventions can be listed with a label, the second search pass is done, the crawl reports and Bing are handled, the versioning rules are decided, and v0.2.0 is published.
+
+After M7 comes [M8: settle the public contract and v1.0.0](https://github.com/hazeliscoding/conatlas-tx/milestone/3), the last milestone before 1.0.
 
 Issues without a milestone are ideas for later.
 
