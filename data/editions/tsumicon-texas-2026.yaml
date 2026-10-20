@@ -2,7 +2,7 @@ id: tsumicon-texas-2026
 series: tsumicon-texas
 edition: '2026'
 slug: tsumicon-texas-2026
-status: confirmed
+status: completed
 start_date: 2026-10-16
 end_date: 2026-10-18
 venue:
@@ -28,5 +28,5 @@ evidence:
     checked_at: 2026-10-18
     excerpt: TsumiCon is an 18+ event. No one under 18 is admitted — there are no exceptions, including when accompanied by a parent or legal guardian.
 last_verified_at: 2026-10-18
-updated_at: 2026-10-18
-revision: 0
+updated_at: 2026-10-19
+revision: 1
