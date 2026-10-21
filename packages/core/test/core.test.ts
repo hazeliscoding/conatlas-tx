@@ -1,3 +1,6 @@
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
@@ -87,6 +90,40 @@ describe('loadDataset', () => {
     const { dataset, issues } = loadDataset(fileURLToPath(new URL('./nowhere', import.meta.url)));
     expect(issues).toEqual([]);
     expect(dataset.editions).toEqual([]);
+  });
+
+  it('warns when fields are out of schema order, and still loads the record', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'conatlas-'));
+    cpSync(FIXTURES, dir, { recursive: true });
+    const rewrite = (file: string, from: string, to: string) =>
+      writeFileSync(join(dir, file), readFileSync(join(dir, file), 'utf8').replace(from, to));
+    rewrite(
+      'editions/lone-star-anime-fest-2026.yaml',
+      '    facts: [dates, venue, city, tickets]\n    checked_at: 2026-09-30',
+      '    checked_at: 2026-09-30\n    facts: [dates, venue, city, tickets]',
+    );
+    rewrite(
+      'sources/lone-star-anime-fest-site.yaml',
+      'url: https://example.org/lone-star-anime-fest\ntype: official_site',
+      'type: official_site\nurl: https://example.org/lone-star-anime-fest',
+    );
+    const { dataset, issues } = loadDataset(dir);
+    expect(issues).toEqual([
+      {
+        level: 'warning',
+        record: 'editions/lone-star-anime-fest-2026',
+        message:
+          'evidence.0 fields are out of order; list them as source, facts, checked_at, excerpt',
+      },
+      {
+        level: 'warning',
+        record: 'sources/lone-star-anime-fest-site',
+        message:
+          'fields are out of order; list them as id, series, url, type, supports, last_checked',
+      },
+    ]);
+    expect(dataset.sources).toHaveLength(2);
+    rmSync(dir, { recursive: true });
   });
 
   it('passes cross-record validation', () => {

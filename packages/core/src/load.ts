@@ -5,6 +5,25 @@ import type { z } from 'zod';
 import { EditionSchema, SeriesSchema, SourceSchema, type Dataset } from './schema.ts';
 import type { Issue } from './validate.ts';
 
+/** Where a record's fields first stray from the schema's order. Prettier formats the rest. */
+function misordered(raw: unknown, parsed: unknown, path = ''): string | undefined {
+  if (!raw || typeof raw !== 'object' || !parsed || typeof parsed !== 'object') return;
+  // Parsed records list their fields in schema order, so they show where each belongs.
+  const expected = Object.keys(parsed);
+  if (!Array.isArray(raw) && Object.keys(raw).join() !== expected.join()) {
+    return `${path ? `${path} fields` : 'fields'} are out of order; list them as ${expected.join(', ')}`;
+  }
+  for (const key of Object.keys(raw)) {
+    const at = path ? `${path}.${key}` : key;
+    const found = misordered(
+      (raw as Record<string, unknown>)[key],
+      (parsed as Record<string, unknown>)[key],
+      at,
+    );
+    if (found) return found;
+  }
+}
+
 /** Reads one kind of record: every `<id>.yaml` file in `dir`. A missing directory is empty. */
 function readRecords<T>(
   dir: string,
@@ -47,6 +66,8 @@ function readRecords<T>(
       issues.push({ level: 'error', record, message: `id must match the file name "${fileId}"` });
       continue;
     }
+    const order = misordered(raw, result.data);
+    if (order) issues.push({ level: 'warning', record, message: order });
     records.push(result.data);
   }
   return { records, issues };
