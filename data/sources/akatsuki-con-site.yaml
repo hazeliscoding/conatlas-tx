@@ -3,5 +3,5 @@ series: akatsuki-con
 url: https://akatsukicon.com/
 type: official_site
 supports: [existence, dates, venue, city]
-last_checked: 2026-10-14
-access_notes: WordPress site readable with a plain fetch. The header on every page reads "April 11-12, 2026 Pasadena, TX" and "Pasadena Convention Center". The "2026 activities" section lists workshops, exhibitor hall, cosplayers and gaming, with panelist, performer and exhibitor applications. "Buy Tickets" goes to tixr.com, which returned 403 to both a plain fetch and a browser. No later edition is announced on the site.
+last_checked: 2026-10-20
+access_notes: WordPress site readable with a plain fetch. The header on every page reads "April 11-12, 2026 Pasadena, TX" and "Pasadena Convention Center". The "2026 activities" section lists workshops, exhibitor hall, cosplayers and gaming, with panelist, performer and exhibitor applications. "Buy Tickets" goes to tixr.com, which returned 403 to both a plain fetch and a browser. On 2026-10-20 the site still shows only the 2026 edition and announces no later one.
