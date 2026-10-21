@@ -1,0 +1,24 @@
+id: tokyo-x-2027
+series: tokyo-x
+edition: '2027'
+slug: tokyo-x-2027
+status: dates_tba
+announced_window: 'Fall 2027'
+city: Houston
+region: gulf-coast
+timezone: America/Chicago
+url: https://www.tokyonightfest.com/
+evidence:
+  - source: tokyo-x-site
+    facts: [existence]
+    checked_at: 2026-10-20
+    excerpt: 'BRINGING A PIECE OF JAPAN COMING BACK FALL 2027'
+    note: 'Text under the home page heading. The home page''s Upcoming Events list also shows "2027 TBA".'
+  - source: tokyo-x-about
+    facts: [city]
+    checked_at: 2026-10-20
+    excerpt: 'Tokyo X a celebrations of Japanese culture, bringing together the sights, sounds, and spirit of Japan through an immersive two-day festival in Houston, Texas.'
+    note: From the About Us text, which describes the festival rather than one year.
+last_verified_at: 2026-10-20
+updated_at: 2026-10-20
+revision: 0

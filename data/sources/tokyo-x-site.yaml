@@ -3,5 +3,6 @@ series: tokyo-x
 url: https://www.tokyonightfest.com/
 type: official_site
 supports: [existence, dates, city, status]
-last_checked: 2026-10-14
+last_checked: 2026-10-20
+access_notes: Plain fetch works. On 2026-10-20 the line under the home page heading read "COMING BACK FALL 2027", and the newest post in the embedded Instagram feed was from 2026-10-04.
 notes: The dated text is in the organizer's Instagram posts (@tokyox.usa) embedded in the home page feed.
