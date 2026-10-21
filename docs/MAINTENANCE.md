@@ -4,6 +4,8 @@ The maintainer's routine for keeping listings right. How the tools work is in [`
 
 ## Weekly
 
+Every Monday morning the Data reminder workflow runs the report, and when anything is due now or soon it opens an issue labeled `data-due` with the list, closing last week's. A quiet week opens nothing. To see what a later date will bring, run the workflow from the Actions tab with that date.
+
 1. Run `pnpm data:report`. It lists what is due: editions starting soon that haven't been checked recently, editions that ended and need marking completed, failed checks, undated editions, and series waiting on a next edition.
 2. Refresh what it lists. In Claude Code, run `/conatlas-refresh` (or `/conatlas-refresh editions/<id>` for one record). By hand: `pnpm data:propose editions/<id>`, open the organizer's pages, edit the draft, and run `pnpm data:diff`.
 3. Review and publish (below).
