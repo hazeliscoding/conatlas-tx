@@ -1,0 +1,20 @@
+id: anime-mundo-2027
+series: anime-mundo
+edition: '2027'
+slug: anime-mundo-2027
+status: confirmed
+start_date: 2027-07-17
+end_date: 2027-07-18
+city: El Paso
+region: west
+timezone: America/Denver
+url: https://animemundo.com/
+evidence:
+  - source: anime-mundo-2027-announcement
+    facts: [existence, dates, city]
+    checked_at: 2026-10-20
+    excerpt: Thank you El Paso! See you July 17-18, 2027
+    note: Caption of the organizer's Instagram post of October 18, 2026, the last day of the 2026 edition. It names no venue.
+last_verified_at: 2026-10-20
+updated_at: 2026-10-20
+revision: 0

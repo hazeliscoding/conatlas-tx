@@ -1,0 +1,7 @@
+id: anime-mundo-2027-announcement
+series: anime-mundo
+url: https://www.instagram.com/animemundotx/p/DeqH4CBNSu-/
+type: organizer_social
+supports: [existence, dates, city]
+last_checked: 2026-10-20
+access_notes: Organizer Instagram post of October 18, 2026, on the account linked from the animemundo.com header and footer. Read in a browser without logging in; a sign-up prompt covers the page and closes. A plain fetch gets only a script shell.
