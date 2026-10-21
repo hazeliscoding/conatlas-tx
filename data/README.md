@@ -64,6 +64,8 @@ last_checked: 2026-10-11 # YYYY-MM-DD, last successful check
 
 Fields not marked optional are required. Dates are `YYYY-MM-DD` strings, URLs are `https://`, and text can't be empty.
 
+Write fields in the order the tables list them, so a record's diff shows only what changed: `pnpm data:validate` and `pnpm data:diff` warn when they're out of order. Prettier (`pnpm format`) keeps the rest of the layout consistent.
+
 ### Conventions
 
 | Field         | What it holds                                                                          |
