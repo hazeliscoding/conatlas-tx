@@ -3,5 +3,5 @@ series: anime-mundo
 url: https://animemundo.com/
 type: official_site
 supports: [existence, dates, venue, city, tickets]
-last_checked: 2026-10-19
+last_checked: 2026-10-20
 access_notes: Dates, venue and city are in the home page's scrolling banner; the page's meta description is stale and still names the 2025 dates. The "Tickets" nav link goes to the Eventeny ticket page.

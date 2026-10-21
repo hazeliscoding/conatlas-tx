@@ -3,5 +3,5 @@ series: tsumicon-texas
 url: https://tsumicon.com/
 type: official_site
 supports: [existence, dates, venue]
-last_checked: 2026-10-19
-access_notes: Renders in the browser; a plain fetch returns only the page title.
+last_checked: 2026-10-20
+access_notes: Renders in the browser; a plain fetch returns only the page title. On 2026-10-20 the home page showed a post-event thank-you ("Follow us so you don't miss a single announcement about what's next") and no next edition.

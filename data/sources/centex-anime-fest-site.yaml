@@ -3,5 +3,5 @@ series: centex-anime-fest
 url: https://comanchecon.com/
 type: official_site
 supports: [existence, dates, venue, city]
-last_checked: 2026-10-14
-access_notes: Organizer homepage (footer "Presented by Comanche Con"). Facebook and Instagram accounts linked from it were not checked.
+last_checked: 2026-10-20
+access_notes: Organizer homepage (footer "Presented by Comanche Con"). On 2026-10-20 it still advertised only the 2026 edition ("OCTOBER 16–17, 2026 · COMANCHE, TX."), with no next edition announced. Its footer links to facebook.com/ComancheCon and instagram.com/comanche_con; neither could be read with a plain fetch on 2026-10-20 (Facebook error page, Instagram script-only).
