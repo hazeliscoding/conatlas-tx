@@ -268,6 +268,7 @@ function report(ctx: Context): number {
     console.log('\nThese records are left out of the report until they load.\n');
   }
   const tasks = maintenanceTasks(published, ctx.today);
+  // .github/workflows/data-reminder.yml opens an issue when "Due now" or "Due soon" appears.
   const titles = { now: 'Due now', soon: 'Due soon', later: 'When there is time' };
   for (const priority of ['now', 'soon', 'later'] as const) {
     const due = tasks.filter((t) => t.priority === priority);

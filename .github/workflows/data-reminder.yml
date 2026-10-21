@@ -1,0 +1,90 @@
+name: Data reminder
+
+# Every Monday, opens an issue listing the records due for a re-check, so the weekly refresh
+# doesn't depend on remembering it. Only "Due now" and "Due soon" open one, and the issue replaces
+# last week's; a quiet week posts nothing. It's for the maintainer, whose own GitHub digest shows
+# new issues, so this repository holds no webhook or other secret.
+on:
+  schedule:
+    - cron: '30 12 * * 1' # Mondays 12:30 UTC: 7:30 CDT, 6:30 CST
+  workflow_dispatch:
+    inputs:
+      today:
+        description: Report as of this date (YYYY-MM-DD), to see what will be due. Empty means today.
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: data-reminder
+  cancel-in-progress: false
+
+jobs:
+  # Runs the repository's code and its dependencies, so it gets no secrets and no write access.
+  report:
+    runs-on: ubuntu-latest
+    outputs:
+      due: ${{ steps.report.outputs.due }}
+      as_of: ${{ steps.report.outputs.as_of }}
+      text: ${{ steps.report.outputs.text }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - id: report
+        env:
+          TODAY: ${{ inputs.today }}
+        run: |
+          as_of=${TODAY:-$(TZ=America/Chicago date +%F)}
+          node packages/ingestion/src/cli.ts report --today "$as_of" > report.txt
+          cat report.txt
+          # The headings come from report() in packages/ingestion/src/cli.ts.
+          if grep -qxE 'Due now|Due soon' report.txt; then due=true; else due=false; fi
+          eof=$(openssl rand -hex 16)
+          {
+            echo "due=$due"
+            echo "as_of=$as_of"
+            echo "text<<$eof"
+            cat report.txt
+            echo "$eof"
+          } >> "$GITHUB_OUTPUT"
+
+  # Opens and closes issues and runs no repository code: it never checks the repository out.
+  issue:
+    needs: report
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      DUE: ${{ needs.report.outputs.due }}
+      AS_OF: ${{ needs.report.outputs.as_of }}
+      REPORT: ${{ needs.report.outputs.text }}
+    steps:
+      - run: |
+          old=$(gh issue list --label data-due --state open --json number --jq '.[].number')
+          new=''
+          if [ "$DUE" = true ]; then
+            gh label create data-due --force --color FBCA04 \
+              --description 'Weekly list of records due for a re-check'
+            {
+              echo "These records are due for a re-check as of $AS_OF. Refresh them as the [weekly routine]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/blob/main/docs/MAINTENANCE.md#weekly) describes. Next Monday's run closes this issue."
+              echo
+              echo '```text'
+              printf '%s\n' "$REPORT"
+              echo '```'
+            } > body.md
+            new=$(gh issue create --title "Data due as of $AS_OF" --label data-due --body-file body.md)
+          fi
+          for n in $old; do
+            if [ -n "$new" ]; then comment="Replaced by $new."; else comment="Nothing is due as of $AS_OF."; fi
+            gh issue close "$n" --comment "$comment"
+          done
