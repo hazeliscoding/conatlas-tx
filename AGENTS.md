@@ -2,7 +2,7 @@
 
 A free, open-source calendar of Texas anime conventions. Static Astro site, YAML data in Git, no backend.
 
-`README.md`, `ROADMAP.md` and this file are the source of truth, and GitHub issues hold the open work. Work from the open issues in the current milestone, which `ROADMAP.md` links under **Next** (`gh issue list --milestone "<name>"`). Set an issue to In progress on the [project board](https://github.com/users/hazeliscoding/projects/8) when you start it, so the maintainer can see what's moving. Close an issue with the pull request that finishes it (`Closes #N` in its description), record new decisions in `ROADMAP.md` with a date, and don't build past the current milestone without asking. Stop at each milestone gate for the maintainer's approval.
+`README.md`, `ROADMAP.md` and this file are the source of truth. Work from the next unchecked item in `ROADMAP.md`, tick it off in the pull request that finishes it, record new decisions there with a date, and don't build past the current milestone without asking. Stop at each milestone gate for the maintainer's approval. Milestone work never goes in GitHub issues, milestones or a Project board, and there are no plan, spec or backlog docs (2026-10-27). Issues hold what visitors and contributors report, the ideas for later, and the weekly `data-due` reminder.
 
 ## Commands
 
