@@ -1,0 +1,7 @@
+id: anime-wonder-texas
+series: anime-wonder
+url: https://animewondercon.com/texas/
+type: official_site
+supports: [existence, dates, venue, city]
+last_checked: 2026-11-12
+access_notes: The dates, venue and city are in the page header and the "Event times and info" block. The "2026 Schedule" block lower down is template filler, not this event's schedule.
