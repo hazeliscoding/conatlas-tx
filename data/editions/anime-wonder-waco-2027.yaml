@@ -1,0 +1,21 @@
+id: anime-wonder-waco-2027
+series: anime-wonder
+edition: Waco 2027
+slug: anime-wonder-waco-2027
+status: confirmed
+start_date: 2027-08-14
+end_date: 2027-08-15
+venue:
+  name: Waco Convention Center
+city: Waco
+region: central
+timezone: America/Chicago
+url: https://animewondercon.com/texas/
+evidence:
+  - source: anime-wonder-texas
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-11-12
+    excerpt: AUG. 14-15, 2027 Waco convention center waco, tx
+last_verified_at: 2026-11-12
+updated_at: 2026-11-12
+revision: 0
