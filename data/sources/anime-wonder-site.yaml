@@ -4,4 +4,4 @@ url: https://animewonderfest.com/
 type: official_site
 supports: [existence, dates, venue, city]
 last_checked: 2026-10-14
-access_notes: The site answers HTTP 503 with a "coming soon" maintenance page; its visible "2026 Schedule" block lists the dates. Plain fetch tools that stop on a 503 miss it.
+access_notes: As of 2026-11-12 the domain redirects (301) to animewondercon.com/washington, which shows only the Washington event; no page lists Waco on Nov 21-22, 2026 any more. The Texas event is at animewondercon.com/texas/ (source anime-wonder-texas). The "2026 Schedule" block and its "22 Nov TX" tab are template filler, not evidence.
