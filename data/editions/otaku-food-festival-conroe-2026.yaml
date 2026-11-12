@@ -1,0 +1,24 @@
+id: otaku-food-festival-conroe-2026
+series: otaku-food-festival
+edition: Conroe 2026
+slug: otaku-food-festival-conroe-2026
+name: Otaku Food Festival Conroe
+status: confirmed
+start_date: 2026-11-21
+end_date: 2026-11-22
+venue:
+  name: B52 Brewing Co
+  address: 12470 Milroy Ln, Conroe, TX 77304
+city: Conroe
+region: gulf-coast
+timezone: America/Chicago
+url: https://www.instagram.com/otakufoodfestival/reel/Dfn3FDzMjir/
+evidence:
+  - source: otaku-food-festival-conroe-2026-reel
+    facts: [existence, dates, venue, city]
+    checked_at: 2026-11-12
+    excerpt: 'Hey Conroe (Houston), TX! The famous Otaku Anime + Food Festival is coming back to YOU Nov 21-22 … B52 Brewing Co (12470 Milroy Ln Conroe, TX 77304) Saturday, Nov 21: 11AM-7:30PM Sunday, Nov 22 11AM-5:30PM'
+    note: 'Caption of the organizer''s reel of November 11, 2026. The caption gives no year; it was posted on November 11, 2026, and November 21, 2026 is a Saturday as it says. The caption also says: "This is a FREE entry, FREE parking, two-day family food and anime event with food and drink vendors, cosplay, anime vendors, crafts, photo ops".'
+last_verified_at: 2026-11-12
+updated_at: 2026-11-12
+revision: 0
